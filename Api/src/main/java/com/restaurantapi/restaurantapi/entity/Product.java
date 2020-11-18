@@ -1,11 +1,8 @@
 package com.restaurantapi.restaurantapi.entity;
 
-import sun.jvm.hotspot.gc.shared.Generation;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 
 @Entity
 public class Product {
@@ -15,6 +12,16 @@ public class Product {
     private int id ;
     private String name;
     private String category;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDesctription(String desctription) {
+        this.description = desctription;
+    }
+
+    private String description;
     private double salesPrice;
     private double purchasePrice;
 

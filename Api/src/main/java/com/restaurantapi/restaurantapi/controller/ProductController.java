@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins ="*")
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -17,33 +17,27 @@ public class ProductController {
 
     @GetMapping("/list")
     public List<Product> getAllProducts() {
-
         return productService.getAllProduct();
     }
+
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable int id) {
-
-        List<Product> articles = productService.getProductById(id);
-
-        return articles.get(0);
+        return productService.getProductById(id);
     }
 
     @PostMapping("/add")
     public Product addProduct(@RequestBody Product product) {
-
         return productService.addProduct(product);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update")
     public Product putProduct(@RequestBody Product product) {
-      return   productService.editProduct(product);
-
+        return productService.editProduct(product);
     }
 
     @DeleteMapping("/delete/{id}")
-    public boolean deleteProduct(@PathVariable int id) {
+    public void deleteProduct(@PathVariable int id) {
         productService.deleteProduct(id);
-        return true;
     }
 
 
