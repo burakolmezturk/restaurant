@@ -8,8 +8,8 @@ function App() {
   return (
     <div>
       <Router>    
-        <div className="container">          
-          <div className="container">
+
+
            
            <Switch> 
                   <Route path ="/" exact component ={HomePageController}></Route>
@@ -17,8 +17,8 @@ function App() {
                   
             </Switch>
           
-        </div>
-      </div>
+
+
       </Router>
   </div>
   );

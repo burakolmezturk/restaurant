@@ -9,7 +9,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id ;
+    private int id;
     private String name;
     private String category;
 
@@ -25,7 +25,7 @@ public class Product {
     private double salesPrice;
     private double purchasePrice;
 
-    public Product(){
+    public Product() {
 
     }
 
@@ -69,5 +69,15 @@ public class Product {
         this.purchasePrice = purchasePrice;
     }
 
+    public static class Category {
+        public String getName() {
+            return name;
+        }
 
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        private String name;
+    }
 }

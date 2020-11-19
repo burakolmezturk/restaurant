@@ -3,6 +3,16 @@ import axios from 'axios';
 const PRODUCT_API_BASE_URL = "http://localhost:8080/product/";
 class ProductService{
 
+    getCategories(){
+        return axios.get(PRODUCT_API_BASE_URL+"/list/category")
+    }
+    getProductsByCategory(categoryName){
+        return axios.get(PRODUCT_API_BASE_URL+"products",{
+            params: {
+              categoryName: categoryName
+            }
+        })
+    }
     getProduct(){
         return axios.get(PRODUCT_API_BASE_URL+"list");
     }
