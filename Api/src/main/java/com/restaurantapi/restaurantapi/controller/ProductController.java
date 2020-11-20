@@ -1,5 +1,6 @@
 package com.restaurantapi.restaurantapi.controller;
 
+import com.restaurantapi.restaurantapi.entity.Cart;
 import com.restaurantapi.restaurantapi.entity.Product;
 import com.restaurantapi.restaurantapi.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,13 @@ public class ProductController {
     public void deleteProduct(@PathVariable int id) {
         productService.deleteProduct(id);
     }
+    @PostMapping("/cart")
+    public boolean sellProduct(@RequestBody List<Cart> carts)
+    {
+        productService.sellProduct(carts);
+        return true;
+    }
+
 
 
 }

@@ -39,11 +39,9 @@ ProductService.deleteProduct(id).then(res =>{
     render() {
         return (
             <div>
+                <div clasname="container">
                 <h2 className="text-center">Product List</h2>
                    <div className="row">
-                       <div className="row">
-                          
-                       </div>
                        <table className="table table-striped table bordered">
                             <thead>
                                 <tr>
@@ -81,7 +79,7 @@ ProductService.deleteProduct(id).then(res =>{
                        </table>
                        <button   className="btn btn-primary" onClick={this.addProduct}>Add Product</button>
                    </div>
-                   
+                   </div>
             </div>
         );
     }

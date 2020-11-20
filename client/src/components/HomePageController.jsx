@@ -14,11 +14,11 @@ class HomePageController extends Component {
             carts: [],
             cart: {
                 cartid: 0,
-                id: 0,
-                name: '',
-                salesPrice: 0,
+                productId: 0,
+                pdocutName: '',
+                price: 0,
                 piece: 1,
-                total: 0
+                totalPrice: 0
             },
             totalCarts: 0
 
@@ -35,13 +35,17 @@ class HomePageController extends Component {
 //		ProductService.getProduct().then((res)=>{
 //		 this.setState({products:res.data})   
 //	 });
-    }
+	}
+	saleButton(cart){
+		ProductService.postCart(cart);
+
+	}
 
     increasePrice(cart) {
 
-        this.state.totalCarts += cart.salesPrice;
+        this.state.totalCarts += cart.price;
         cart.piece += 1;
-        cart.total = cart.salesPrice * cart.piece;
+        cart.total = cart.price * cart.piece;
         //this.setState({carts: this.state.carts.filter(carts => carts.cartid == cart.cartid)});
 
         this.setState([{...this.state.carts, [cart.cartid]: cart}]);
@@ -49,9 +53,9 @@ class HomePageController extends Component {
     }
 
     decreasePrice(cart) {
-        this.state.totalCarts -= cart.salesPrice;
+        this.state.totalCarts -= cart.price;
         cart.piece -= 1;
-        cart.total = cart.salesPrice * cart.piece;
+        cart.totalPrice = cart.price * cart.piece;
         if (cart.piece == 0) {
             this.setState({carts: this.state.carts.filter(carts => carts.cartid !== cart.cartid)});
         } else {
@@ -65,21 +69,21 @@ class HomePageController extends Component {
     addCarts(product) {
         this.state.totalCarts += product.salesPrice;
 
-        if (this.state.carts.filter(carts => carts.id == product.id).length > 0) {
-            var cart = this.state.carts.filter(carts => carts.id == product.id)
+        if (this.state.carts.filter(carts => carts.productId == product.id).length > 0) {
+            var cart = this.state.carts.filter(carts => carts.productId == product.id)
             cart[0].piece += 1
-            cart[0].total =  cart[0].salesPrice *  cart[0].piece;
+            cart[0].totalPrice =  cart[0].price *  cart[0].piece;
             this.setState([{...this.state.carts, [cart[0].id]: cart[0]}]);
         }else {
 
             this.setState({
                 cart: {
                     cartid: nextId(),
-                    id: product.id,
-                    name: product.name,
-                    salesPrice: product.salesPrice,
+                    productId: product.id,
+                    productName: product.name,
+                    price: product.salesPrice,
                     piece: 1,
-                    total: product.salesPrice
+                    totalPrice: product.salesPrice
                 }
             }, () => this.setState({carts: [...this.state.carts, this.state.cart]}));
 
@@ -164,8 +168,8 @@ class HomePageController extends Component {
                             <thead>
                             <tr>
                                 <th>Increase</th>
-                                <th>Piece</th>
                                 <th>Name</th>
+                                <th>Piece</th>
                                 <th>Price</th>
                                 <th>Total</th>
                                 <th>Decrease</th>
@@ -176,17 +180,18 @@ class HomePageController extends Component {
                                 this.state.carts.map(
                                     cart =>
                                         <tr key={cart.cartid}>
-                                            <td>
+                                            <td style={{textAlign:"center"}}>
                                                 <button className="btn btn-success"
                                                         onClick={() => this.increasePrice(cart)}>+
                                                 </button>
                                             </td>
-                                            <td>{cart.piece}</td>
-                                            <td>{cart.name}</td>
-                                            <td>{cart.salesPrice} ₺</td>
-                                            <td>{cart.total}</td>
 
-                                            <td>
+                                            <td style={{textAlign:"center"}}>{cart.productName}</td>
+                                            <td style={{textAlign:"center"}}>{cart.piece}</td>
+                                            <td style={{textAlign:"center"}}>{cart.price} ₺</td>
+                                            <td style={{textAlign:"center"}}>{cart.totalPrice} ₺</td>
+
+                                            <td style={{textAlign:"center"}}>
                                                 <button className="btn btn-danger"
                                                         onClick={() => this.decreasePrice(cart)}>-
                                                 </button>
@@ -203,7 +208,7 @@ class HomePageController extends Component {
                                 <th>{this.state.totalCarts} ₺</th>
                                 <th>
                                     <button className="btn btn-outline-danger"
-                                            onClick={() => this.saleButton()}>Payment
+                                            onClick={() => this.saleButton(this.state.carts)}>Payment
                                     </button>
                                 </th>
                             </tr>
