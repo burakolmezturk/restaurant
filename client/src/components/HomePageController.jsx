@@ -29,6 +29,7 @@ class HomePageController extends Component {
     componentDidMount() {
 
         ProductService.getCategories().then((res) => {
+            
             this.setState({categories: res.data})
         });
 
@@ -37,7 +38,9 @@ class HomePageController extends Component {
 //	 });
 	}
 	saleButton(cart){
-		ProductService.postCart(cart);
+        ProductService.postCart(cart).then((res)=>{
+            window.location.reload(false);
+        });
 
 	}
 
@@ -118,18 +121,16 @@ class HomePageController extends Component {
                 <div className="row">
                     <div className="col-2">
                         <div className="sidebar">
-
-                            <ul className="list-unstyled components">
-                                <p style={{fontWeight: 'bold', fontSize: "15px", marginTop: "10px"}}>Product
-                                    Categories</p>
+                            <div className="list-group">
+                                <a  className="list-group-item list-group-item-action list-group-item-dark" style={{fontSize:"15px",fontWeight: 'bold',textAlign: "center"}}>Product Categories</a>
                                 {
                                     this.state.categories.map(categories =>
-                                        <li>
-                                            <button className="btn btn-secondary" style={{marginTop: "10px"}}
-                                                    onClick={() => this.getProducts(categories.name)}>{categories.name}</button>
-                                        </li>
+                                        
+                                            <a href="#" className="list-group-item list-group-item-action list-group-item-dark"
+                                                    onClick={() => this.getProducts(categories.name)} style={{fontSize:"15px",fontWeight: 'bold',textAlign: "center"}}>{categories.name} </a>
+                                 
                                     )}
-                            </ul>
+                            </div>
                         </div>
                     </div>
                     <div className="col-5">
