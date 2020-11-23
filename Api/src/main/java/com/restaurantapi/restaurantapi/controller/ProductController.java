@@ -30,11 +30,11 @@ public class ProductController {
 
     @GetMapping("/list/category")
     public List<Product.Category> getAllCategory() {
-        Product.Category category=new Product.Category();
-       List<String> list= productService.getAllCategory();
-       List<Product.Category> categoryList=new ArrayList<>();
-        for (String ctr:list) {
-            category=new Product.Category();
+        Product.Category category = new Product.Category();
+        List<String> list = productService.getAllCategory();
+        List<Product.Category> categoryList = new ArrayList<>();
+        for (String ctr : list) {
+            category = new Product.Category();
             category.setName(ctr);
             categoryList.add(category);
         }
@@ -60,13 +60,12 @@ public class ProductController {
     public void deleteProduct(@PathVariable int id) {
         productService.deleteProduct(id);
     }
+
     @PostMapping("/cart")
-    public boolean sellProduct(@RequestBody List<Cart> carts)
-    {
+    public boolean sellProduct(@RequestBody List<Cart> carts) {
         productService.sellProduct(carts);
         return true;
     }
-
 
 
 }

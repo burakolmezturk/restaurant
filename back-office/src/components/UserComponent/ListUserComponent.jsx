@@ -12,6 +12,9 @@ class ListUserComponent extends Component {
         
     }
     componentDidMount(){
+        if(localStorage.getItem("username")==null && localStorage.getItem("password")==null){
+            this.props.history.push('')
+        }
         UserService.getUsers().then((res)=>
          this.setState({users:res.data}))
     }
@@ -51,9 +54,9 @@ class ListUserComponent extends Component {
                                 this.state.users.map(
                                    user =>
                                    <tr key ={user.id} >
-                                       <td>{user.username}</td>
-                                       <td>{user.role}</td>
-                                       <td>
+                                       <td >{user.username}</td>
+                                       <td >{user.role}</td>
+                                       <td >
                                            <button onClick={() => this.editUser(user.id)} className="btn btn-info">Edit</button>
                                            <button style={{marginLeft:"10px"}} onClick={() => this.deleteUser(user.id)} className="btn btn-danger" >Delete</button>                                  
                                        </td>

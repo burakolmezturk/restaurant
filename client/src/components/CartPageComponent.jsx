@@ -3,10 +3,12 @@ import '../../src/App.css';
 import ProductService from '../services/ProductService';
 import nextId from "react-id-generator";
 
-class HomePageController extends Component {
+class CartPageComponent extends Component {
 
 
     constructor(props) {
+
+       
         super(props)
         this.state = {
             products: [],
@@ -27,6 +29,11 @@ class HomePageController extends Component {
     }
 
     componentDidMount() {
+        console.log(localStorage.getItem("username"));
+
+        if(localStorage.getItem("username")==null && localStorage.getItem("password")==null){
+            this.props.history.push('')
+        }
 
         ProductService.getCategories().then((res) => {
             
@@ -36,7 +43,12 @@ class HomePageController extends Component {
 //		ProductService.getProduct().then((res)=>{
 //		 this.setState({products:res.data})   
 //	 });
-	}
+    }
+    logOut= (e) => {
+        e.preventDefault();
+        localStorage.clear();
+        this.props.history.push('')
+    }
 	saleButton(cart){
         ProductService.postCart(cart).then((res)=>{
             window.location.reload(false);
@@ -48,7 +60,7 @@ class HomePageController extends Component {
 
         this.state.totalCarts += cart.price;
         cart.piece += 1;
-        cart.total = cart.price * cart.piece;
+        cart.totalPrice = cart.price *cart.piece;
         //this.setState({carts: this.state.carts.filter(carts => carts.cartid == cart.cartid)});
 
         this.setState([{...this.state.carts, [cart.cartid]: cart}]);
@@ -106,39 +118,45 @@ class HomePageController extends Component {
             <html>
 
 
-            <div>
-                <header>
-                    <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                        <div>
-                            <a href="/home" className="navbar-brand" style={{textAlign: "center"}}>Restaurant
-                                Automation</a>
-                        </div>
-                    </nav>
-                </header>
+            <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+            <button className="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+                    <a className="navbar-brand" href="#">Restaurant Automation</a>
+                    <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+                                           
+                    </ul>
+                    <form className="form-inline my-2 my-lg-0">
 
-            </div>
+                            <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={this.logOut}>Logout</button>
+                    </form>
+                </div>
+            </nav>
             <div className="container">
                 <div className="row">
-                    <div className="col-2">
+                    <div className="col-md-2">
                         <div className="sidebar">
                             <div className="list-group">
-                                <a  className="list-group-item list-group-item-action list-group-item-dark" style={{fontSize:"15px",fontWeight: 'bold',textAlign: "center"}}>Product Categories</a>
+                                <a  className="list-group-item list-group-item-action list-group-item-dark" >Product Categories</a>
                                 {
                                     this.state.categories.map(categories =>
                                         
                                             <a href="#" className="list-group-item list-group-item-action list-group-item-dark"
-                                                    onClick={() => this.getProducts(categories.name)} style={{fontSize:"15px",fontWeight: 'bold',textAlign: "center"}}>{categories.name} </a>
+                                                    onClick={() => this.getProducts(categories.name)} >{categories.name} </a>
                                  
                                     )}
                             </div>
                         </div>
                     </div>
-                    <div className="col-5">
+                    <div className="col-md-5">
                         <div className="row">
                             {
                                 this.state.products.map(
                                     products =>
-                                        <div className="col-sm-4">
+                                        <div className="col-sm-6">
                                             <div className="shadow-lg p-0 mb-2 bg-white rounded">
                                                 <div key={products.id} className="card">
                                                     <div className="card-body">
@@ -164,14 +182,14 @@ class HomePageController extends Component {
                             }
                         </div>
                     </div>
-                    <div className="col-5">
+                    <div className="row">
+                    <div className="col-md-5">
                         <table className="table table-striped table-bordered">
                             <thead>
                             <tr>
                                 <th>Increase</th>
                                 <th>Name</th>
-                                <th>Piece</th>
-                                <th>Price</th>
+                                <th>Piece</th>                      
                                 <th>Total</th>
                                 <th>Decrease</th>
                             </tr>
@@ -189,7 +207,7 @@ class HomePageController extends Component {
 
                                             <td style={{textAlign:"center"}}>{cart.productName}</td>
                                             <td style={{textAlign:"center"}}>{cart.piece}</td>
-                                            <td style={{textAlign:"center"}}>{cart.price} ₺</td>
+                                          
                                             <td style={{textAlign:"center"}}>{cart.totalPrice} ₺</td>
 
                                             <td style={{textAlign:"center"}}>
@@ -201,27 +219,27 @@ class HomePageController extends Component {
                                 )
                             }
                             </tbody>
-                            <thead>
+                            <tfoot>
                             <tr>
-                                <th></th>
-                                <th></th>
-                                <th>Total</th>
-                                <th>{this.state.totalCarts} ₺</th>
+                                
+                                <td colspan="2"></td>
+                                <th colspan="2">Total {this.state.totalCarts} ₺</th>
+                               
                                 <th>
                                     <button className="btn btn-outline-danger"
                                             onClick={() => this.saleButton(this.state.carts)}>Payment
                                     </button>
                                 </th>
                             </tr>
-                            </thead>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
             </div>
-
+            </div>
             </html>
         );
     }
 }
 
-export default HomePageController;
+export default CartPageComponent;

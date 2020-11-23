@@ -15,28 +15,35 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/list")
+    @GetMapping("/function/list")
     public List<User> getList() {
         return userService.getListUsers();
     }
 
-    @GetMapping("/list/{id}")
-    public User getUserById(@PathVariable int id) {
-        return userService.getUserById(id);
+    @GetMapping("/function/list/{id}")
+    public User getUserById(@PathVariable String username) {
+        return userService.getUserById(username);
     }
 
-    @PostMapping("/add")
-    public User addUser(@RequestBody User user) {
-        return userService.saveUser(user);
+    @PostMapping("/function/add")
+    public User addUser(@RequestBody User user,@RequestParam String role) {
+        return userService.saveUser(user,role);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/function/update")
     public User updateUser(@RequestBody User user) {
         return userService.updateUser(user);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteUser(@PathVariable int id) {
-        userService.deleteUser(id);
+    @DeleteMapping("/function/delete/{id}")
+    public void deleteUser(@PathVariable String username) {
+        userService.deleteUser(username);
+    }
+
+    @GetMapping("/login")
+    public User login(@RequestParam String username, @RequestParam String password) {
+       return userService.login(username, password);
     }
 }
+
+

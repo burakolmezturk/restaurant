@@ -15,6 +15,11 @@ class ListProductComponent extends Component {
 
     }
 componentDidMount(){
+    
+        if(localStorage.getItem("username")==null && localStorage.getItem("password")==null){
+            this.props.history.push('')
+        }
+    
    ProductService.getProduct().then((res)=>{
     this.setState({products:res.data})   
 });

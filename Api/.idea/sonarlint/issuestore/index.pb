@@ -23,3 +23,9 @@ w
 Gsrc/main/java/com/restaurantapi/restaurantapi/services/UserService.java,f\5\f50abb35b1460ba67017d1927dcd6197e7ee575b
 |
 Lsrc/main/java/com/restaurantapi/restaurantapi/controller/UserController.java,a\c\ac6b1cb8bf081836da50c23acea2208d0fef6a48
+Å
+Qsrc/main/java/com/restaurantapi/restaurantapi/repository/AuthorityRepository.java,9\d\9d4328071a516535240a32e8a48a631dd9e62183
+u
+Esrc/main/java/com/restaurantapi/restaurantapi/entity/Authorities.java,3\4\3485799dc4d9359d59bd11945a2dc17a7fc6b55d
+x
+Hsrc/main/java/com/restaurantapi/restaurantapi/config/SecurityConfig.java,7\c\7c66adf00601659b303376f87bb95efb01a2aae2

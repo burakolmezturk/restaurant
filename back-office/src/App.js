@@ -2,12 +2,14 @@
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import './App.css';
 import HeaderComponent from './components/HeaderComponent';
+import LoginComponent from './components/loginComponent/LoginComponent';
 import CreateProductComponent from './components/productComponent/CreateProductComponent';
 import ListProductComponent from './components/productComponent/ListProductComponent';
 import UpdateProductComponent from './components/productComponent/UpdateProductComponent';
 import CreateUserComponent from './components/UserComponent/CreateUserComponent';
 import ListUserComponent from './components/UserComponent/ListUserComponent';
 import UpdateUserComponent from './components/UserComponent/UpdateUserComponent';
+import LoginService from './services/LoginService';
 
 function App() {
   return (
@@ -17,7 +19,7 @@ function App() {
         <div className="container">
          <Router>                  
            <Switch> 
-                  <Route path ="/" exact component ={ListProductComponent}></Route>
+                  <Route path ="/" exact component ={LoginComponent}></Route>
                   <Route path ="/home" exact component ={ListProductComponent}></Route>
                   <Route path ="/product" component ={ListProductComponent}></Route>
                   <Route path ="/add-product" component ={CreateProductComponent}></Route>

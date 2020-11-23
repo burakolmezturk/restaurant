@@ -1,7 +1,8 @@
 
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import './App.css';
-import HomePageController from './components/HomePageController';
+import CartPageComponent from './components/CartPageComponent';
+import LoginComponent from './components/LoginComponent';
 
 
 function App() {
@@ -12,8 +13,8 @@ function App() {
 
            
            <Switch> 
-                  <Route path ="/" exact component ={HomePageController}></Route>
-                  <Route path ="/home" exact component ={HomePageController}></Route>
+                  <Route path ="/" exact component ={LoginComponent}></Route>
+                  <Route path ="/cart" exact component ={CartPageComponent}></Route>
                   
             </Switch>
           

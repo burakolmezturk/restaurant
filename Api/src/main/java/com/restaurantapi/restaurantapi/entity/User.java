@@ -1,26 +1,26 @@
 package com.restaurantapi.restaurantapi.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
-@Entity
+
+import javax.persistence.*;
+
+@Entity(name = "Users")
 public class User {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name="username",nullable = false)
     private String username;
     private String password;
-    private String role;
 
-    public int getId() {
-        return id;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
+
+    private boolean enabled;
 
     public String getUsername() {
         return username;
@@ -38,11 +38,5 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
-    }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

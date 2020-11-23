@@ -18,6 +18,9 @@ class UpdateUserComponent extends Component {
         this.updateUser=this.updateUser.bind(this);
     }
     componentDidMount(){
+        if(localStorage.getItem("username")==null && localStorage.getItem("password")==null){
+            this.props.history.push('')
+        }
         UserService.getUserById(this.state.id).then((res) =>{
             let user = res.data;
             this.setState({id:user.id,

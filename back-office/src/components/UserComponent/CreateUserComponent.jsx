@@ -14,13 +14,17 @@ class CreateUserComponent extends Component {
         this.changeRoleHandler=this.changeRoleHandler.bind(this);
 
         }
+        componentDidMount(){
+            if(localStorage.getItem("username")==null && localStorage.getItem("password")==null){
+                this.props.history.push('')
+            }
+        }
         saveUser = (e) => {
             e.preventDefault();
     
-            let user={username:this.state.username,password:this.state.password,role:this.state.role,
-              };
+            let user={username:this.state.username,password:this.state.password};
     
-                UserService.createUser(user).then(res =>{
+                UserService.createUser(user,this.state.role).then(res =>{
                     this.props.history.push('/user');
     
                 })
@@ -36,7 +40,9 @@ class CreateUserComponent extends Component {
             this.setState({password:event.target.value});
         }
         changeRoleHandler=(event) =>{
+            
             this.setState({role:event.target.value});
+            console.log(this.state.role);
         }
 
     render() {
@@ -59,11 +65,22 @@ class CreateUserComponent extends Component {
                                     <input placeholder="Password" name="password" className="form-control"
                                     value={this.state.password} onChange={this.changePasswordHandler}/>
                                 </div>
+                                
                                 <div className="form-group">
-                                    <label>Role :</label>
-                                    <input placeholder="Role" name="category" className="form-control"
-                                    value={this.state.role} onChange={this.changeRoleHandler}/>
-                                </div>
+                                        <label> Role :</label>
+                                        <div className="form-check form-check-inline">
+                                            <input className="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                                   value="ADMIN" onChange={this.changeRoleHandler}/>
+                                                <label className="form-check-label" htmlFor="inlineCheckbox1">ADMIN</label>
+                                        </div>
+                                        <div className="form-check form-check-inline">
+                                            <input className="form-check-input" type="checkbox" id="inlineCheckbox2"
+                                                   value="USER" onChange={this.changeRoleHandler}/>
+                                                <label className="form-check-label" htmlFor="inlineCheckbox2">USER</label>
+                                        </div>
+                                      
+
+                                 </div>
                        
 
                                 <button className="btn btn-success" onClick={this.saveUser}>Save</button>

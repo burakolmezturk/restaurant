@@ -22,6 +22,11 @@ class UpdateProductComponent extends Component {
         this.updateProduct=this.updateProduct.bind(this);
     }
     componentDidMount(){
+
+        if(localStorage.getItem("username")==null && localStorage.getItem("password")==null){
+            this.props.history.push('')
+        }
+
         ProductService.getProductById(this.state.id).then((res) =>{
             let product = res.data;
             this.setState({id:product.id,

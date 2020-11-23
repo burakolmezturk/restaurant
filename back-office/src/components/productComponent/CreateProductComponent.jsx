@@ -11,12 +11,18 @@ class CreateProductComponent extends Component {
         salesPrice:0,
         purchasePrice:0     
     }
+    
     this.changeNameHandler=this.changeNameHandler.bind(this);
     this.changeDescriptionHandler=this.changeDescriptionHandler.bind(this);
     this.changeCategoryHandler=this.changeCategoryHandler.bind(this);
     this.changeSalesHandler=this.changeSalesHandler.bind(this);
     this.changePurchaseHandler=this.changePurchaseHandler.bind(this);
     this.saveProduct=this.saveProduct.bind(this);
+    }
+    componentDidMount(){
+        if(localStorage.getItem("username")==null && localStorage.getItem("password")==null){
+            this.props.history.push('')
+        }
     }
     saveProduct = (e) => {
         e.preventDefault();
