@@ -67,3 +67,33 @@
     transform: rotate(360deg);
   }
 }
+.social-box .box{
+  background:#4183D7;
+  border-radius: 10px; 
+  padding: 40px 10px;
+  margin: 20px 0px;
+  cursor: pointer;
+  transition: all 0.5s ease-out;
+}
+
+.social-box .box:hover{
+ box-shadow: 0 0 6px #4183D7;
+}
+.social-box .box .box-text1{
+color:white;
+font-size: 25px;
+line-height: 30px;
+}
+
+.social-box .box .box-text{
+  margin:20px 0px;
+  font-size: 15px;
+  line-height: 30px;
+}
+
+.social-box .box .box-btn a{
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+

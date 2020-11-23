@@ -36,9 +36,7 @@ class ListUserComponent extends Component {
             <div>
             <h2 className="text-center">User List</h2>
                <div className="row">
-                   <div className="row">
-                      
-                   </div>
+                   <button   className="btn btn-primary" onClick={this.addUser}>Add User</button>
                    <table className="table table-striped table bordered">
                         <thead>
                             <tr>
@@ -66,7 +64,7 @@ class ListUserComponent extends Component {
 
                         </tbody>
                    </table>
-                   <button   className="btn btn-primary" onClick={this.addUser}>Add User</button>
+                   
                </div>
             </div>
                
