@@ -31,13 +31,16 @@ class HeaderComponent extends Component {
                             <a className="nav-link" href="/user">Users</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/user">Categories</a>
+                            <a className="nav-link" href="/category">Categories</a>
                         </li>        
                         <li className="nav-item">
                             <a className="nav-link" href="/user">Reports</a>
                         </li>            
                         <li className="nav-item">
                             <a className="nav-link" href="/user">Authorities</a>
+                        </li> 
+                        <li className="nav-item">
+                            <a className="nav-link" href="/info">Info</a>
                         </li>             
                     </ul>
                     <form className="form-inline my-2 my-lg-0">

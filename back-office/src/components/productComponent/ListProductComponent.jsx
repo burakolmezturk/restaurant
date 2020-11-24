@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CategoryService from '../../services/CategoryService';
 
 import ProductService from '../../services/ProductService';
 
@@ -7,7 +8,8 @@ class ListProductComponent extends Component {
     constructor(props){
         super(props)
         this.state={
-            products:[]
+            products:[],
+            categories:[]
         }
         this.addProduct = this.addProduct.bind(this);
         this.editProduct=this.editProduct.bind(this);
@@ -21,11 +23,24 @@ componentDidMount(){
         }
     
    ProductService.getProduct().then((res)=>{
+    
     this.setState({products:res.data})   
 });
+CategoryService.getCategory().then((res)=>{
+    console.log(res.data);
+    this.setState({categories:res.data})
+    
+});
 }
-editProduct(id){
-    this.props.history.push(`/update-product/${id}`);
+editProduct(id,catId){
+    this.props.history.push({
+  pathname: '/update-product',
+  state: {
+    id: id,
+    catId:catId
+
+  },
+});
 
 }
 addProduct(){
@@ -48,41 +63,46 @@ ProductService.deleteProduct(id).then(res =>{
                 <h2 className="text-center">Product List</h2>
                    <div className="row">
                    <button   className="btn btn-primary" onClick={this.addProduct}>Add Product</button>
-                       <table className="table table-striped table bordered">
+                   <table className="table table-striped table-bordered">
                             <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Category</th>
-                                    <th>Sales Price</th>
-                                    <th>Purchase Price</th>
-                                    <th>Actions</th>
-                                </tr>
+                            <tr>
 
+                                <th>Category</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
                             </thead>
 
-                            <tbody>
-                                {
-                                    this.state.products.map(
-                                       products =>
-                                       <tr key ={products.id} >
-                                           <td>{products.name}</td>
-                                           <td>{products.description}</td>
-                                           <td>{products.category}</td>
-                                           <td>{products.salesPrice}</td>
-                                           <td>{products.purchasePrice}</td>
-                                           <td>
+                            {
+                                this.state.categories.map(
+                                    category =>
+                                        <tbody>
+                                            {
+                                                category.productSet.map(
+                                                    product =>
+                                                        <tr key={product.id}>
+                                                            <td>{category.name}</td>
+                                                            <td>{product.name}</td>
+                                                            <td>{product.description}</td>
+                                                            <td>{product.salesPrice}</td>
+                                                            <td>
+                                                                <button onClick={() => this.editProduct(product.id,category.id)}
+                                                                        className="btn btn-info"> Update
+                                                                </button>
+                                                                <button style={{marginLeft: "6px"}} onClick={() => this.deleteProduct(product.id)}
+                                                                        className="btn btn-danger"> Delete
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                )
+                                            }
+                                        </tbody>
+                                )
+                            }
 
-                                               <button style={{marginLeft:"10px"}} onClick={() => this.editProduct(products.id)} className="btn btn-info">Edit</button>
-                                               <button style={{marginLeft:"10px"}} onClick={() => this.deleteProduct(products.id)} className="btn btn-danger" >Delete</button>
-                                           
-                                           </td>
-                                       </tr>   
-                                    )
-                                }
-
-                            </tbody>
-                       </table>
+                        </table>
                        
                    </div>
                    </div>

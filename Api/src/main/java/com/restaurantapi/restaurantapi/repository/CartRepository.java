@@ -10,8 +10,5 @@ import java.util.List;
 
 @Repository
 public interface CartRepository extends JpaRepository<Cart,Integer> {
-    @Query("Select DISTINCT category From Product ")
-    public List<String> getAllCategory();
-    @Query("SELECT p from Product p Where p.category=:categoryName")
-    public List<Product> findCategoryByName(String categoryName);
+
 }

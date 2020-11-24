@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import '../../src/App.css';
 import ProductService from '../services/ProductService';
 import nextId from "react-id-generator";
+import CategoryService from '../services/CategoryService';
 
 class CartPageComponent extends Component {
 
@@ -35,7 +36,7 @@ class CartPageComponent extends Component {
             this.props.history.push('')
         }
 
-        ProductService.getCategories().then((res) => {
+        CategoryService.getCategory().then((res) => {
             
             this.setState({categories: res.data})
         });
@@ -105,9 +106,9 @@ class CartPageComponent extends Component {
         }
     }
 
-    getProducts(name) {
+    getProducts(id) {
 
-        ProductService.getProductsByCategory(name).then((res) => {
+        ProductService.getProductsByCategory(id).then((res) => {
             this.setState({products: res.data})
         });
 
@@ -145,7 +146,7 @@ class CartPageComponent extends Component {
                                     this.state.categories.map(categories =>
                                         
                                             <a href="#" className="list-group-item list-group-item-action list-group-item-dark"
-                                                    onClick={() => this.getProducts(categories.name)} >{categories.name} </a>
+                                                    onClick={() => this.getProducts(categories.id)} >{categories.name} </a>
                                  
                                     )}
                             </div>

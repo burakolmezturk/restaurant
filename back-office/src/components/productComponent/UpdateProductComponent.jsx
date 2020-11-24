@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
+import CategoryService from '../../services/CategoryService';
 import ProductService from '../../services/ProductService';
 
 class UpdateProductComponent extends Component {
     constructor(props){
         super(props)
         this.state = {
-            id:this.props.match.params.id,
+            id:this.props.history.location.state?.id,
             name:'',
             description:'',
-            category:'',
+            categoryId:this.props.history.location.state?.catId,
             salesPrice:0,
-            purchasePrice:0
+            purchasePrice:0,
+            categories:[]
            
         }
                
@@ -22,27 +24,29 @@ class UpdateProductComponent extends Component {
         this.updateProduct=this.updateProduct.bind(this);
     }
     componentDidMount(){
-
-        if(localStorage.getItem("username")==null && localStorage.getItem("password")==null){
-            this.props.history.push('')
-        }
-
+        
         ProductService.getProductById(this.state.id).then((res) =>{
+           
             let product = res.data;
             this.setState({id:product.id,
-                name:product.name,
-                category:product.category,
+                name:product.name,                
                 description:product.description,
                 salesPrice:product.salesPrice,
                 purchasePrice:product.purchasePrice
             
             });
         });
+        
+        CategoryService.getCategory().then((res)=>{
+            this.setState({categories:res.data})
+            
+        }
+        )
     }
     updateProduct = (e) => {
         e.preventDefault();
     
-        let product={id:this.state.id,name:this.state.name,description:this.state.description,category:this.state.category,
+        let product={id:this.state.id,name:this.state.name,description:this.state.description,
             salesPrice:this.state.salesPrice,purchasePrice:this.state.purchasePrice};
     
             ProductService.updateProduct(product).then(res =>{
@@ -94,9 +98,16 @@ class UpdateProductComponent extends Component {
                                     value={this.state.description} onChange={this.changeDescriptionHandler}/>
                                 </div>
                                 <div className="form-group">
-                                    <label>Product Category :</label>
-                                    <input placeholder="Product Category" name="desccategoryription" className="form-control"
-                                    value={this.state.category} onChange={this.changeCategoryHandler}/>
+                                <select   
+                                                className="form-control" id="option">
+                                            {
+                                                this.state.categories.map(
+                                                    category =>
+                                                        
+                                                        <option  key={category.id} selected={this.state.categoryId==category.id} value ={category.id}>{category.name}</option>
+                                                )
+                                            }
+                                        </select>
                                 </div>
                                 <div className="form-group">
                                     <label>Sales Price :</label>

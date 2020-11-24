@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { ThemeProvider } from 'react-bootstrap';
+import CategoryService from '../../services/CategoryService';
 import ProductService from '../../services/ProductService';
 
 class CreateProductComponent extends Component {
@@ -7,9 +9,10 @@ class CreateProductComponent extends Component {
     this.state = {
         name:'',
         description:'',
-        category:'',
+        categoryId:0,
         salesPrice:0,
-        purchasePrice:0     
+        purchasePrice:0,
+        categories:[]     
     }
     
     this.changeNameHandler=this.changeNameHandler.bind(this);
@@ -17,20 +20,31 @@ class CreateProductComponent extends Component {
     this.changeCategoryHandler=this.changeCategoryHandler.bind(this);
     this.changeSalesHandler=this.changeSalesHandler.bind(this);
     this.changePurchaseHandler=this.changePurchaseHandler.bind(this);
+    this.changeCatId=this.changeCatId.bind(this);
     this.saveProduct=this.saveProduct.bind(this);
     }
     componentDidMount(){
         if(localStorage.getItem("username")==null && localStorage.getItem("password")==null){
             this.props.history.push('')
         }
+        CategoryService.getCategory().then((res)=>{
+            this.setState({categories:res.data})
+            
+        }
+        )
+      
     }
+
     saveProduct = (e) => {
         e.preventDefault();
-
-        let product={name:this.state.name,description:this.state.description,category:this.state.category,
+        
+       
+        
+        let product={name:this.state.name,description:this.state.description,categoryId:document.getElementById('option').value,
             salesPrice:this.state.salesPrice,purchasePrice:this.state.purchasePrice};
+            
 
-            ProductService.createProduct(product).then(res =>{
+            ProductService.createProduct(product,document.getElementById('option').value).then(res =>{
                 this.props.history.push('/product');
 
             })
@@ -49,7 +63,8 @@ class CreateProductComponent extends Component {
     } 
     changePurchaseHandler=(event) =>{
         this.setState({purchasePrice:event.target.value});
-    }      
+    }  
+  
 
     cancel(){
         this.props.history.push('/product')
@@ -75,9 +90,16 @@ class CreateProductComponent extends Component {
                                     value={this.state.description} onChange={this.changeDescriptionHandler}/>
                                 </div>
                                 <div className="form-group">
-                                    <label>Product Category :</label>
-                                    <input placeholder="Product Category" name="category" className="form-control"
-                                    value={this.state.category} onChange={this.changeCategoryHandler}/>
+                                <select   
+                                                className="form-control" id="option">
+                                            {
+                                                this.state.categories.map(
+                                                    category =>
+                                                        
+                                                        <option key={category.id} value ={category.id}>{category.name}</option>
+                                                )
+                                            }
+                                        </select>
                                 </div>
                                 <div className="form-group">
                                     <label>Sales Price :</label>

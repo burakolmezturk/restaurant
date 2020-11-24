@@ -1,44 +1,42 @@
 import axios from 'axios';
 
-const PRODUCT_API_BASE_URL = "http://localhost:8080/product/";
-class ProductService{
+const CATEGORY_API_BASE_URL = "http://localhost:8080/category/";
+class CategoryService{
 
-    getProduct(){
-        return axios.get(PRODUCT_API_BASE_URL+"list",{
+    getCategory(){
+        return axios.get(CATEGORY_API_BASE_URL+"list",{
             auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
             }
         });
     }
-    createProduct(product,categoryId){
-        return axios.post(PRODUCT_API_BASE_URL+"add",product,{
-            auth:{
-                username:localStorage.getItem("username"),
-                password:localStorage.getItem("password")
-            },params: {
-                categoryId: categoryId         
-              }
-        });
-    }
-    getProductById(productId){        
-        return axios.get(PRODUCT_API_BASE_URL+productId,{
+    createCategory(category){
+        return axios.post(CATEGORY_API_BASE_URL+"add",category,{
             auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
             }
         });
     }
-    updateProduct(product){
-        return axios.put(PRODUCT_API_BASE_URL+"update",product,{
+    getCategoryById(categoryId){        
+        return axios.get(CATEGORY_API_BASE_URL+categoryId,{
             auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
             }
         });
     }
-    deleteProduct(productId){
-        return axios.delete(PRODUCT_API_BASE_URL+"delete/"+productId,{
+    updateCategory(category){
+        return axios.put(CATEGORY_API_BASE_URL+"update",category,{
+            auth:{
+                username:localStorage.getItem("username"),
+                password:localStorage.getItem("password")
+            }
+        });
+    }
+    deleteCategory(categoryId){
+        return axios.delete(CATEGORY_API_BASE_URL+"delete/"+categoryId,{
             auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
@@ -47,4 +45,4 @@ class ProductService{
     }
 
 }
-export default new ProductService()
+export default new CategoryService()

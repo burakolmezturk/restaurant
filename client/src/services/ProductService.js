@@ -19,10 +19,10 @@ class ProductService{
             }
         })
     }
-    getProductsByCategory(categoryName){
+    getProductsByCategory(id){
         return axios.get(PRODUCT_API_BASE_URL+"/products",{
             params: {
-              categoryName: categoryName
+              categoryId: id
             },
             auth:{
                 username:localStorage.getItem("username"),
