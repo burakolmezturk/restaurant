@@ -20,7 +20,7 @@ class CreateProductComponent extends Component {
     this.changeCategoryHandler=this.changeCategoryHandler.bind(this);
     this.changeSalesHandler=this.changeSalesHandler.bind(this);
     this.changePurchaseHandler=this.changePurchaseHandler.bind(this);
-    this.changeCatId=this.changeCatId.bind(this);
+  
     this.saveProduct=this.saveProduct.bind(this);
     }
     componentDidMount(){

@@ -3,6 +3,8 @@ import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import './App.css';
 import CartPageComponent from './components/CartPageComponent';
 import HomePageComponent from './components/HomePageComponent';
+import ListPlaceComponent from './components/ListPlaceComponent copy';
+import ListTableComponent from './components/ListTableComponent';
 import LoginComponent from './components/LoginComponent';
 
 
@@ -17,6 +19,8 @@ function App() {
                   <Route path ="/home" exact component ={HomePageComponent}></Route>
                   <Route path ="/" exact component ={LoginComponent}></Route>
                   <Route path ="/cart" exact component ={CartPageComponent}></Route>
+                  <Route path ="/table" exact component ={ListTableComponent}></Route>
+                  <Route path ="/place" exact component ={ListPlaceComponent}></Route>
                   
             </Switch>
           

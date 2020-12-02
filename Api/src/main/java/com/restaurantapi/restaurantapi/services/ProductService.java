@@ -7,13 +7,9 @@ import com.restaurantapi.restaurantapi.repository.CartRepository;
 import com.restaurantapi.restaurantapi.repository.CategoryRepository;
 import com.restaurantapi.restaurantapi.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ProductService {
@@ -35,9 +31,12 @@ public class ProductService {
     public Product addProduct(Product product, int categoryId) {
         Set<Product> products = new HashSet<>();
         Optional<Category> category = categoryRepository.findById(categoryId);
+        if (!category.isPresent()) {
+            return null;
+        }
         products.add(product);
         category.get().getProductSet().add(product);
-
+        product.setCategory(category.get());
         return productRepository.save(product);
     }
 
@@ -53,15 +52,26 @@ public class ProductService {
     }
 
     public Product getProductById(int id) {
-        return productRepository.findById(id).get();
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (!productOptional.isPresent()) {
+            return null;
+        }
+        return productOptional.get();
     }
 
     public boolean sellProduct(List<Cart> listCart) {
         cartRepository.saveAll(listCart);
         return true;
     }
-    public Set<Product>  getProductsByCategoryId(int categoryId){
-       return categoryRepository.findById(categoryId).get().getProductSet();
+
+    public Set<Product> getProductsByCategoryId(int categoryId) {
+        Optional<Category> category = categoryRepository.findById(categoryId);
+        if (category.isPresent()) {
+            return category.get().getProductSet();
+        } else {
+            return Collections.emptySet();
+        }
+
     }
 
 }

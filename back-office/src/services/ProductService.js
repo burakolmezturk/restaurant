@@ -29,12 +29,15 @@ class ProductService{
             }
         });
     }
-    updateProduct(product){
+    updateProduct(product,categoryId){
         return axios.put(PRODUCT_API_BASE_URL+"update",product,{
             auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")
-            }
+            },
+            params:{
+                categoryId: categoryId         
+              }
         });
     }
     deleteProduct(productId){

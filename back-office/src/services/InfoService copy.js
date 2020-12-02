@@ -11,6 +11,14 @@ class InfoService{
             }
         });
     }
+    getProfileInfo(){
+        return axios.get(INFO_API_BASE_URL+"getProfile",{
+            auth:{
+                username:localStorage.getItem("username"),
+                password:localStorage.getItem("password")
+            }
+        });
+    }
    
 
 }

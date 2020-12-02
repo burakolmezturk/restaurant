@@ -4,11 +4,11 @@ package com.restaurantapi.restaurantapi.entity;
 
 import javax.persistence.*;
 
-@Entity(name = "Users")
-public class User {
+@Entity
+public class Users {
 
     @Id
-    @Column(name="username",nullable = false)
+    @Column(name="username",nullable = false,length = 30)
     private String username;
     private String password;
 

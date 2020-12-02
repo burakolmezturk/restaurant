@@ -8,64 +8,77 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class InfoService {
-
-    @Value("${"+ ApplicationPropertiesTagName.serverport +"}")
+    private static final String VALUE = "value";
+    private static final String KEY = "key";
+    @Value("${" + ApplicationPropertiesTagName.SERVERPORT + "}")
     private String serverPort;
-    @Value("${"+ ApplicationPropertiesTagName.h2ConsoleEnabled +"}")
+    @Value("${" + ApplicationPropertiesTagName.h2ConsoleEnabled + "}")
     private String h2ConsoleEnabled;
-    @Value("${"+ ApplicationPropertiesTagName.loggingLevel +"}")
+    @Value("${" + ApplicationPropertiesTagName.loggingLevel + "}")
     private String loggingLevel;
-    @Value("${"+ ApplicationPropertiesTagName.hibernateDdlAuto +"}")
+    @Value("${" + ApplicationPropertiesTagName.hibernateDdlAuto + "}")
     private String hibernateDdlAuto;
-    @Value("${"+ ApplicationPropertiesTagName.springDataSourceUrl +"}")
+    @Value("${" + ApplicationPropertiesTagName.springDataSourceUrl + "}")
     private String springDataSourceUrl;
-    @Value("${"+ ApplicationPropertiesTagName.showSql +"}")
+    @Value("${" + ApplicationPropertiesTagName.showSql + "}")
     private String showSql;
-    @Value("${"+ ApplicationPropertiesTagName.hibernateFormatSql +"}")
+    @Value("${" + ApplicationPropertiesTagName.hibernateFormatSql + "}")
     private String hibernateFormatSql;
-    @Value("${"+ ApplicationPropertiesTagName.hibernateType +"}")
+    @Value("${" + ApplicationPropertiesTagName.hibernateType + "}")
     private String hibernateType;
 
+    @Value("${" + ApplicationPropertiesTagName.springProfilesActive + "}")
+    private String springProfiles;
 
-    public String getInfo(){
+    public String getInfo() {
         JSONArray jsonArray = new JSONArray();
-        JSONObject jsonObject=new JSONObject();
+        JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("key",ApplicationPropertiesTagName.serverport);
-        jsonObject.put("value",serverPort);
+        jsonObject.put(KEY, ApplicationPropertiesTagName.SERVERPORT);
+        jsonObject.put(VALUE, serverPort);
         jsonArray.add(jsonObject);
 
-        jsonObject=new JSONObject();
-        jsonObject.put("key",ApplicationPropertiesTagName.loggingLevel);
-        jsonObject.put("value",loggingLevel);
+        jsonObject = new JSONObject();
+        jsonObject.put(KEY, ApplicationPropertiesTagName.loggingLevel);
+        jsonObject.put(VALUE, loggingLevel);
         jsonArray.add(jsonObject);
 
-        jsonObject=new JSONObject();
-        jsonObject.put("key",ApplicationPropertiesTagName.hibernateDdlAuto);
-        jsonObject.put("value",hibernateDdlAuto);
+        jsonObject = new JSONObject();
+        jsonObject.put(KEY, ApplicationPropertiesTagName.hibernateDdlAuto);
+        jsonObject.put(VALUE, hibernateDdlAuto);
         jsonArray.add(jsonObject);
 
-        jsonObject=new JSONObject();
-        jsonObject.put("key",ApplicationPropertiesTagName.springDataSourceUrl);
-        jsonObject.put("value",springDataSourceUrl);
+        jsonObject = new JSONObject();
+        jsonObject.put(KEY, ApplicationPropertiesTagName.springDataSourceUrl);
+        jsonObject.put(VALUE, springDataSourceUrl);
         jsonArray.add(jsonObject);
 
-        jsonObject=new JSONObject();
-        jsonObject.put("key",ApplicationPropertiesTagName.showSql);
-        jsonObject.put("value",showSql);
+        jsonObject = new JSONObject();
+        jsonObject.put(KEY, ApplicationPropertiesTagName.showSql);
+        jsonObject.put(VALUE, showSql);
         jsonArray.add(jsonObject);
 
-        jsonObject=new JSONObject();
-        jsonObject.put("key",ApplicationPropertiesTagName.hibernateFormatSql);
-        jsonObject.put("value",hibernateFormatSql);
+        jsonObject = new JSONObject();
+        jsonObject.put(KEY, ApplicationPropertiesTagName.hibernateFormatSql);
+        jsonObject.put(VALUE, hibernateFormatSql);
         jsonArray.add(jsonObject);
 
-        jsonObject=new JSONObject();
-        jsonObject.put("key",ApplicationPropertiesTagName.hibernateType);
-        jsonObject.put("value",hibernateType);
+        jsonObject = new JSONObject();
+        jsonObject.put(KEY, ApplicationPropertiesTagName.hibernateType);
+        jsonObject.put(VALUE, hibernateType);
         jsonArray.add(jsonObject);
 
 
+
+        return jsonArray.toJSONString();
+    }
+    public String getSpringProfiles(){
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject = new JSONObject();
+        jsonObject.put(KEY, ApplicationPropertiesTagName.springProfilesActive);
+        jsonObject.put(VALUE, springProfiles);
+        jsonArray.add(jsonObject);
         return jsonArray.toJSONString();
     }
 }

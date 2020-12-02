@@ -102,6 +102,9 @@ span{
 
 
 }
+.login-center{
+  margin-top: 200px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

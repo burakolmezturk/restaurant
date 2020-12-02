@@ -1,9 +1,6 @@
 
-^
-java:S1854!"<Remove this useless assignment to local variable "category".(ÿªˆÃıÿÿÿÿ8Ä³©„Ş.
-V
-java:S1128	"4Remove this unused import 'java.security.PublicKey'.(ºâú½üÿÿÿÿ8êÉºØİ.
 ]
-java:S46842"@Replace this persistent entity with a simple POJO or DTO object.(Ù¨¸8ºŠÙİ.
+java:S4684*"@Replace this persistent entity with a simple POJO or DTO object.(İ¾…ô8ºŠÙİ.
 b
-java:S46847"@Replace this persistent entity with a simple POJO or DTO object.(ÂÊã ûÿÿÿÿ8ºŠÙİ.
+java:S4684%"@Replace this persistent entity with a simple POJO or DTO object.(–Íä¦úÿÿÿÿ8ºŠÙİ.
+]	java:S125/"<This block of commented-out lines of code should be removed.(ÎÕäúÿÿÿÿ8 “°â.

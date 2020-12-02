@@ -1,6 +1,9 @@
 package com.restaurantapi.restaurantapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,9 +21,10 @@ public class Category {
         this.productSet = productSet;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="category_id")
-    private Set<Product> productSet ;
+    @JsonIgnore
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+
+    private Set<Product> productSet=new HashSet<>();
 
     public int getId() {
         return id;

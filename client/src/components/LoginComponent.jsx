@@ -20,7 +20,7 @@ class LoginComponent extends Component {
             if(res.data!=''){
                 localStorage.setItem("username",this.state.username);
                 localStorage.setItem("password",this.state.password);
-                this.props.history.push('/cart')
+                this.props.history.push('/home')
             }else{
                 console.log("Hatalı Giriş");
             }
@@ -41,8 +41,8 @@ class LoginComponent extends Component {
     render()
 {
         return (
-            <div>
-                <div>
+            <div style={{backgroundColor:"#f9f9f9"}}>
+                <div className="login-center">
                     <div className="container">
                         <div className="row">
                             <div className="card col-md-6 offset-md-3 offset-md-3">

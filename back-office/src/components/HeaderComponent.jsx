@@ -32,7 +32,11 @@ class HeaderComponent extends Component {
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="/category">Categories</a>
-                        </li>        
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/place">Places</a>
+                        </li>
+                           
                         <li className="nav-item">
                             <a className="nav-link" href="/user">Reports</a>
                         </li>            

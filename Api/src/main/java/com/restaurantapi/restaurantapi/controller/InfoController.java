@@ -21,5 +21,9 @@ public class InfoController {
     public String getInfo() {
         return infoService.getInfo();
     }
+    @GetMapping("/getProfile")
+    public String getSpringProfile() {
+        return infoService.getSpringProfiles();
+    }
 
 }

@@ -40,7 +40,7 @@ class UpdateCategoryComponent extends Component {
     
         let category={id:this.state.id,name:this.state.name,description:this.state.description,image:this.state.image};
     
-            UserService.updateCategory(category).then(res =>{
+            CategoryService.updateCategory(category).then(res =>{
                 this.props.history.push('/category');
     
             })

@@ -25,12 +25,18 @@ componentDidMount(){
    ProductService.getProduct().then((res)=>{
     
     this.setState({products:res.data})   
+
+    console.log(res.data)
 });
 CategoryService.getCategory().then((res)=>{
     console.log(res.data);
     this.setState({categories:res.data})
     
 });
+}
+getProducts(id)
+{
+    this.setState({categories:this.state.categories.filter(category=>category.id==id)});
 }
 editProduct(id,catId){
     this.props.history.push({
@@ -63,6 +69,7 @@ ProductService.deleteProduct(id).then(res =>{
                 <h2 className="text-center">Product List</h2>
                    <div className="row">
                    <button   className="btn btn-primary" onClick={this.addProduct}>Add Product</button>
+                   <button style={{marginLeft: "6px"}}  className="btn btn-primary" onClick={()=>window.location.reload()}>All Products</button>
                    <table className="table table-striped table-bordered">
                             <thead>
                             <tr>
@@ -76,27 +83,26 @@ ProductService.deleteProduct(id).then(res =>{
                             </thead>
 
                             {
-                                this.state.categories.map(
-                                    category =>
+                                this.state.products.map(
+                                    products =>
                                         <tbody>
                                             {
-                                                category.productSet.map(
-                                                    product =>
-                                                        <tr key={product.id}>
-                                                            <td>{category.name}</td>
-                                                            <td>{product.name}</td>
-                                                            <td>{product.description}</td>
-                                                            <td>{product.salesPrice}</td>
+                                               
+                                                        <tr key={products.id}>
+                                                            <td onClick={()=>this.getProducts(products.category.id)} ><a href="#">{products.category.name}</a></td>
+                                                            <td>{products.name}</td>
+                                                            <td>{products.description}</td>
+                                                            <td>{products.salesPrice}</td>
                                                             <td>
-                                                                <button onClick={() => this.editProduct(product.id,category.id)}
+                                                                <button onClick={() => this.editProduct(products.id,products.category.id)}
                                                                         className="btn btn-info"> Update
                                                                 </button>
-                                                                <button style={{marginLeft: "6px"}} onClick={() => this.deleteProduct(product.id)}
+                                                                <button style={{marginLeft: "6px"}} onClick={() => this.deleteProduct(products.id)}
                                                                         className="btn btn-danger"> Delete
                                                                 </button>
                                                             </td>
                                                         </tr>
-                                                )
+                                                
                                             }
                                         </tbody>
                                 )

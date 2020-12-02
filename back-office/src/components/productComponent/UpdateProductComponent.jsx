@@ -49,7 +49,7 @@ class UpdateProductComponent extends Component {
         let product={id:this.state.id,name:this.state.name,description:this.state.description,
             salesPrice:this.state.salesPrice,purchasePrice:this.state.purchasePrice};
     
-            ProductService.updateProduct(product).then(res =>{
+            ProductService.updateProduct(product,document.getElementById('option').value).then(res =>{
                 this.props.history.push('/product');
     
             })

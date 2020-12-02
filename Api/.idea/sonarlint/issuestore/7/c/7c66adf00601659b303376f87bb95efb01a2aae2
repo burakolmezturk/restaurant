@@ -1,7 +1,5 @@
 
+
+java:S1128	"]Remove this unused import 'org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder'.(åÅÚ…ûÿÿÿÿ8å¾‡à.
 `
-java:S5344(">Don't use the default "PasswordEncoder" relying on plain-text.(¢õæ•ûÿÿÿÿ8ÜªŞ.
-s
-java:S1192"QDefine a constant instead of duplicating this literal "hasRole('ADMIN')" 4 times.(’Ù‰Âıÿÿÿÿ8¦ã®Ş.
-x
-java:S1192"[Define a constant instead of duplicating this literal "hasAnyRole('USER','ADMIN')" 5 times.(çÚ·£8¦ã®Ş.
+java:S5344%">Don't use the default "PasswordEncoder" relying on plain-text.(¢õæ•ûÿÿÿÿ8å¾‡à.

@@ -36,7 +36,7 @@ class ListCategoryComponent extends Component {
     render() {
         return (
             <div>
-            <h2 className="text-center">User List</h2>
+            <h2 className="text-center">Category List</h2>
                <div className="row">
                    <button   className="btn btn-primary" onClick={this.addCategory}>Add Category</button>
                    <table className="table table-striped table bordered">

@@ -4,6 +4,11 @@ import '../../src/App.css';
 
 class HomePageComponent extends Component {
 
+	logOut= (e) => {
+        e.preventDefault();
+        localStorage.clear();
+        this.props.history.push('')
+    }
 
 
     render() {
@@ -12,12 +17,13 @@ class HomePageComponent extends Component {
   <div className="social-box">
      
     <div className="container">
+		
      	<div className="row">			 
 			    <div  className="col-lg-4 col-xs-12 text-center">
-					<div  className="box">
+					<div  className="box"style={{backgroundColor:"#adb5bd"}}  >
                         
                         <div class="box-btn">
-						    <a href="/product"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
+						    <a href="/cart"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
 						<div className="box-title">
 							<h3 className="box-text1">Cart </h3>
 						</div>
@@ -28,10 +34,10 @@ class HomePageComponent extends Component {
 					 </div>
 				</div>	 
 				<div  className="col-lg-4 col-xs-12 text-center">
-					<div  className="box">
+					<div  className="box"style={{backgroundColor:"#adb5bd"}}>
                         
                         <div class="box-btn">
-						    <a href="/product"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
+						    <a href="/place"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
 						<div className="box-title">
 							<h3 className="box-text1">Tables </h3>
 						</div>
@@ -42,7 +48,7 @@ class HomePageComponent extends Component {
 					 </div>
 				</div>	  
 				<div  className="col-lg-4 col-xs-12 text-center">
-					<div  className="box">
+					<div  className="box"style={{backgroundColor:"#adb5bd"}}>
                         
                         <div class="box-btn">
 						    <a href="/product"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
@@ -56,7 +62,7 @@ class HomePageComponent extends Component {
 					 </div>
 				</div>	 	 
 				<div  className="col-lg-4 col-xs-12 text-center">
-					<div  className="box">
+					<div  className="box"style={{backgroundColor:"#adb5bd"}}>
                         
                         <div class="box-btn">
 						    <a href="/product"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
@@ -70,7 +76,7 @@ class HomePageComponent extends Component {
 					 </div>
 				</div>	 
 				<div  className="col-lg-4 col-xs-12 text-center">
-					<div  className="box">
+					<div  className="box"style={{backgroundColor:"#adb5bd"}}>
                         
                         <div class="box-btn">
 						    <a href="/product"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
@@ -84,7 +90,7 @@ class HomePageComponent extends Component {
 					 </div>
 				</div>	 
 				<div  className="col-lg-4 col-xs-12 text-center">
-					<div  className="box">
+					<div  className="box"style={{backgroundColor:"#adb5bd"}}>
                         
                         <div class="box-btn">
 						    <a href="#"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
@@ -98,7 +104,7 @@ class HomePageComponent extends Component {
 					 </div>
 				</div>	 
 				<div  className="col-lg-4 col-xs-12 text-center">
-					<div  className="box">
+					<div  className="box"style={{backgroundColor:"#adb5bd"}}>
                         
                         <div class="box-btn">
 						    <a href="#"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
@@ -112,7 +118,7 @@ class HomePageComponent extends Component {
 					 </div>
 				</div>	 
 				<div  className="col-lg-4 col-xs-12 text-center">
-					<div  className="box">
+					<div  className="box"style={{backgroundColor:"#adb5bd"}}>
                         
                         <div class="box-btn">
 						    <a href="#"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
@@ -126,10 +132,10 @@ class HomePageComponent extends Component {
 					 </div>
 				</div>	 
 				<div  className="col-lg-4 col-xs-12 text-center">
-					<div  className="box">
+					<div  className="box" style={{backgroundColor:"#ff6666"}}>
                         
                         <div class="box-btn">
-						    <a href="/product"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
+						    <a onClick={this.logOut}><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
 						<div className="box-title">
 							<h3 className="box-text1">Logout </h3>
 						</div>

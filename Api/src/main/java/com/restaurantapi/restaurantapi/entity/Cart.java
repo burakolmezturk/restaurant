@@ -14,6 +14,25 @@ public class Cart {
     private String price;
     private String totalPrice;
     private int piece;
+    private int placeId;
+
+    public int getPlaceId() {
+        return placeId;
+    }
+
+    public void setPlaceId(int placeId) {
+        this.placeId = placeId;
+    }
+
+    public int getTableId() {
+        return tableId;
+    }
+
+    public void setTableId(int tableId) {
+        this.tableId = tableId;
+    }
+
+    private int tableId;
     private Timestamp createDate = new Timestamp(System.currentTimeMillis());
 
 

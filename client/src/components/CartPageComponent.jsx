@@ -12,6 +12,8 @@ class CartPageComponent extends Component {
        
         super(props)
         this.state = {
+            placeId:this.props.history.location.state?.placeId,
+            tableId:this.props.history.location.state?.tableId,
             products: [],
             categories: [],
             carts: [],
@@ -21,7 +23,8 @@ class CartPageComponent extends Component {
                 pdocutName: '',
                 price: 0,
                 piece: 1,
-                totalPrice: 0
+                totalPrice: 0,
+                
             },
             totalCarts: 0
 
@@ -30,6 +33,8 @@ class CartPageComponent extends Component {
     }
 
     componentDidMount() {
+
+        console.log(this.state.placeId)
         console.log(localStorage.getItem("username"));
 
         if(localStorage.getItem("username")==null && localStorage.getItem("password")==null){
@@ -45,20 +50,22 @@ class CartPageComponent extends Component {
 //		 this.setState({products:res.data})   
 //	 });
     }
-    logOut= (e) => {
-        e.preventDefault();
-        localStorage.clear();
-        this.props.history.push('')
-    }
+    
 	saleButton(cart){
+        console.log(cart)
         ProductService.postCart(cart).then((res)=>{
-            window.location.reload(false);
+            if(this.state.placeId!=0 && this.state.placeId!=undefined){
+                this.props.history.push('/place')
+            }else{
+                window.location.reload(false);
+            }
+            
         });
 
 	}
 
     increasePrice(cart) {
-
+console.log(cart)
         this.state.totalCarts += cart.price;
         cart.piece += 1;
         cart.totalPrice = cart.price *cart.piece;
@@ -99,7 +106,9 @@ class CartPageComponent extends Component {
                     productName: product.name,
                     price: product.salesPrice,
                     piece: 1,
-                    totalPrice: product.salesPrice
+                    totalPrice: product.salesPrice,
+                    placeId:this.state.placeId,
+                    tableId:this.state.tableId
                 }
             }, () => this.setState({carts: [...this.state.carts, this.state.cart]}));
 
@@ -128,32 +137,44 @@ class CartPageComponent extends Component {
                 <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
                     <a className="navbar-brand" href="#">Restaurant Automation</a>
                     <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-                                           
+                    <li className="nav-item">
+                            <a className="nav-link" href="/table">Tables</a>
+                        </li>              
                     </ul>
+                    
                     <form className="form-inline my-2 my-lg-0">
-
-                            <button className="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={this.logOut}>Logout</button>
+                    <a href="/home" className="navbar-toggler-icon"></a>
+                            
                     </form>
                 </div>
             </nav>
             <div className="container">
+             
                 <div className="row">
                     <div className="col-md-2">
+                    <div className="card card-body-2">
+                    
                         <div className="sidebar">
+                            
                             <div className="list-group">
-                                <a  className="list-group-item list-group-item-action list-group-item-dark" >Product Categories</a>
+                                <a  className="list-group-item list-group-item-action " style={{fontWeight:"bold",backgroundColor:"#868e96",color:"white"}}>Product Categories</a>
                                 {
                                     this.state.categories.map(categories =>
                                         
-                                            <a href="#" className="list-group-item list-group-item-action list-group-item-dark"
+                                            <a href="#" style={{backgroundColor:"#f8f9fa"}} className="list-group-item list-group-item-action list-group-item-dark"
                                                     onClick={() => this.getProducts(categories.id)} >{categories.name} </a>
                                  
                                     )}
                             </div>
+                            </div>
+                            
                         </div>
                     </div>
                     <div className="col-md-5">
+                    <div className="card card-body-1">
+                    <div className="scroll-1">
                         <div className="row">
+                        
                             {
                                 this.state.products.map(
                                     products =>
@@ -181,10 +202,14 @@ class CartPageComponent extends Component {
                                         </div>
                                 )
                             }
+                            </div>
+                        </div>
                         </div>
                     </div>
                     <div className="row">
+                    <div className="card card-body-3">
                     <div className="col-md-5">
+                       <div className="scroll">
                         <table className="table table-striped table-bordered">
                             <thead>
                             <tr>
@@ -220,20 +245,22 @@ class CartPageComponent extends Component {
                                 )
                             }
                             </tbody>
-                            <tfoot>
-                            <tr>
+                            
+                        </table>
+                        
+                        </div>
+                        </div>
+                        
                                 
-                                <td colspan="2"></td>
-                                <th colspan="2">Total {this.state.totalCarts} ₺</th>
-                               
-                                <th>
-                                    <button className="btn btn-outline-danger"
+                            <div className="card" style={{backgroundColor:"#f9f9f9"}}>
+                               <a style={{fontSize:"15px",fontWeight:"bold",marginLeft:"10px",color:"#dc3545"}}>Total Price :<a>{this.state.totalCarts} ₺</a></a> 
+                               </div>
+                                
+                                    <button className="btn" style={{backgroundColor:"#868e96",color:"white"}}
                                             onClick={() => this.saleButton(this.state.carts)}>Payment
                                     </button>
-                                </th>
-                            </tr>
-                            </tfoot>
-                        </table>
+                                
+                          
                     </div>
                 </div>
             </div>

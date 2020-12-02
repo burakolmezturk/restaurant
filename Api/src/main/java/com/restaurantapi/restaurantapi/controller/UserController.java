@@ -1,6 +1,6 @@
 package com.restaurantapi.restaurantapi.controller;
 
-import com.restaurantapi.restaurantapi.entity.User;
+import com.restaurantapi.restaurantapi.entity.Users;
 import com.restaurantapi.restaurantapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,23 +16,23 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/function/list")
-    public List<User> getList() {
+    public List<Users> getList() {
         return userService.getListUsers();
     }
 
     @GetMapping("/function/list/{id}")
-    public User getUserById(@PathVariable String username) {
+    public Users getUserById(@PathVariable String username) {
         return userService.getUserById(username);
     }
 
     @PostMapping("/function/add")
-    public User addUser(@RequestBody User user,@RequestParam String role) {
-        return userService.saveUser(user,role);
+    public Users addUser(@RequestBody Users users, @RequestParam String role) {
+        return userService.saveUser(users, role);
     }
 
     @PutMapping("/function/update")
-    public User updateUser(@RequestBody User user) {
-        return userService.updateUser(user);
+    public Users updateUser(@RequestBody Users users) {
+        return userService.updateUser(users);
     }
 
     @DeleteMapping("/function/delete/{id}")
@@ -41,8 +41,8 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public User login(@RequestParam String username, @RequestParam String password) {
-       return userService.login(username, password);
+    public Users login(@RequestParam String username, @RequestParam String password) {
+        return userService.login(username, password);
     }
 }
 
