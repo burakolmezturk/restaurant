@@ -1,11 +1,12 @@
 package com.restaurantapi.restaurantapi.services;
 
+import com.restaurantapi.restaurantapi.dto.CategoryDTO;
+import com.restaurantapi.restaurantapi.convertor.CategoryDTOConvertor;
 import com.restaurantapi.restaurantapi.entity.Category;
 import com.restaurantapi.restaurantapi.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,25 +15,40 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public List<Category> getCategories(){
-        return categoryRepository.findAll();
+    public List<CategoryDTO> getCategories() {
+
+
+       return CategoryDTOConvertor.categoryListToDTOList(categoryRepository.findAll());
+
     }
-    public void addCategory(Category category){
-        categoryRepository.save(category);
+
+    public boolean addCategory(CategoryDTO categoryDTO) {
+
+      Category category=  categoryRepository.save(CategoryDTOConvertor.dtoToCategory(categoryDTO));
+    if(category.getId()!=0) return true;
+    else return false;
     }
-    public Category editCategory(Category category){
-       return categoryRepository.saveAndFlush(category);
+
+    public CategoryDTO editCategory(CategoryDTO categoryDTO) {
+
+        categoryRepository.saveAndFlush(CategoryDTOConvertor.dtoToCategory(categoryDTO));
+        return categoryDTO;
     }
-    public void deleteCategory(int id){
-        categoryRepository.deleteById(id);
+
+    public boolean deleteCategory(int id) {
+       if(categoryRepository.existsById(id)){
+           categoryRepository.deleteById(id);
+           return true;
+       }else return false;
+
     }
-    public Optional<Category> getCategoryById(int categoryId){
-        Optional<Category> category =categoryRepository.findById(categoryId);
-        if (category.isPresent()){
-            return category;
-        }else{
+
+    public CategoryDTO getCategoryById(int categoryId) {
+        Optional<Category> category = categoryRepository.findById(categoryId);
+        if (!category.isPresent()) {
             return null;
         }
+        return CategoryDTOConvertor.categoryToDTO(category.get());
 
     }
 }

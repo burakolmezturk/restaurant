@@ -1,6 +1,7 @@
 
-]
-java:S4684*"@Replace this persistent entity with a simple POJO or DTO object.(İ¾…ô8ºŠÙİ.
-b
-java:S4684%"@Replace this persistent entity with a simple POJO or DTO object.(–Íä¦úÿÿÿÿ8ºŠÙİ.
-]	java:S125/"<This block of commented-out lines of code should be removed.(ÎÕäúÿÿÿÿ8 “°â.
+L
+java:S54110"*Use the primitive boolean expression here.(ˆı¡‡ùÿÿÿÿ8ÒÅåäâ.
+c
+java:S11268"AReplace this if-then-else statement by a single return statement.(Ä·âÕşÿÿÿÿ8õÔåâ.
+c
+java:S11260"AReplace this if-then-else statement by a single return statement.(ˆı¡‡ùÿÿÿÿ8ÒÅåäâ.

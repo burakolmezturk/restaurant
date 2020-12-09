@@ -1,15 +1,14 @@
 package com.restaurantapi.restaurantapi.controller;
 
-import com.restaurantapi.restaurantapi.entity.Cart;
-import com.restaurantapi.restaurantapi.entity.Category;
-import com.restaurantapi.restaurantapi.entity.Product;
+import com.restaurantapi.restaurantapi.dto.CartDTO;
+import com.restaurantapi.restaurantapi.dto.ProductDTO;
 import com.restaurantapi.restaurantapi.services.CategoryService;
 import com.restaurantapi.restaurantapi.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 import java.util.Set;
 
 @CrossOrigin(origins = "*")
@@ -24,44 +23,44 @@ public class ProductController {
     private CategoryService categoryService;
 
     @GetMapping("/list")
-    public List<Product> getAllProducts() {
-        return productService.getAllProduct();
+    public List<ProductDTO> getAllProducts() {
+        return productService.getAllProducts();
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable int id) {
+    public ProductDTO getProductById(@PathVariable int id) {
         return productService.getProductById(id);
     }
 
     @PostMapping("/add")
-    public Product addProduct(@RequestBody Product product, @RequestParam int categoryId) {
-        return productService.addProduct(product, categoryId);
+    public ProductDTO addProduct(@RequestBody ProductDTO productDTO, @RequestParam int categoryId) {
+        return productService.addProduct(productDTO, categoryId);
     }
 
     @PutMapping("/update")
-    public Product putProduct(@RequestBody Product product, @RequestParam int categoryId) {
-        Optional<Category> category = categoryService.getCategoryById(categoryId);
-        if (!category.isPresent()) {
-            return null;
-        }
-       // category.get().getProductSet().add(productService.editProduct(product));
-        product.setCategory(category.get());
-        return productService.editProduct(product);
+    public ProductDTO putProduct(@RequestBody ProductDTO productDTO, @RequestParam int categoryId) {
+
+        return productService.editProduct(productDTO,categoryId);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteProduct(@PathVariable int id) {
-        productService.deleteProduct(id);
+    public boolean deleteProduct(@PathVariable int id) {
+        if(productService.deleteProduct(id))
+            return true;
+        else return false;
     }
 
     @PostMapping("/cart")
-    public boolean sellProduct(@RequestBody List<Cart> carts) {
-        productService.sellProduct(carts);
-        return true;
+    public boolean sellProduct(@RequestBody List<CartDTO> cartDTOList) {
+
+        if (productService.sellProduct(cartDTOList)) return true;
+        else return false;
+
     }
 
     @GetMapping("/products")
-    public Set<Product> getProductsByCategoryId(@RequestParam int categoryId) {
+    public Set<ProductDTO> getProductsByCategoryId(@RequestParam int categoryId) {
+
         return productService.getProductsByCategoryId(categoryId);
     }
 

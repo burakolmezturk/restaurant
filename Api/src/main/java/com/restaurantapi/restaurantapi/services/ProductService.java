@@ -1,5 +1,9 @@
 package com.restaurantapi.restaurantapi.services;
 
+import com.restaurantapi.restaurantapi.dto.CartDTO;
+import com.restaurantapi.restaurantapi.dto.ProductDTO;
+import com.restaurantapi.restaurantapi.convertor.CartDTOConvertor;
+import com.restaurantapi.restaurantapi.convertor.ProductDTOConvertor;
 import com.restaurantapi.restaurantapi.entity.Cart;
 import com.restaurantapi.restaurantapi.entity.Category;
 import com.restaurantapi.restaurantapi.entity.Product;
@@ -22,52 +26,73 @@ public class ProductService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-
-    public List<Product> getAllProduct() {
-
-        return productRepository.findAll();
+    public List<ProductDTO> getAllProducts() {
+        List<Product> productList = productRepository.findAll();
+        List<ProductDTO> productDTOList = ProductDTOConvertor.productListToDTOList(productList);
+        return productDTOList;
     }
 
-    public Product addProduct(Product product, int categoryId) {
-        Set<Product> products = new HashSet<>();
+    public ProductDTO addProduct(ProductDTO productDTO, int categoryId) {
+
         Optional<Category> category = categoryRepository.findById(categoryId);
         if (!category.isPresent()) {
             return null;
         }
-        products.add(product);
-        category.get().getProductSet().add(product);
+        Product product = ProductDTOConvertor.dtoToProduct(productDTO);
         product.setCategory(category.get());
-        return productRepository.save(product);
+
+        productRepository.save(product);
+        return productDTO;
+
     }
 
+    public ProductDTO editProduct(ProductDTO productDTO, int categoryId) {
 
-    public Product editProduct(Product product) {
+        Optional<Category> category = categoryRepository.findById(categoryId);
 
+        if (!category.isPresent()) {
+            return null;
+        }
+        Product product = ProductDTOConvertor.dtoToProduct(productDTO);
+        product.setCategory(category.get());
+        productRepository.saveAndFlush(product);
 
-        return productRepository.saveAndFlush(product);
+        return productDTO;
     }
 
-    public void deleteProduct(int id) {
-        productRepository.deleteById(id);
+    public Boolean deleteProduct(int id) {
+        if (productRepository.existsById(id)) {
+            productRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
-    public Product getProductById(int id) {
+    public ProductDTO getProductById(int id) {
         Optional<Product> productOptional = productRepository.findById(id);
         if (!productOptional.isPresent()) {
             return null;
         }
-        return productOptional.get();
+
+        return ProductDTOConvertor.productToDto(productOptional.get());
     }
 
-    public boolean sellProduct(List<Cart> listCart) {
-        cartRepository.saveAll(listCart);
-        return true;
+    public boolean sellProduct(List<CartDTO> cartDTOList) {
+        List<Cart> cartList = new ArrayList<>();
+        cartDTOList.stream().forEach(cartDTO -> cartList.add(CartDTOConvertor.dtoToCart(cartDTO)));
+        List<Cart> carts = cartRepository.saveAll(cartList);
+        if (carts.isEmpty()) return false;
+         else return true;
+
     }
 
-    public Set<Product> getProductsByCategoryId(int categoryId) {
+    public Set<ProductDTO> getProductsByCategoryId(int categoryId) {
         Optional<Category> category = categoryRepository.findById(categoryId);
+
         if (category.isPresent()) {
-            return category.get().getProductSet();
+            return ProductDTOConvertor.setProductToSetDTO(category.get().getProductSet());
         } else {
             return Collections.emptySet();
         }

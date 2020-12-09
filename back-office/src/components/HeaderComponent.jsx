@@ -36,6 +36,9 @@ class HeaderComponent extends Component {
                         <li className="nav-item">
                             <a className="nav-link" href="/place">Places</a>
                         </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/waiter">Waiter</a>
+                        </li>
                            
                         <li className="nav-item">
                             <a className="nav-link" href="/user">Reports</a>

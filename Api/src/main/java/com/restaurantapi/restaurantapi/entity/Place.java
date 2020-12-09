@@ -9,7 +9,6 @@ public class Place {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-
     public int getTableCount() {
         return tableCount;
     }
@@ -37,16 +36,4 @@ public class Place {
     }
 
 
-
-   /* public Set<RestaurantTable> getRestaurantTableSet() {
-        return restaurantTableSet;
-    }
-
-    public void setRestaurantTableSet(Set<RestaurantTable> restaurantTableSet) {
-        this.restaurantTableSet = restaurantTableSet;
-    }
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="place_id")
-    private Set<RestaurantTable> restaurantTableSet ;*/
 }

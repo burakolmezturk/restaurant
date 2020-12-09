@@ -1,20 +1,50 @@
 package com.restaurantapi.restaurantapi.entity;
 
 
-
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
+
 @Entity
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
     private int productId;
-    private String price;
-    private String totalPrice;
+    private double totalPrice;
     private int piece;
     private int placeId;
+    private double price;
+    private int tableId;
+
+    public int getWaiterId() {
+        return waiterId;
+    }
+
+    public void setWaiterId(int waiterId) {
+        this.waiterId = waiterId;
+    }
+
+    private int waiterId;
+
+    private Timestamp createDate = new Timestamp(System.currentTimeMillis());
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
 
     public int getPlaceId() {
         return placeId;
@@ -32,9 +62,13 @@ public class Cart {
         this.tableId = tableId;
     }
 
-    private int tableId;
-    private Timestamp createDate = new Timestamp(System.currentTimeMillis());
+    public Timestamp getCreateDate() {
+        return createDate;
+    }
 
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
+    }
 
     public int getId() {
         return id;
@@ -53,22 +87,6 @@ public class Cart {
         this.productId = productId;
     }
 
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(String totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
     public int getPiece() {
         return piece;
     }
@@ -76,7 +94,6 @@ public class Cart {
     public void setPiece(int piece) {
         this.piece = piece;
     }
-
 
 
 }

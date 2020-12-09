@@ -2,7 +2,6 @@ package com.restaurantapi.restaurantapi.entity;
 
 
 import javax.persistence.*;
-import java.util.Set;
 
 
 @Entity
@@ -12,7 +11,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    private String description;
+    private double salesPrice;
+    private double purchasePrice;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     public String getDescription() {
         return description;
@@ -22,9 +27,6 @@ public class Product {
         this.description = desctription;
     }
 
-    private String description;
-    private double salesPrice;
-    private double purchasePrice;
 
     public Category getCategory() {
         return category;
@@ -34,14 +36,6 @@ public class Product {
         this.category = category;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
-
-    public Product() {
-
-    }
 
     public int getId() {
         return id;
@@ -58,7 +52,6 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public double getSalesPrice() {
         return salesPrice;

@@ -3,7 +3,7 @@ import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
 import './App.css';
 import CartPageComponent from './components/CartPageComponent';
 import HomePageComponent from './components/HomePageComponent';
-import ListPlaceComponent from './components/ListPlaceComponent copy';
+import ListPlaceComponent from './components/ListPlaceComponent';
 import ListTableComponent from './components/ListTableComponent';
 import LoginComponent from './components/LoginComponent';
 

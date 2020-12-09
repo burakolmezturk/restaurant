@@ -1,7 +1,7 @@
 package com.restaurantapi.restaurantapi.controller;
 
 
-import com.restaurantapi.restaurantapi.entity.Place;
+import com.restaurantapi.restaurantapi.dto.PlaceDTO;
 import com.restaurantapi.restaurantapi.services.PlaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,21 +16,24 @@ public class PlaceController {
     private PlaceService placeService;
 
     @GetMapping("/list")
-    public List<Place> getPlaces(){ return placeService.getPlaces(); }
+    public List<PlaceDTO> getPlaces(){ return placeService.getPlaces(); }
     @PostMapping("/add")
-    public void addPlace(@RequestBody Place place){
-        placeService.addPlace(place);
+    public boolean addPlace(@RequestBody PlaceDTO placeDTO){
+        if (placeService.addPlace(placeDTO)) return true;
+        else return false;
+
     }
     @PutMapping("/edit")
-    public Place updatePlace(@RequestBody Place place){
-        return placeService.editPlace(place);
+    public PlaceDTO updatePlace(@RequestBody PlaceDTO placeDTO){
+        return placeService.editPlace(placeDTO);
     }
     @DeleteMapping("/delete/{id}")
-    public void deletePlace(@PathVariable int id){
-        placeService.deletePlace(id);
+    public boolean deletePlace(@PathVariable int id){
+        if(placeService.deletePlace(id)) return true;
+        else return false;
     }
     @GetMapping("/{placeId}")
-    public Place getPlaceById(@PathVariable int placeId){
-        return placeService.getPlaceById(placeId).get();
+    public PlaceDTO getPlaceById(@PathVariable int placeId){
+        return placeService.getPlaceById(placeId);
     }
 }

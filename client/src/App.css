@@ -110,6 +110,14 @@ div.scroll-1 {
   overflow-x: hidden;
   
 }
+div.scroll-1 {
+  height: 600px;
+  width: 440px;       /* Just for the demo          */
+  overflow-y: scroll;    /* Trigger vertical scroll    */
+  overflow-x: hidden;
+  
+}
+
 
 
 .card-body-1{

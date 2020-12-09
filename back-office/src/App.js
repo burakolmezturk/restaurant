@@ -16,10 +16,10 @@ import ListCategoryComponent from './components/categoryComponent/ListCategoryCo
 import CreateCategoryComponent from './components/categoryComponent/CreateCategoryComponent';
 import UpdateCategoryComponent from './components/categoryComponent/UpdateCategoryComponent';
 import infoComponent from './components/infoComponent/infoComponent';
-import ListTableComponent from './components/tableComponent/ListTableComponent';
-import CreateTableComponent from './components/tableComponent/CreateTableComponent';
-import UpdateTableComponent from './components/tableComponent/UpdateTableComponent';
-
+import ListWaiterComponent from './components/waiterComponent/ListWaiterComponent';
+import CreateWaiterComponent from './components/waiterComponent/CreateWaiterComponent';
+import UpdateWaiterComponent from './components/waiterComponent/UpdateWaiterComponent';
+import CreateMediaComponent from './components/mediaComponent/CreateMediaComponent';
 
 function App() {
   return (
@@ -47,6 +47,10 @@ function App() {
                   {/* <Route path ="/table" component ={ListTableComponent}></Route>
                   <Route path ="/add-table" component ={CreateTableComponent}></Route>
                   <Route path ="/update-table" component ={UpdateTableComponent}></Route> */}
+                  <Route path ="/waiter" component ={ListWaiterComponent}></Route>
+                  <Route path ="/add-waiter" component ={CreateWaiterComponent}></Route>
+                  <Route path ="/update-waiter/:id" component ={UpdateWaiterComponent}></Route>
+                  <Route path ="/media" component ={CreateMediaComponent}></Route>
                   
             </Switch>
           

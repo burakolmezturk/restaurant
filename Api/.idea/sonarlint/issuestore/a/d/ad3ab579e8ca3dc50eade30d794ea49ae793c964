@@ -1,7 +1,5 @@
 
+c
+java:S1126#"AReplace this if-then-else statement by a single return statement.(Ò‘Âøÿÿÿÿ8Šı„ãâ.
 ]
-java:S4684"@Replace this persistent entity with a simple POJO or DTO object.(İğêŒ8ªĞğ¦ß.
-Y
-java:S3655$"7Call "Optional#isPresent()" before accessing the value.( ¹îıùÿÿÿÿ8»Õµšà.
-]
-java:S4684"@Replace this persistent entity with a simple POJO or DTO object.(«÷µ´8ÛĞ°§ß.
+java:S1126"AReplace this if-then-else statement by a single return statement.(ñ–Î#8Êõôââ.

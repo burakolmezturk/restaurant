@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
+    <changeSet  id="07.12.2020 15:06:04"  author="burak">
+        <createTable tableName="waiter">
+            <column type="int(20)" name="id" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column type="nvarchar(50)" name="name"></column>
+            <column type="nvarchar(100)" name="email"></column>
+            <column type="nvarchar(100)" name="phone"></column>
+            <column type="int(3)" name="age"></column>
+        </createTable>
+    </changeSet>
+    <changeSet  id="07.12.2020 15:06:05"  author="burak">
+        <insert  catalogName="restaurant" tableName="waiter">
+            <column  name="name"  value="Burak"/>
+            <column  name="email"  value="b@hotmail.com"/>
+            <column  name="phone"  value="05454545454"/>
+            <column  name="age"  value="21"/>
+        </insert>
+    </changeSet>
+
+
+</databaseChangeLog>

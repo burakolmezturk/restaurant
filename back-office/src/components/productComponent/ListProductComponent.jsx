@@ -36,7 +36,7 @@ CategoryService.getCategory().then((res)=>{
 }
 getProducts(id)
 {
-    this.setState({categories:this.state.categories.filter(category=>category.id==id)});
+    this.setState({products:this.state.products.filter(product=>product.categoryId==id)});
 }
 editProduct(id,catId){
     this.props.history.push({
@@ -89,12 +89,12 @@ ProductService.deleteProduct(id).then(res =>{
                                             {
                                                
                                                         <tr key={products.id}>
-                                                            <td onClick={()=>this.getProducts(products.category.id)} ><a href="#">{products.category.name}</a></td>
+                                                            <td onClick={()=>this.getProducts(products.categoryId)} ><a href="#">{products.categoryName}</a></td>
                                                             <td>{products.name}</td>
                                                             <td>{products.description}</td>
                                                             <td>{products.salesPrice}</td>
                                                             <td>
-                                                                <button onClick={() => this.editProduct(products.id,products.category.id)}
+                                                                <button onClick={() => this.editProduct(products.id,products.categoryId)}
                                                                         className="btn btn-info"> Update
                                                                 </button>
                                                                 <button style={{marginLeft: "6px"}} onClick={() => this.deleteProduct(products.id)}
