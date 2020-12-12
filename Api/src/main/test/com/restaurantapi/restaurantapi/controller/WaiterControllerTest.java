@@ -1,7 +1,9 @@
 package com.restaurantapi.restaurantapi.controller;
 
+import com.restaurantapi.restaurantapi.builder.MediaDTOBuilder;
 import com.restaurantapi.restaurantapi.builder.WaiterDTOBuilder;
 import com.restaurantapi.restaurantapi.convertor.WaiterDTOConvertor;
+import com.restaurantapi.restaurantapi.dto.MediaDTO;
 import com.restaurantapi.restaurantapi.dto.WaiterDTO;
 import com.restaurantapi.restaurantapi.entity.Waiter;
 import com.restaurantapi.restaurantapi.services.WaiterService;
@@ -24,13 +26,17 @@ public class WaiterControllerTest {
 
     @Mock
     private WaiterService waiterService;
-
+    private MediaDTO mediaDTO = new MediaDTOBuilder()
+            .fileContent(null)
+            .fileName("deneme")
+            .id(1).build();
     private WaiterDTO waiterDTO = new WaiterDTOBuilder()
             .name("ahmet")
             .age(22)
             .id(1)
             .email("ahmet@htm")
             .phone("4567890")
+            .image(mediaDTO)
             .build();
     private List<WaiterDTO> waiterDTOList = new ArrayList<>();
     private Waiter waiter = WaiterDTOConvertor.dtoToWaiter(waiterDTO);
