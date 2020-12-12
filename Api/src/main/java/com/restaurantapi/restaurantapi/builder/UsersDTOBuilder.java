@@ -1,6 +1,6 @@
 package com.restaurantapi.restaurantapi.builder;
 
-import com.restaurantapi.restaurantapi.dto.UsersDTO;
+import com.restaurantapi.restaurantapi.dto.UserDTO;
 
 public class UsersDTOBuilder extends Builder{
     private String userName;
@@ -9,14 +9,14 @@ public class UsersDTOBuilder extends Builder{
     private boolean enabled;
 
     @Override
-    public UsersDTO build() {
-        UsersDTO usersDTO = new UsersDTO();
-        usersDTO.setId(super.id);
-        usersDTO.setUserName(this.userName);
-        usersDTO.setPassword(this.password);
-        usersDTO.setEmail(this.email);
-        usersDTO.setEnabled(this.enabled);
-        return usersDTO;
+    public UserDTO build() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(super.id);
+        userDTO.setUserName(this.userName);
+        userDTO.setPassword(this.password);
+        userDTO.setEmail(this.email);
+        userDTO.setEnabled(this.enabled);
+        return userDTO;
     }
     public UsersDTOBuilder id(int id){
         super.id=id;

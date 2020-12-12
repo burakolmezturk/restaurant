@@ -1,7 +1,7 @@
 package com.restaurantapi.restaurantapi.controller;
 
 import com.restaurantapi.restaurantapi.dto.RoleDTO;
-import com.restaurantapi.restaurantapi.dto.UsersDTO;
+import com.restaurantapi.restaurantapi.dto.UserDTO;
 import com.restaurantapi.restaurantapi.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,22 +20,22 @@ public class UserController {
 
 
     @GetMapping("/function/list")
-    public List<UsersDTO> getList() {
+    public List<UserDTO> getList() {
         return userService.getListUsers();
     }
 
     @GetMapping("/function/list/{id}")
-    public UsersDTO getUserById(@PathVariable int id) {
+    public UserDTO getUserById(@PathVariable int id) {
         return userService.getUserById(id);
     }
 
     @PostMapping("/function/add")
-    public UsersDTO addUser(@RequestBody UsersDTO users) {
+    public UserDTO addUser(@RequestBody UserDTO users) {
         return userService.saveUser(users);
     }
 
     @PutMapping("/function/update")
-    public UsersDTO updateUser(@RequestBody UsersDTO users) {
+    public UserDTO updateUser(@RequestBody UserDTO users) {
         return userService.updateUser(users);
     }
     @DeleteMapping("/function/delete/{id}")

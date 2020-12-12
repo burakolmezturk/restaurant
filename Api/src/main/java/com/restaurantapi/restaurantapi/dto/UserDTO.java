@@ -6,7 +6,7 @@ import com.restaurantapi.restaurantapi.entity.Role;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersDTO {
+public class UserDTO {
 
     private int id;
     private String userName;

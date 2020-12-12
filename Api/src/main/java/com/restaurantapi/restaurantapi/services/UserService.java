@@ -3,7 +3,7 @@ package com.restaurantapi.restaurantapi.services;
 import com.restaurantapi.restaurantapi.convertor.RoleDTOConvertor;
 import com.restaurantapi.restaurantapi.convertor.UserDTOConverter;
 import com.restaurantapi.restaurantapi.dto.RoleDTO;
-import com.restaurantapi.restaurantapi.dto.UsersDTO;
+import com.restaurantapi.restaurantapi.dto.UserDTO;
 import com.restaurantapi.restaurantapi.entity.Role;
 import com.restaurantapi.restaurantapi.entity.User;
 import com.restaurantapi.restaurantapi.repository.RoleRepository;
@@ -26,20 +26,20 @@ public class UserService {
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public UsersDTO saveUser(UsersDTO usersDTO) {
-        List<Role> roleList = roleRepository.findAllById(usersDTO.getRolesId());
+    public UserDTO saveUser(UserDTO userDTO) {
+        List<Role> roleList = roleRepository.findAllById(userDTO.getRolesId());
 
-        User user = UserDTOConverter.DTOToUsers(usersDTO);
-        user.setPassword(encoder.encode(usersDTO.getPassword()));
+        User user = UserDTOConverter.DTOToUsers(userDTO);
+        user.setPassword(encoder.encode(userDTO.getPassword()));
         user.setRoleList(roleList);
         userRepository.save(user);
-        return usersDTO;
+        return userDTO;
     }
 
-    public List<UsersDTO> getListUsers() {
-        List<UsersDTO> usersDTOList = new ArrayList<>();
+    public List<UserDTO> getListUsers() {
+        List<UserDTO> userDTOList = new ArrayList<>();
         List<Integer> roleId = new ArrayList<>();
-        userRepository.findAll().forEach(users -> usersDTOList.add(UserDTOConverter.UserToDTO(users)));
+        userRepository.findAll().forEach(users -> userDTOList.add(UserDTOConverter.UserToDTO(users)));
 //        for (UsersDTO usersDTO: usersDTOList) {
 //            roleId=new ArrayList<>();
 //            for (Role role:usersDTO.getRolesList()) {
@@ -48,19 +48,19 @@ public class UserService {
 //            usersDTO.setRolesId(roleId);
 //        }
 
-        return usersDTOList;
+        return userDTOList;
     }
 
-    public UsersDTO getUserById(int userId) {
+    public UserDTO getUserById(int userId) {
         List<Integer> roleId = new ArrayList<>();
         Optional<User> optionalUser = userRepository.findById(userId);
 
         if (optionalUser.isPresent()) {
 
             optionalUser.get().getRoleList().forEach(role -> roleId.add(role.getId()));
-            UsersDTO usersDTO = UserDTOConverter.UserToDTO(optionalUser.get());
-            usersDTO.setRolesId(roleId);
-            return usersDTO;
+            UserDTO userDTO = UserDTOConverter.UserToDTO(optionalUser.get());
+            userDTO.setRolesId(roleId);
+            return userDTO;
 
         } else {
             return null;
@@ -69,13 +69,13 @@ public class UserService {
 
     }
 
-    public UsersDTO updateUser(UsersDTO usersDTO) {
-        List<Role> roleList = roleRepository.findAllById(usersDTO.getRolesId());
-        User user = UserDTOConverter.DTOToUsers(usersDTO);
-        user.setPassword(encoder.encode(usersDTO.getPassword()));
+    public UserDTO updateUser(UserDTO userDTO) {
+        List<Role> roleList = roleRepository.findAllById(userDTO.getRolesId());
+        User user = UserDTOConverter.DTOToUsers(userDTO);
+        user.setPassword(encoder.encode(userDTO.getPassword()));
         user.setRoleList(roleList);
         userRepository.saveAndFlush(user);
-        return usersDTO;
+        return userDTO;
     }
 
     public void deleteUser(int userId) {

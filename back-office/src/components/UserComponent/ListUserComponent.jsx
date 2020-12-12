@@ -17,9 +17,9 @@ class ListUserComponent extends Component {
             this.props.history.push('')
         }
         UserService.getUsers().then((res) => {
-            let user= res.data;
-            this.setState({ users: user})
-          
+            let user = res.data;
+            this.setState({ users: user })
+
         })
     }
     addUser() {
@@ -35,7 +35,7 @@ class ListUserComponent extends Component {
         this.props.history.push(`/update-user/${id}`);
     }
 
-    
+
 
     render() {
         return (
@@ -47,6 +47,7 @@ class ListUserComponent extends Component {
                         <thead>
                             <tr>
                                 <th>Username</th>
+                                <th>Email</th>
                                 <th>Role</th>
                                 <th>Actions</th>
                             </tr>
@@ -59,6 +60,7 @@ class ListUserComponent extends Component {
                                     user =>
                                         <tr key={user.id} >
                                             <td >{user.userName}</td>
+                                            <td >{user.email}</td>
                                             <td>
                                                 {
                                                     user.rolesList.map(
