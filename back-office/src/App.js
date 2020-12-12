@@ -21,6 +21,9 @@ import ListWaiterComponent from './components/waiterComponent/ListWaiterComponen
 import CreateWaiterComponent from './components/waiterComponent/CreateWaiterComponent';
 import UpdateWaiterComponent from './components/waiterComponent/UpdateWaiterComponent';
 import CreateMediaComponent from './components/mediaComponent/CreateMediaComponent';
+import CreateRoleComponent from './components/roleComponent/CreateRoleComponent';
+import UpdateRoleComponent from './components/roleComponent/UpdateRoleComponent';
+import ListRoleComponent from './components/roleComponent/ListRoleComponent';
 
 import {users,AppContext} from './ContextApi';
 
@@ -58,6 +61,9 @@ function App() {
                   <Route path ="/add-waiter" component ={CreateWaiterComponent}></Route>
                   <Route path ="/update-waiter" component ={UpdateWaiterComponent}></Route>
                   <Route path ="/media" component ={CreateMediaComponent}></Route>
+                  <Route path ="/role" component ={ListRoleComponent}></Route>
+                  <Route path ="/add-role" component ={CreateRoleComponent}></Route>
+                  <Route path ="/update-role/:id" component ={UpdateRoleComponent}></Route>
                   
             </Switch>
           

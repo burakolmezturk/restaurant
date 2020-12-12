@@ -10,4 +10,10 @@ public class RoleDTOConvertor {
         roleDTO.setName(role.getName());
         return roleDTO;
     }
+    public static Role DTOToRole(RoleDTO roleDTO) {
+        Role role = new Role();
+        role.setId(roleDTO.getId());
+        role.setName(roleDTO.getName());
+        return role;
+    }
 }
