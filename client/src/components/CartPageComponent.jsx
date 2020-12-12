@@ -178,9 +178,9 @@ class CartPageComponent extends Component {
                                         <a className="list-group-item list-group-item-action " style={{ fontWeight: "bold", backgroundColor: "#868e96", color: "white" }}>Product Categories</a>
                                         {
                                             this.state.categories.map(categories =>
-
+                                                 
                                                 <a href="#" style={{ backgroundColor: "#f8f9fa" }} className="list-group-item list-group-item-action list-group-item-dark"
-                                                    onClick={() => this.getProducts(categories.id)} >{categories.name} </a>
+                                                    onClick={() => this.getProducts(categories.id)} > <img src={'data:image/png;base64,' + categories.image.fileContent} style={{width:"2rem",height:"2rem",borderRadius:"10px"}}></img> {categories.name} </a>
 
                                             )}
                                     </div>

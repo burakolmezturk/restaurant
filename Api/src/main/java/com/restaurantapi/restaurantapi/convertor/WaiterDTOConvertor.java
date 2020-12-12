@@ -1,5 +1,6 @@
 package com.restaurantapi.restaurantapi.convertor;
 
+import com.restaurantapi.restaurantapi.dto.MediaDTO;
 import com.restaurantapi.restaurantapi.dto.WaiterDTO;
 import com.restaurantapi.restaurantapi.entity.Waiter;
 
@@ -13,6 +14,9 @@ public class WaiterDTOConvertor {
         waiterDTO.setAge(waiter.getAge());
         waiterDTO.setEmail(waiter.getEmail());
         waiterDTO.setPhone(waiter.getPhone());
+        if (waiter.getImage()!=null)
+        waiterDTO.setImage(MediaDTOConvertor.mediaToDTO(waiter.getImage()));
+        else waiterDTO.setImage(null);
         return waiterDTO;
     }
     public static Waiter dtoToWaiter (WaiterDTO waiterDTO){
@@ -22,6 +26,7 @@ public class WaiterDTOConvertor {
         waiter.setAge(waiterDTO.getAge());
         waiter.setEmail(waiterDTO.getEmail());
         waiter.setPhone(waiterDTO.getPhone());
+        waiter.setImage(MediaDTOConvertor.dtoToMedia(waiterDTO.getImage()));
         return waiter;
     }
 }

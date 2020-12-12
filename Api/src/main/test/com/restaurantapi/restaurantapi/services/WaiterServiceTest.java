@@ -1,9 +1,13 @@
 package com.restaurantapi.restaurantapi.services;
 
+import com.restaurantapi.restaurantapi.builder.MediaDTOBuilder;
 import com.restaurantapi.restaurantapi.builder.WaiterDTOBuilder;
+import com.restaurantapi.restaurantapi.convertor.MediaDTOConvertor;
 import com.restaurantapi.restaurantapi.convertor.WaiterDTOConvertor;
+import com.restaurantapi.restaurantapi.dto.MediaDTO;
 import com.restaurantapi.restaurantapi.dto.WaiterDTO;
 import com.restaurantapi.restaurantapi.entity.Waiter;
+import com.restaurantapi.restaurantapi.repository.MediaRepository;
 import com.restaurantapi.restaurantapi.repository.WaiterRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,13 +31,22 @@ public class WaiterServiceTest {
     @Mock
     private WaiterRepository waiterRepository;
 
+    @Mock
+    private MediaRepository mediaRepository;
+
+    private MediaDTO mediaDTO = new MediaDTOBuilder()
+            .fileContent(null)
+            .fileName("deneme")
+            .id(1).build();
     private WaiterDTO waiterDTO = new WaiterDTOBuilder()
             .name("ahmet")
             .age(22)
             .id(1)
             .email("ahmet@htm")
             .phone("4567890")
+            .image(mediaDTO)
             .build();
+
     private List<WaiterDTO> waiterDTOList = new ArrayList<>();
     private Waiter waiter = WaiterDTOConvertor.dtoToWaiter(waiterDTO);
     private List<Waiter> waiterList = new ArrayList<>();
@@ -46,6 +59,7 @@ public class WaiterServiceTest {
 
     @Test
     public void shouldAddWaiter() {
+        Mockito.when(mediaRepository.findById(1)).thenReturn(Optional.of(MediaDTOConvertor.dtoToMedia(mediaDTO)));
         Mockito.when(waiterRepository.save(Mockito.any())).thenReturn(waiter);
         WaiterDTO res = waiterService.addWaiter(waiterDTO);
         Assert.assertEquals(res.getId(), waiterDTO.getId());
@@ -53,6 +67,7 @@ public class WaiterServiceTest {
 
     @Test
     public void shouldNotAddWaiter() {
+        Mockito.when(mediaRepository.findById(1)).thenReturn(Optional.of(MediaDTOConvertor.dtoToMedia(mediaDTO)));
         Mockito.when(waiterRepository.save(Mockito.any())).thenReturn(new Waiter());
         WaiterDTO res = waiterService.addWaiter(waiterDTO);
         Assert.assertNotEquals(res.getId(), waiterDTO.getId());
@@ -76,24 +91,27 @@ public class WaiterServiceTest {
     public void shouldGetAllWaiters() {
         Mockito.when(waiterRepository.findAll()).thenReturn(waiterList);
         List<WaiterDTO> res = waiterService.getAllWaiters();
-        Assert.assertEquals(res.get(0).getId(),waiterList.get(0).getId());
+        Assert.assertEquals(res.get(0).getId(), waiterList.get(0).getId());
     }
+
     @Test
-    public void shouldDeleteWaiterById(){
+    public void shouldDeleteWaiterById() {
         Mockito.when(waiterRepository.existsById(1)).thenReturn(true);
         Boolean res = waiterService.deleteWaiterById(1);
-        Assert.assertEquals(true,res);
+        Assert.assertEquals(true, res);
     }
+
     @Test
-    public void shouldNotDeleteWaiterById(){
+    public void shouldNotDeleteWaiterById() {
         Mockito.when(waiterRepository.existsById(1)).thenReturn(false);
         Boolean res = waiterService.deleteWaiterById(1);
-        Assert.assertEquals(false,res);
+        Assert.assertEquals(false, res);
     }
+
     @Test
-    public void shouldGetWaiterById(){
+    public void shouldGetWaiterById() {
         Mockito.when(waiterRepository.findById(1)).thenReturn(Optional.of(waiter));
         WaiterDTO res = waiterService.getWaiterById(1);
-        Assert.assertEquals(waiterDTO.getId(),res.getId());
+        Assert.assertEquals(waiterDTO.getId(), res.getId());
     }
 }

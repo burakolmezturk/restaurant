@@ -1,10 +1,14 @@
 package com.restaurantapi.restaurantapi.dto;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CategoryDTO {
 
     private int id;
     private String name;
-    
+    private String description;
+    private MediaDTO image;
+
     public int getId() {
         return id;
     }
@@ -29,14 +33,21 @@ public class CategoryDTO {
         this.description = description;
     }
 
-    public String getImage() {
+    public MediaDTO getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(MediaDTO image) {
         this.image = image;
     }
 
-    private String description;
-    private String image;
+    public Set<ProductDTO> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<ProductDTO> products) {
+        this.products = products;
+    }
+
+    private Set<ProductDTO> products = new HashSet<>();
 }

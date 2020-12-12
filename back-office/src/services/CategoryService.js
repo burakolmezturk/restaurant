@@ -28,7 +28,8 @@ class CategoryService{
         });
     }
     updateCategory(category){
-        return axios.put(CATEGORY_API_BASE_URL+"update",category,{
+        console.log(category);
+        return axios.put(CATEGORY_API_BASE_URL+"edit",category,{
             auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")

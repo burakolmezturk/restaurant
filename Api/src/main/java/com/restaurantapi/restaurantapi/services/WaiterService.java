@@ -2,7 +2,9 @@ package com.restaurantapi.restaurantapi.services;
 
 import com.restaurantapi.restaurantapi.convertor.WaiterDTOConvertor;
 import com.restaurantapi.restaurantapi.dto.WaiterDTO;
+import com.restaurantapi.restaurantapi.entity.Media;
 import com.restaurantapi.restaurantapi.entity.Waiter;
+import com.restaurantapi.restaurantapi.repository.MediaRepository;
 import com.restaurantapi.restaurantapi.repository.WaiterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +18,14 @@ public class WaiterService {
 
     @Autowired
     private WaiterRepository waiterRepository;
+    @Autowired
+    private MediaRepository mediaRepository;
 
     public WaiterDTO addWaiter(WaiterDTO waiterDTO) {
-        return WaiterDTOConvertor.waiterToDTO(waiterRepository.save(WaiterDTOConvertor.dtoToWaiter(waiterDTO)));
+        Media media = mediaRepository.findById(waiterDTO.getImage().getId()).get();
+        Waiter waiter = WaiterDTOConvertor.dtoToWaiter(waiterDTO);
+        waiter.setImage(media);
+        return WaiterDTOConvertor.waiterToDTO(waiterRepository.save(waiter));
     }
 
     public WaiterDTO editWaiter(WaiterDTO waiterDTO) {

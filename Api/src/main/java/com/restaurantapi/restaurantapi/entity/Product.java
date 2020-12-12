@@ -1,7 +1,12 @@
 package com.restaurantapi.restaurantapi.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -15,25 +20,25 @@ public class Product {
     private double salesPrice;
     private double purchasePrice;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    @JsonManagedReference
+    @ManyToMany(mappedBy = "products", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Category> categories=new HashSet<>();
 
     public String getDescription() {
         return description;
     }
 
-    public void setDesctription(String desctription) {
-        this.description = desctription;
-    }
-
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 

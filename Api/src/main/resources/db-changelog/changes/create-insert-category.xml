@@ -13,7 +13,9 @@
             </column>
             <column type="nvarchar(50)" name="name"></column>
             <column type="nvarchar(250)" name="description"></column>
-            <column type="nvarchar(250)" name="image"></column>
+            <column name="media_id" type="int">
+                <constraints  foreignKeyName="fk_media_id" references="media(id)"/>
+            </column>
 
         </createTable>
     </changeSet>

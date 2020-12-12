@@ -15,9 +15,7 @@
             <column type="nvarchar(250)" name="description"></column>
             <column type="float" name="sales_price"></column>
             <column type="float" name="purchase_price"></column>
-            <column name="category_id" type="int">
-                <constraints nullable="false" foreignKeyName="fk_product_category" references="category(id)"/>
-            </column>
+
         </createTable>
     </changeSet>
 

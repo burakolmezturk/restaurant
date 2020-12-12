@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const PRODUCT_API_BASE_URL = "http://localhost:8080/user/function/";
+const ROLES_API_BASE_URL = "http://localhost:8080/user/roles";
 class UserService{
 
     getUsers(){
@@ -40,6 +41,14 @@ class UserService{
     }
     deleteUser(userId){
         return axios.delete(PRODUCT_API_BASE_URL+"delete/"+userId,{
+            auth:{
+                username:localStorage.getItem("username"),
+                password:localStorage.getItem("password")
+            }
+        });
+    }
+    getRoles(){        
+        return axios.get(ROLES_API_BASE_URL,{
             auth:{
                 username:localStorage.getItem("username"),
                 password:localStorage.getItem("password")

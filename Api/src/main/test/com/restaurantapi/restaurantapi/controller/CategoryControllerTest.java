@@ -26,7 +26,6 @@ public class CategoryControllerTest {
     private CategoryDTO categoryDTO = new CategoryDTOBuilder()
             .id(1)
             .description("deneme")
-            .image("dene")
             .name("cate")
             .build();
     List<CategoryDTO> categoryDTOList = new ArrayList<>();

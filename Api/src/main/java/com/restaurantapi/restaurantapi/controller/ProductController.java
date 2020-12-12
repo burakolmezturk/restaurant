@@ -33,8 +33,8 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public ProductDTO addProduct(@RequestBody ProductDTO productDTO, @RequestParam int categoryId) {
-        return productService.addProduct(productDTO, categoryId);
+    public ProductDTO addProduct(@RequestBody ProductDTO productDTO) {
+        return productService.addProduct(productDTO);
     }
 
     @PutMapping("/update")

@@ -1,6 +1,8 @@
 package com.restaurantapi.restaurantapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -13,18 +15,20 @@ public class Category {
     private int id;
     private String name;
 
-    public Set<Product> getProductSet() {
-        return productSet;
+
+    public Set<Product> getProducts() {
+        return products;
     }
 
-    public void setProductSet(Set<Product> productSet) {
-        this.productSet = productSet;
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonBackReference
+    @ManyToMany
+    @JoinTable(name = "category_product", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private Set<Product> products = new HashSet<>();
 
-    private Set<Product> productSet=new HashSet<>();
 
     public int getId() {
         return id;
@@ -50,14 +54,17 @@ public class Category {
         this.description = description;
     }
 
-    public String getImage() {
+    private String description;
+
+    public Media getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(Media image) {
         this.image = image;
     }
 
-    private String description;
-    private String image;
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Media image;
 }

@@ -47,6 +47,9 @@ class HeaderComponent extends Component {
                             <a className="nav-link" href="/user">Authorities</a>
                         </li> 
                         <li className="nav-item">
+                            <a className="nav-link" href="/media">Media</a>
+                        </li> 
+                        <li className="nav-item">
                             <a className="nav-link" href="/info">Info</a>
                         </li>             
                     </ul>

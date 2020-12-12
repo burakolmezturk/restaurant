@@ -1,3 +1,5 @@
 
 c
-java:S1126"AReplace this if-then-else statement by a single return statement.(Öýï‹ùÿÿÿÿ8÷Ÿ¯Ôâ.
+java:S1126#"AReplace this if-then-else statement by a single return statement.(Öýï‹ùÿÿÿÿ8÷Ÿ¯Ôâ.
+Y
+java:S3655"7Call "Optional#isPresent()" before accessing the value.(»†Ððøÿÿÿÿ8†Œã…å.

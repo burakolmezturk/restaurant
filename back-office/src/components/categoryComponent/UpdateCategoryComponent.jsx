@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import CategoryService from '../../services/CategoryService';
-import UserService from '../../services/UserService';
+import MediaService from '../../services/MediaService';
 
 class UpdateCategoryComponent extends Component {
     constructor(props){
         super(props)
         this.state = {
-            id:this.props.match.params.id,            
+            id:this.props.history.location.state?.id,            
             name:'',
             description:'',
             image:'',
+            imageId:this.props.history.location.state?.imageId,
+            medias: [],
+            image:[]
            
         }
                
@@ -19,13 +22,13 @@ class UpdateCategoryComponent extends Component {
         this.updateCategory=this.updateCategory.bind(this);
     }
     componentDidMount(){
-        console.log(this.state.id);
+      
         if(localStorage.getItem("username")==null && localStorage.getItem("password")==null){
             this.props.history.push('')
         }
         CategoryService.getCategoryById(this.state.id).then((res) =>{
             let category = res.data;
-            console.log(category);
+      
             this.setState({id:category.id,
                 name:category.name,
                 description:category.description,
@@ -33,17 +36,30 @@ class UpdateCategoryComponent extends Component {
            
             });
         });
+      this.getMedias();
         
     }
     updateCategory = (e) => {
         e.preventDefault();
     
         let category={id:this.state.id,name:this.state.name,description:this.state.description,image:this.state.image};
-    
+        
             CategoryService.updateCategory(category).then(res =>{
                 this.props.history.push('/category');
     
             })
+    }
+    showImage() {
+        const html = [];
+        const images = this.state.image
+        html.push(<img src={'data:image/png;base64,' + images.fileContent} width="50" />)
+        return html;
+    }
+    getMedias() {
+        MediaService.getMedias().then(res => {
+            this.setState({ medias: res.data });
+            
+        })
     }
     changeIdHandler=(event) =>{
         this.setState({id:event.target.value});
@@ -54,9 +70,11 @@ class UpdateCategoryComponent extends Component {
     changeDescriptionHandler=(event) =>{
         this.setState({description:event.target.value});
     }
-    changeImageHandler=(event) =>{
-        this.setState({image:event.target.value});
+
+    changeImageSelect=(event) =>{
+        this.setState({image:this.state.medias[event.target.value]});
     }
+
       
     cancel(){
         this.props.history.push('/category')
@@ -83,10 +101,20 @@ class UpdateCategoryComponent extends Component {
                                     value={this.state.description} onChange={this.changeDescriptionHandler}/>
                                 </div>
                                 <div className="form-group">
-                                    <label>Image :</label>
-                                    <input placeholder="image" name="category" className="form-control"
-                                    value={this.state.image} onChange={this.changeImageHandler}/>
-                                </div>
+                                        <label>Category Image :</label>
+                                        <select
+                                            className="form-control" id="option" onChange={this.changeImageSelect} > 
+                                            {
+                                                this.state.medias.map(
+                                                    (media,index) =>
+
+                                                        <option key={media.id} selected={this.state.imageId==media.id}  value={index}>{media.fileName}</option>
+                                                )
+                                            }
+                                        </select>
+                                        {this.showImage()}
+
+                                    </div>
 
                                 <button className="btn btn-success" onClick={this.updateCategory}>Save</button>
                                 <button style={{marginLeft:"10px"}}  className="btn btn-danger" onClick={this.cancel.bind(this)} >Cancel</button>

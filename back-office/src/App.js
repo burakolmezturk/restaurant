@@ -1,5 +1,6 @@
 
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom';
+import React, { useState } from 'react';
 import './App.css';
 import HeaderComponent from './components/HeaderComponent';
 import LoginComponent from './components/loginComponent/LoginComponent';
@@ -21,10 +22,16 @@ import CreateWaiterComponent from './components/waiterComponent/CreateWaiterComp
 import UpdateWaiterComponent from './components/waiterComponent/UpdateWaiterComponent';
 import CreateMediaComponent from './components/mediaComponent/CreateMediaComponent';
 
+import {users,AppContext} from './ContextApi';
+
+
+
 function App() {
+
   return (
-    
+    <AppContext.Provider value={users}>
     <div>
+     
         <HeaderComponent/> 
         <div className="container">
          <Router>                  
@@ -39,7 +46,7 @@ function App() {
                   <Route path ="/update-user/:id" component ={UpdateUserComponent}></Route>
                   <Route path ="/category" component ={ListCategoryComponent}></Route>
                   <Route path ="/add-category" component ={CreateCategoryComponent}></Route>
-                  <Route path ="/update-category/:id" component ={UpdateCategoryComponent}></Route>
+                  <Route path ="/update-category" component ={UpdateCategoryComponent}></Route>
                   <Route path ="/info" component ={infoComponent}></Route>
                   <Route path ="/place" component ={ListPlaceComponent}></Route>
                   <Route path ="/add-place" component ={CreatePlaceComponent}></Route>
@@ -49,7 +56,7 @@ function App() {
                   <Route path ="/update-table" component ={UpdateTableComponent}></Route> */}
                   <Route path ="/waiter" component ={ListWaiterComponent}></Route>
                   <Route path ="/add-waiter" component ={CreateWaiterComponent}></Route>
-                  <Route path ="/update-waiter/:id" component ={UpdateWaiterComponent}></Route>
+                  <Route path ="/update-waiter" component ={UpdateWaiterComponent}></Route>
                   <Route path ="/media" component ={CreateMediaComponent}></Route>
                   
             </Switch>
@@ -58,7 +65,10 @@ function App() {
       </Router>
       </div> 
   </div>
+  </AppContext.Provider>
+
   );
 }
+export default App
 
-export default App;
+

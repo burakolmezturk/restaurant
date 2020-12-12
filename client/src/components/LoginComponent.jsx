@@ -6,10 +6,12 @@ class LoginComponent extends Component {
         super(props)
         this.state = {
             username:'',
-            password:''
+            password:'',
+            checked:false
         }
         this.changeusernameHandler = this.changeusernameHandler.bind(this);
         this.changepasswordHandler = this.changepasswordHandler.bind(this);
+        this.changeCheckedHandler=this.changeCheckedHandler.bind(this);
     }
     loginUser= (e) => {
         e.preventDefault();
@@ -20,7 +22,13 @@ class LoginComponent extends Component {
             if(res.data!=''){
                 localStorage.setItem("username",this.state.username);
                 localStorage.setItem("password",this.state.password);
-                this.props.history.push('/home')
+                if (this.state.checked === true) {
+                    let remember = { username: this.state.username, password: this.state.password }
+                    localStorage.setItem("remember", JSON.stringify(remember));
+                }else{
+                    localStorage.removeItem("remember");
+                }
+                this.props.history.push('/home');
             }else{
                 console.log("Hatalı Giriş");
             }
@@ -28,6 +36,35 @@ class LoginComponent extends Component {
         } 
         )
 
+    }
+    componentDidMount(){
+        if(localStorage.getItem("remember") !== null){
+                     
+            const rememberMe=JSON.parse(localStorage.getItem("remember"));
+            this.setState({username:rememberMe.username,password:rememberMe.password});}
+    }
+    loadCheckBox() {
+      
+        const checkbox = [];
+        if(localStorage.getItem("remember") !== null){
+                                    
+                checkbox.push(
+                <label><input type="checkbox" defaultChecked="true" onChange={this.changeCheckedHandler}  />Remember Me</label>
+                );
+               
+         
+           
+        }else{
+            
+            checkbox.push(
+                <label><input type="checkbox" onChange={this.changeCheckedHandler} />Remember Me</label>
+                );
+        }
+        return checkbox;
+
+    }
+    changeCheckedHandler = (event) => {
+        this.setState({ checked: event.target.checked })
     }
     changeusernameHandler=(event) =>{
         this.setState({username: event.target.value})
@@ -59,7 +96,8 @@ class LoginComponent extends Component {
                                             <input type="password" placeholder="password" name="password" className="form-control"
                                                    value={this.state.password} onChange={this.changepasswordHandler}/>
                                         </div>
-                                        <button className="btn btn-success" onClick={this.loginUser}>Login</button>
+                                        {this.loadCheckBox()}
+                                       <br/><button className="btn btn-success" onClick={this.loginUser}>Login</button>
                             
                                     </form>
                                 </div>

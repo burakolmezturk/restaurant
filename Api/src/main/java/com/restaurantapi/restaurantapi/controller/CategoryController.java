@@ -20,8 +20,7 @@ public class CategoryController {
 
     @PostMapping("/add")
     public boolean addCategory(@RequestBody CategoryDTO categoryDTO) {
-       if( categoryService.addCategory(categoryDTO))
-        return true;
+       if( categoryService.addCategory(categoryDTO)) return true;
        else return false;
     }
 

@@ -15,16 +15,20 @@
             <column type="nvarchar(100)" name="email"></column>
             <column type="nvarchar(100)" name="phone"></column>
             <column type="int(3)" name="age"></column>
+            <column name="media_id" type="int">
+                <constraints  foreignKeyName="fk_media_waiter_id" references="media(id)"/>
+            </column>
         </createTable>
     </changeSet>
-    <changeSet  id="07.12.2020 15:06:05"  author="burak">
-        <insert  catalogName="restaurant" tableName="waiter">
-            <column  name="name"  value="Burak"/>
-            <column  name="email"  value="b@hotmail.com"/>
-            <column  name="phone"  value="05454545454"/>
-            <column  name="age"  value="21"/>
-        </insert>
-    </changeSet>
+<!--    <changeSet  id="07.12.2020 15:06:05"  author="burak">-->
+<!--        <insert  catalogName="restaurant" tableName="waiter">-->
+<!--            <column  name="name"  value="Burak"/>-->
+<!--            <column  name="email"  value="b@hotmail.com"/>-->
+<!--            <column  name="phone"  value="05454545454"/>-->
+<!--            <column  name="age"  value="21"/>-->
+
+<!--        </insert>-->
+<!--    </changeSet>-->
 
 
 </databaseChangeLog>

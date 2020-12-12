@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
-import CategoryService from '../../services/CategoryService';
-import UserService from '../../services/UserService';
+
+import MediaService from '../../services/MediaService';
 import WaiterService from '../../services/WaiterService';
 
 class UpdateWaiterComponent extends Component {
     constructor(props){
         super(props)
         this.state = {
-            id:this.props.match.params.id,            
+            id:this.props.history.location.state?.id,           
             name:'', 
             email:'',
             phone:'',
-            age:0          
+            age:0,
+            imageId:this.props.history.location.state?.imageId,
+            medias: [],
+            image:[]    
         }
                
         this.changeNameHandler=this.changeNameHandler.bind(this);
         this.changeEmailHandler=this.changeEmailHandler.bind(this);
         this.changePhoneHandler=this.changePhoneHandler.bind(this);
         this.changeAgeHandler=this.changeAgeHandler.bind(this);
+        this.changeImageSelect=this.changeImageSelect.bind(this);
         this.updateWaiter=this.updateWaiter.bind(this);
     }
     componentDidMount(){
@@ -31,20 +35,34 @@ class UpdateWaiterComponent extends Component {
                 name:waiter.name,
                 email:waiter.email,
                 age:waiter.age,
-                phone:waiter.phone
+                phone:waiter.phone,
+                image:waiter.image
             });
         });
+        this.getMedias();
         
     }
     updateWaiter = (e) => {
         e.preventDefault();
     
-        let waiter={id:this.state.id,name:this.state.name,email:this.state.email,phone:this.state.phone,age:this.state.age};
+        let waiter={id:this.state.id,name:this.state.name,email:this.state.email,phone:this.state.phone,age:this.state.age,image:this.state.image};
     
             WaiterService.updateWaiter(waiter).then(res =>{
                 this.props.history.push('/waiter');
     
             })
+    }
+    showImage() {
+        const html = [];
+        const images = this.state.image
+        html.push(<img src={'data:image/png;base64,' + images.fileContent} width="50" />)
+        return html;
+    }
+    getMedias() {
+        MediaService.getMedias().then(res => {
+            this.setState({ medias: res.data });
+            
+        })
     }
     changeIdHandler=(event) =>{
         this.setState({id:event.target.value});
@@ -60,6 +78,9 @@ class UpdateWaiterComponent extends Component {
     }
     changePhoneHandler=(event) =>{
         this.setState({phone:event.target.value});
+    }
+    changeImageSelect=(event) =>{
+        this.setState({image:this.state.medias[event.target.value]});
     }
     
     cancel(){
@@ -96,6 +117,21 @@ class UpdateWaiterComponent extends Component {
                                     <input placeholder="name" name="name" className="form-control"
                                     value={this.state.phone} onChange={this.changePhoneHandler} type="number"/>
                                 </div>
+                                <div className="form-group">
+                                        <label>Category Image :</label>
+                                        <select
+                                            className="form-control" id="option" onChange={this.changeImageSelect} > 
+                                            {
+                                                this.state.medias.map(
+                                                    (media,index) =>
+
+                                                        <option key={media.id} selected={this.state.imageId==media.id}  value={index}>{media.fileName}</option>
+                                                )
+                                            }
+                                        </select>
+                                        {this.showImage()}
+
+                                    </div>
                                
 
                                 <button type="submit" className="btn btn-success" onClick={this.updateWaiter}>Save</button>

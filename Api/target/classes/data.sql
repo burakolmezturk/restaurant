@@ -1,7 +1,5 @@
-INSERT INTO Users (username,password,enabled) VALUES('burak','{noop}1234',true);
-INSERT INTO Authorities (username,authority) VALUES('burak','ROLE_ADMIN');
-
-INSERT INTO Users (username,password,enabled) VALUES('burak1','{noop}12345',true);
-INSERT INTO Authorities (username,authority) VALUES('burak1','ROLE_USER');
-
-
+INSERT INTO USER (EMAIL,USERNAME,PASSWORD,ENABLED) VALUES ('DENEME@HOTMAIL','burak','$2y$12$1E7sVhB80trTlmHCk.EqrO22Eoie15kpGhVppWNeRdWECjSUyoIce',true )
+INSERT INTO ROLES (NAME) VALUES ('ROLE_ADMIN')
+INSERT INTO ROLES (NAME) VALUES ('ROLE_USER')
+INSERT INTO USERS_ROLE (USER_ID,ROLE_ID) VALUES (1,1)
+INSERT INTO USERS_ROLE (USER_ID,ROLE_ID) VALUES (1,2)

@@ -1,6 +1,8 @@
 package com.restaurantapi.restaurantapi.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Media {
@@ -10,6 +12,18 @@ public class Media {
     @Column(length = 100000)
     private byte[] fileContent;
     private String fileName;
+
+
+//    public List<Category> getCategories() {
+//        return categories;
+//    }
+//
+//    public void setCategories(List<Category> categories) {
+//        this.categories = categories;
+//    }
+//
+//    @OneToMany(mappedBy = "image",cascade = CascadeType.ALL)
+//    private List<Category> categories = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -34,4 +48,7 @@ public class Media {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
+
+
+
 }

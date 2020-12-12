@@ -3,12 +3,14 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
+    <include file="/changes/create-insert-media.xml" relativeToChangelogFile="true"/>
+    <include file="/changes/create-insert-roles.xml" relativeToChangelogFile="true"/>
     <include file="/changes/create-insert-users.xml" relativeToChangelogFile="true"/>
-    <include file="/changes/create-insert-authorities.xml" relativeToChangelogFile="true"/>
     <include file="/changes/create-insert-place.xml" relativeToChangelogFile="true"/>
     <include file="/changes/create-insert-waiter.xml" relativeToChangelogFile="true"/>
     <include file="/changes/create-insert-category.xml" relativeToChangelogFile="true"/>
     <include file="/changes/create-insert-product.xml" relativeToChangelogFile="true"/>
     <include file="/changes/create-insert-cart.xml" relativeToChangelogFile="true"/>
-    <include file="/changes/create-insert-media.xml" relativeToChangelogFile="true"/>
+    <include file="/changes/create-insert-users-role.xml" relativeToChangelogFile="true"/>
+    <include file="/changes/create-insert-product-category.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

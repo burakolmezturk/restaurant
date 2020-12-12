@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import WaiterService from '../../services/WaiterService';
-
+import MediaService from '../../services/MediaService';
 
 class CreateWaiterComponent extends Component {
     constructor(props){
@@ -9,28 +9,49 @@ class CreateWaiterComponent extends Component {
             name:'',
             email:'',
             phone:'',
-            age:0 
+            age:0,
+            medias: [],
+            image:[]
         }
         this.changeNameHandler=this.changeNameHandler.bind(this);
         this.changeEmailHandler=this.changeEmailHandler.bind(this);
         this.changeEmailHandler=this.changeEmailHandler.bind(this);
         this.changeEmailHandler=this.changeEmailHandler.bind(this);
-
+        this.changeImageSelect=this.changeImageSelect.bind(this);
         }
         componentDidMount(){
             if(localStorage.getItem("username")==null && localStorage.getItem("password")==null){
                 this.props.history.push('')
             }
+            this.getMedias();
         }
         saveWaiter = (e) => {
             e.preventDefault();
     
-            let waiter={name:this.state.name,email:this.state.email,phone:this.state.phone,age:this.state.age};
+            let waiter={name:this.state.name,email:this.state.email,phone:this.state.phone,age:this.state.age,image:this.state.image};
+            console.log(waiter);
     
                 WaiterService.createWaiter(waiter).then(res =>{
                     this.props.history.push('/waiter');
     
                 })
+        }
+        changeImageSelect=(event) =>{
+            this.setState({image:this.state.medias[event.target.value]});
+        }
+        showImage() {
+            const html = [];
+            const images = this.state.image
+            
+            html.push(<img src={'data:image/png;base64,' + images.fileContent} width="50" />)
+            return html;
+        }
+        getMedias() {
+            MediaService.getMedias().then(res => {
+                this.setState({ medias: res.data });
+                this.setState({image:this.state.medias[0]})
+
+            })
         }
 
         cancel(){
@@ -80,6 +101,21 @@ class CreateWaiterComponent extends Component {
                                     <input placeholder="Waiter Phone" name="name" className="form-control"
                                     value={this.state.phone} onChange={this.changePhoneHandler} type="number"/>
                                 </div>
+                                <div className="form-group">
+                                        <label>Category Image :</label>
+                                        <select
+                                            className="form-control" id="option" onChange={this.changeImageSelect} > 
+                                            {
+                                                this.state.medias.map(
+                                                    (media,index) =>
+
+                                                        <option key={media.id} value={index}>{media.fileName}</option>
+                                                )
+                                            }
+                                        </select>
+                                        {this.showImage()}
+
+                                    </div>
                                
                        
 

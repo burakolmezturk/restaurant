@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
+    <changeSet  id="07.12.2020 15:06:01"  author="burak">
+        <createTable tableName="category_product">
+
+            <column name="category_id" type="int">
+                <constraints primaryKey="true" nullable="false" foreignKeyName="fk_category_id" references="category(id)"/>
+            </column>
+            <column name="product_id" type="int">
+                <constraints primaryKey="true" nullable="false" foreignKeyName="fk_product_id" references="product(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+
+
+</databaseChangeLog>

@@ -5,7 +5,7 @@ class LoginService{
 
     getLogin(username,password){
         return axios.get(LOGIN_API_BASE_URL+"login",{
-            params: {
+            auth: {
               username: username,
               password: password
             }

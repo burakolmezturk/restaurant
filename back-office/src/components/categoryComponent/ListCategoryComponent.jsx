@@ -29,9 +29,18 @@ class ListCategoryComponent extends Component {
             this.setState({categories:this.state.categories.filter(category=>category.id!==categoryId)});      
     });
 }
-    editCategory(id){
-        this.props.history.push(`/update-category/${id}`);
-    }
+editCategory(id,imageId){
+    console.log(imageId)
+    this.props.history.push({
+        pathname: '/update-category',
+        state: {
+            id: id,
+            imageId: imageId
+
+        },
+    });
+
+}
 
     render() {
         return (
@@ -44,6 +53,7 @@ class ListCategoryComponent extends Component {
                             <tr>
                                 <th>Category Name</th>
                                 <th>Category Description</th>
+                                <th>Category Image</th>
                                 <th>Actions</th>
                             </tr>
 
@@ -56,8 +66,9 @@ class ListCategoryComponent extends Component {
                                    <tr key ={category.id} >
                                        <td >{category.name}</td>
                                        <td >{category.description}</td>
+                                       <td><img src={'data:image/png;base64,' + category.image.fileContent} style={{borderRadius:"10px"}} width="50" /></td>
                                        <td >
-                                           <button onClick={() => this.editCategory(category.id)} className="btn btn-info">Edit</button>
+                                           <button onClick={() => this.editCategory(category.id,category.image.id)} className="btn btn-info">Edit</button>
                                            <button style={{marginLeft:"10px"}} onClick={() => this.deleteCategory(category.id)} className="btn btn-danger" >Delete</button>                                  
                                        </td>
                                    </tr>   

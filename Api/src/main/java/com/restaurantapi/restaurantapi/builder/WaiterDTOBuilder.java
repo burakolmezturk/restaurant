@@ -1,6 +1,8 @@
 package com.restaurantapi.restaurantapi.builder;
 
+import com.restaurantapi.restaurantapi.dto.MediaDTO;
 import com.restaurantapi.restaurantapi.dto.WaiterDTO;
+import com.restaurantapi.restaurantapi.entity.Media;
 
 
 public class WaiterDTOBuilder extends Builder {
@@ -8,6 +10,7 @@ public class WaiterDTOBuilder extends Builder {
     private String email;
     private int age;
     private String phone;
+    private MediaDTO image;
 
 
     @Override
@@ -18,6 +21,7 @@ public class WaiterDTOBuilder extends Builder {
         waiterDTO.setEmail(this.email);
         waiterDTO.setAge(this.age);
         waiterDTO.setPhone(this.phone);
+        waiterDTO.setImage(this.image);
         return waiterDTO;
     }
     public WaiterDTOBuilder id(int id){
@@ -38,6 +42,10 @@ public class WaiterDTOBuilder extends Builder {
     }
     public WaiterDTOBuilder age(int age){
         this.age=age;
+        return this;
+    }
+    public WaiterDTOBuilder image(MediaDTO image){
+        this.image=image;
         return this;
     }
 }

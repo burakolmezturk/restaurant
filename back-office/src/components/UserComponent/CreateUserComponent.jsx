@@ -5,26 +5,32 @@ class CreateUserComponent extends Component {
     constructor(props){
         super(props)
         this.state = {
-            username:'',
+            userName:'',
             password:'',
-            role:'',  
+            roleId:[],
+            roles:[]
         }
         this.changeUserNameHandler=this.changeUserNameHandler.bind(this);
         this.changePasswordHandler=this.changePasswordHandler.bind(this);
-        this.changeRoleHandler=this.changeRoleHandler.bind(this);
-
+        
         }
         componentDidMount(){
             if(localStorage.getItem("username")==null && localStorage.getItem("password")==null){
                 this.props.history.push('')
             }
+            UserService.getRoles().then((res)=>{
+            this.setState({roles:res.data})
+            console.log(res.data);
+            }
+            
+           );
         }
         saveUser = (e) => {
             e.preventDefault();
     
-            let user={username:this.state.username,password:this.state.password};
+            let user={userName:this.state.userName,password:this.state.password,rolesId:this.state.roleId};
     
-                UserService.createUser(user,this.state.role).then(res =>{
+                UserService.createUser(user).then(res =>{
                     this.props.history.push('/user');
     
                 })
@@ -34,15 +40,23 @@ class CreateUserComponent extends Component {
             this.props.history.push('/user')
         }
         changeUserNameHandler=(event) =>{
-            this.setState({username:event.target.value});
+            this.setState({userName:event.target.value});
         }
         changePasswordHandler=(event) =>{
             this.setState({password:event.target.value});
         }
-        changeRoleHandler=(event) =>{
-            
-            this.setState({role:event.target.value});
-            console.log(this.state.role);
+        changeMultiCate(id) {
+            if (this.state.roleId.includes(id) !== true) {
+                this.state.roleId.push(id);
+                console.log(this.state.roleId)
+            } else {
+                for (let i = 0; i < this.state.roleId.length; i++) {
+                    if (id === this.state.roleId[i]) {
+                        this.state.roleId.splice(i, 1);
+                        console.log(this.state.roleId)
+                    }
+                }
+            }
         }
 
     render() {
@@ -67,20 +81,20 @@ class CreateUserComponent extends Component {
                                 </div>
                                 
                                 <div className="form-group">
-                                        <label> Role :</label>
-                                        <div className="form-check form-check-inline">
-                                            <input className="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                                   value="ADMIN" onChange={this.changeRoleHandler}/>
-                                                <label className="form-check-label" htmlFor="inlineCheckbox1">ADMIN</label>
-                                        </div>
-                                        <div className="form-check form-check-inline">
-                                            <input className="form-check-input" type="checkbox" id="inlineCheckbox2"
-                                                   value="USER" onChange={this.changeRoleHandler}/>
-                                                <label className="form-check-label" htmlFor="inlineCheckbox2">USER</label>
-                                        </div>
-                                      
+                                        <div className="row col-md-12">
+                                            <div className="checkbox" style={{ height: "10rem", width: "80rem", overflow: "auto" }}>
+                                                {
+                                                    this.state.roles.map(
+                                                        role =>
+                                                            <div className="row col-md -12">
+                                                                <label><input type="checkbox" value="" onClick={() => this.changeMultiCate(role.id)} />{role.name}</label>
+                                                            </div>
+                                                    )
+                                                }
+                                            </div>
 
-                                 </div>
+                                        </div>
+                                    </div>
                        
 
                                 <button className="btn btn-success" onClick={this.saveUser}>Save</button>

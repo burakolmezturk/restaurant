@@ -1,7 +1,13 @@
 package com.restaurantapi.restaurantapi.dto;
 
 
+import com.restaurantapi.restaurantapi.entity.Category;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 public class ProductDTO {
@@ -9,7 +15,15 @@ public class ProductDTO {
 
     private int id;
     private String name;
+    private List<Integer> categoryIdList = new ArrayList<>();
+    private int[] category;
+    private String description;
+    private double salesPrice;
+    private double purchasePrice;
 
+    public List<Integer> getCategoryIdList() {
+        return categoryIdList;
+    }
 
     public String getDescription() {
         return description;
@@ -19,48 +33,27 @@ public class ProductDTO {
         this.description = description;
     }
 
-    private String description;
-    private double salesPrice;
-    private double purchasePrice;
-
-    public String getCategoryName() {
-        return categoryName;
+    public int[] getCategory() {
+        return category;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setCategory(int[] category) {
+        this.category = category;
     }
 
-    private String categoryName;
-
-    public int getCategoryId() {
-        return categoryId;
+    public void setCategoryIdList(List<Integer> categoryIdList) {
+        this.categoryIdList = categoryIdList;
     }
 
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
+    public Set<CategoryDTO> getCategories() {
+        return categories;
     }
 
-    private int categoryId;
-
-    private String categoryDescription;
-    private String categoryImage;
-
-    public String getCategoryDescription() {
-        return categoryDescription;
+    public void setCategories(Set<CategoryDTO> categories) {
+        this.categories = categories;
     }
 
-    public void setCategoryDescription(String categoryDescription) {
-        this.categoryDescription = categoryDescription;
-    }
-
-    public String getCategoryImage() {
-        return categoryImage;
-    }
-
-    public void setCategoryImage(String categoryImage) {
-        this.categoryImage = categoryImage;
-    }
+    private Set<CategoryDTO> categories = new HashSet<>();
 
     public int getId() {
         return id;
@@ -77,7 +70,6 @@ public class ProductDTO {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public double getSalesPrice() {
         return salesPrice;

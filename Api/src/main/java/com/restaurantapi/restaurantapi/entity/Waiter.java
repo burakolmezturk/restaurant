@@ -1,9 +1,8 @@
 package com.restaurantapi.restaurantapi.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 
 @Entity
 public class Waiter {
@@ -14,6 +13,21 @@ public class Waiter {
     private String email;
     private int age;
     private String phone;
+
+    public Media getImage() {
+        return image;
+    }
+
+    public void setImage(Media image) {
+        this.image = image;
+    }
+
+    @JsonIgnore
+    @OneToOne
+    private Media image;
+
+
+
 
     public String getEmail() {
         return email;
@@ -38,7 +52,6 @@ public class Waiter {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
 
 
     public int getId() {

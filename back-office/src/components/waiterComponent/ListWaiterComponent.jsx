@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import CategoryService from '../../services/CategoryService';
 import WaiterService from '../../services/WaiterService';
 
 
@@ -30,8 +29,18 @@ class ListWaiterComponent extends Component {
             this.setState({ waiters: this.state.waiters.filter(waiter => waiter.id !== waiterId) });
         });
     }
-    editWaiter(id) {
-        this.props.history.push(`/update-waiter/${id}`);
+ 
+    editWaiter(id,imageId){
+        console.log(imageId)
+        this.props.history.push({
+            pathname: '/update-waiter',
+            state: {
+                id: id,
+                imageId: imageId
+    
+            },
+        });
+    
     }
 
     render() {
@@ -47,7 +56,7 @@ class ListWaiterComponent extends Component {
                                 <th>Waiter Age</th>
                                 <th>Waiter Email</th>
                                 <th>Waiter Phone</th>
-
+                                <th>Waiter Image</th>
                                 <th>Actions</th>
                             </tr>
 
@@ -62,8 +71,9 @@ class ListWaiterComponent extends Component {
                                             <td >{waiter.age}</td>
                                             <td >{waiter.email}</td>
                                             <td >{waiter.phone}</td>
+                                            <td><img src={'data:image/png;base64,' + waiter.image.fileContent} style={{borderRadius:"10px"}} width="50" /></td>
                                             <td >
-                                                <button onClick={() => this.editWaiter(waiter.id)} className="btn btn-info">Edit</button>
+                                                <button onClick={() => this.editWaiter(waiter.id,waiter.image.id)} className="btn btn-info">Edit</button>
                                                 <button style={{ marginLeft: "10px" }} onClick={() => this.deleteWaiter(waiter.id)} className="btn btn-danger" >Delete</button>
                                             </td>
                                         </tr>

@@ -2,9 +2,11 @@ package com.restaurantapi.restaurantapi.services;
 
 import com.restaurantapi.restaurantapi.builder.CartDTOBuilder;
 import com.restaurantapi.restaurantapi.builder.CategoryDTOBuilder;
+import com.restaurantapi.restaurantapi.builder.MediaDTOBuilder;
 import com.restaurantapi.restaurantapi.builder.ProductDTOBuilder;
 import com.restaurantapi.restaurantapi.dto.CartDTO;
 import com.restaurantapi.restaurantapi.dto.CategoryDTO;
+import com.restaurantapi.restaurantapi.dto.MediaDTO;
 import com.restaurantapi.restaurantapi.dto.ProductDTO;
 import com.restaurantapi.restaurantapi.convertor.CartDTOConvertor;
 import com.restaurantapi.restaurantapi.convertor.CategoryDTOConvertor;
@@ -38,7 +40,10 @@ public class ProductServiceTest {
 
     @Mock
     private CartRepository cartRepository;
-
+    private MediaDTO mediaDTO = new MediaDTOBuilder()
+            .fileContent(null)
+            .fileName("deneme")
+            .id(1).build();
     private CartDTO cartDTO = new CartDTOBuilder()
             .id(1)
             .piece(5)
@@ -56,12 +61,13 @@ public class ProductServiceTest {
             .description("Deneme")
             .salesPrice(8)
             .purchasePrice(3)
+            .categoryId(new int[1])
             .build();
     private CategoryDTO categoryDTO = new CategoryDTOBuilder()
             .id(1)
             .description("deneme")
-            .image("dene")
             .name("cate")
+            .image(mediaDTO)
             .build();
     private List<ProductDTO> productDTOList = new ArrayList<>();
     private Set<ProductDTO> productDTOSet = new HashSet<>();
@@ -77,9 +83,10 @@ public class ProductServiceTest {
     @Test
     public void shouldAddProduct() {
         int categoryId = 1;
+
         Mockito.when(categoryRepository.findById(Mockito.any())).thenReturn(Optional.of(CategoryDTOConvertor.dtoToCategory(categoryDTO)));
         Mockito.when(productRepository.save(Mockito.any())).thenReturn(ProductDTOConvertor.dtoToProduct(productDTO));
-        ProductDTO res = productService.addProduct(productDTO, categoryId);
+        ProductDTO res = productService.addProduct(productDTO);
         Assert.assertNotNull(res);
         Assert.assertEquals(res, productDTO);
 
@@ -88,6 +95,7 @@ public class ProductServiceTest {
     @Test
     public void shouldDeleteProduct() {
         int id = 1;
+        Mockito.when(productRepository.findById(1)).thenReturn(Optional.of(ProductDTOConvertor.dtoToProduct(productDTO)));
         Mockito.when(productRepository.existsById(Mockito.any())).thenReturn(true);
         Boolean res = productService.deleteProduct(id);
         Assert.assertEquals(true, res);
@@ -97,6 +105,7 @@ public class ProductServiceTest {
     @Test
     public void shouldNotDeleteProduct() {
         int id = 1;
+        Mockito.when(productRepository.findById(1)).thenReturn(Optional.of(ProductDTOConvertor.dtoToProduct(productDTO)));
         Mockito.when(productRepository.existsById(Mockito.any())).thenReturn(false);
         Boolean res = productService.deleteProduct(id);
         Assert.assertEquals(false, res);
@@ -115,6 +124,7 @@ public class ProductServiceTest {
     @Test
     public void shouldEditProduct() {
         int categoryId = 1;
+        Mockito.when(productRepository.findById(Mockito.any())).thenReturn(Optional.of(ProductDTOConvertor.dtoToProduct(productDTO)));
         Mockito.when(categoryRepository.findById(Mockito.any())).thenReturn(Optional.of(CategoryDTOConvertor.dtoToCategory(categoryDTO)));
         Mockito.when(productRepository.saveAndFlush(Mockito.any())).thenReturn(ProductDTOConvertor.dtoToProduct(productDTO));
         ProductDTO res = productService.editProduct(productDTO, categoryId);

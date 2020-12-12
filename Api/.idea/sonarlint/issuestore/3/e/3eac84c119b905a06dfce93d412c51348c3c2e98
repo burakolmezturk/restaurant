@@ -1,0 +1,14 @@
+
+s
+java:S1450"WRemove the "products" field and declare it as a local variable in the relevant methods.(ŞÖŠ@8„Şì¶ä.
+H
+java:S1068",Remove this unused "products" private field.(ŞÖŠ@8„Şì¶ä.
+f
+java:S1128"IRemove this unused import 'com.restaurantapi.restaurantapi.entity.Media'.(ÈÃ¨ 8¿Ãâä.
+K
+java:S2387")"id" is the name of a field in "Builder".(ôç¼Óşÿÿÿÿ8¡ğÄœä.
+H
+java:S1068"&Remove this unused "id" private field.(ôç¼Óşÿÿÿÿ8ÁÖÍœä.
+Q
+java:S3740"/Provide the parametrized type for this generic.(£½üıÿÿÿÿ8¡ğÄœä.
+]	java:S125"<This block of commented-out lines of code should be removed.(›òŞ×ùÿÿÿÿ8„Şì¶ä.

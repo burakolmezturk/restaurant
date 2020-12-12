@@ -2,7 +2,6 @@ package com.restaurantapi.restaurantapi.convertor;
 
 
 import com.restaurantapi.restaurantapi.dto.ProductDTO;
-import com.restaurantapi.restaurantapi.entity.Category;
 import com.restaurantapi.restaurantapi.entity.Product;
 
 import java.util.ArrayList;
@@ -19,14 +18,14 @@ public class ProductDTOConvertor {
         Product product = new Product();
         product.setId(productDTO.getId());
         product.setName(productDTO.getName());
-        product.setDesctription(productDTO.getDescription());
+        product.setDescription(productDTO.getDescription());
         product.setPurchasePrice(productDTO.getPurchasePrice());
         product.setSalesPrice(productDTO.getSalesPrice());
-        product.setCategory(new Category());
-        product.getCategory().setId(productDTO.getCategoryId());
-        product.getCategory().setDescription(productDTO.getCategoryDescription());
-        product.getCategory().setImage(productDTO.getCategoryImage());
-        product.getCategory().setName(productDTO.getCategoryName());
+//        product.setCategory(new Category());
+//        product.getCategory().setId(productDTO.getCategoryId());
+//        product.getCategory().setDescription(productDTO.getCategoryDescription());
+//        product.getCategory().setImage(productDTO.getCategoryImage());
+//        product.getCategory().setName(productDTO.getCategoryName());
         return product;
     }
 
@@ -37,10 +36,11 @@ public class ProductDTOConvertor {
         productDTO.setDescription(product.getDescription());
         productDTO.setPurchasePrice(product.getPurchasePrice());
         productDTO.setSalesPrice(product.getSalesPrice());
-        productDTO.setCategoryName(product.getCategory().getName());
-        productDTO.setCategoryId(product.getCategory().getId());
-        productDTO.setCategoryDescription(product.getCategory().getDescription());
-        productDTO.setCategoryImage(product.getCategory().getImage());
+
+//        productDTO.setCategoryName(product.getCategory().getName());
+//        productDTO.setCategoryId(product.getCategory().getId());
+//        productDTO.setCategoryDescription(product.getCategory().getDescription());
+//        productDTO.setCategoryImage(product.getCategory().getImage());
         return productDTO;
     }
 
@@ -72,8 +72,8 @@ public class ProductDTOConvertor {
             productDTO.setDescription(product.getDescription());
             productDTO.setPurchasePrice(product.getPurchasePrice());
             productDTO.setSalesPrice(product.getSalesPrice());
-            productDTO.setCategoryName(product.getCategory().getName());
-            productDTO.setCategoryId(product.getCategory().getId());
+//            productDTO.setCategoryName(product.getCategory().getName());
+//            productDTO.setCategoryId(product.getCategory().getId());
             productDTOList.add(productDTO);
         }
         return productDTOList;
@@ -88,14 +88,14 @@ public class ProductDTOConvertor {
             product = new Product();
             product.setId(productDTO.getId());
             product.setName(productDTO.getName());
-            product.setDesctription(productDTO.getDescription());
+            product.setDescription(productDTO.getDescription());
             product.setPurchasePrice(productDTO.getPurchasePrice());
             product.setSalesPrice(productDTO.getSalesPrice());
-            product.setCategory(new Category());
-            product.getCategory().setName(productDTO.getCategoryName());
-            product.getCategory().setImage(productDTO.getCategoryImage());
-            product.getCategory().setId(productDTO.getCategoryId());
-            product.getCategory().setDescription(productDTO.getCategoryDescription());
+//            product.setCategory(new Category());
+//            product.getCategory().setName(productDTO.getCategoryName());
+//            product.getCategory().setImage(productDTO.getCategoryImage());
+//            product.getCategory().setId(productDTO.getCategoryId());
+//            product.getCategory().setDescription(productDTO.getCategoryDescription());
             productList.add(product);
         }
         return productList;

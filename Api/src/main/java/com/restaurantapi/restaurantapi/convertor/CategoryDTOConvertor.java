@@ -1,9 +1,12 @@
 package com.restaurantapi.restaurantapi.convertor;
 
 import com.restaurantapi.restaurantapi.dto.CategoryDTO;
+import com.restaurantapi.restaurantapi.dto.MediaDTO;
 import com.restaurantapi.restaurantapi.entity.Category;
+import com.restaurantapi.restaurantapi.entity.Media;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -15,18 +18,24 @@ public class CategoryDTOConvertor {
     public static Category dtoToCategory(CategoryDTO categoryDTO) {
         Category category = new Category();
         category.setId(categoryDTO.getId());
-        category.setImage(categoryDTO.getImage());
+        if(categoryDTO.getImage()!=null)
+        category.setImage(MediaDTOConvertor.dtoToMedia(categoryDTO.getImage()));
+        else category.setImage(null);
         category.setDescription(categoryDTO.getDescription());
         category.setName(categoryDTO.getName());
+        category.setProducts(new HashSet<>());
         return category;
     }
 
     public static CategoryDTO categoryToDTO(Category category) {
         CategoryDTO categoryDTO = new CategoryDTO();
         categoryDTO.setId(category.getId());
-        categoryDTO.setImage(category.getImage());
+        if (category.getImage()!=null)
+        categoryDTO.setImage(MediaDTOConvertor.mediaToDTO(category.getImage()));
+        else categoryDTO.setImage(null);
         categoryDTO.setDescription(category.getDescription());
         categoryDTO.setName(category.getName());
+        categoryDTO.setProducts(new HashSet<>());
         return categoryDTO;
     }
 
@@ -38,7 +47,7 @@ public class CategoryDTOConvertor {
         for (Category category : categories) {
             categoryDTO = new CategoryDTO();
             categoryDTO.setId(category.getId());
-            categoryDTO.setImage(category.getImage());
+            categoryDTO.setImage(MediaDTOConvertor.mediaToDTO(category.getImage()) );
             categoryDTO.setDescription(category.getDescription());
             categoryDTO.setName(category.getName());
             categoryDTOList.add(categoryDTO);
@@ -54,7 +63,7 @@ public class CategoryDTOConvertor {
         for (CategoryDTO categoryDTO : categoriesDTO) {
             category = new Category();
             category.setId(categoryDTO.getId());
-            category.setImage(categoryDTO.getImage());
+            category.setImage(MediaDTOConvertor.dtoToMedia(categoryDTO.getImage()));
             category.setDescription(categoryDTO.getDescription());
             category.setName(categoryDTO.getName());
             categoryList.add(category);

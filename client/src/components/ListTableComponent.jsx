@@ -104,6 +104,7 @@ class ListTableComponent extends Component {
                                 <table className="table table-striped table bordered">
                                     <thead>
                                         <tr>
+                                            <th>Waiter Image</th>
                                             <th>Waiter Name</th>
                                             <th>Actions</th>
                                         </tr>
@@ -113,6 +114,7 @@ class ListTableComponent extends Component {
                                             this.state.waiters.map(
                                                 waiter =>
                                                     <tr key={waiter.id}>
+                                                        <td><img src={'data:image/png;base64,' + waiter.image.fileContent} style={{borderRadius:"30px"}} width="50" /></td>
                                                         <td>{waiter.name}</td>
                                                         <button onClick={() => this.order(this.state.tableIndex, waiter.id)} className="btn btn-info" data-dismiss="modal">Select</button>
                                                     </tr>
@@ -153,11 +155,11 @@ class ListTableComponent extends Component {
                 <div className="social-box">
                     <div className="container">
                         <h2 className="text-center">Table List</h2>
-                       
-                        <div className="row" style={{overflow:"auto" ,height:"37rem"}}>
+
+                        <div className="row" style={{ overflow: "auto", height: "37rem" }}>
 
                             {tables}
-                       
+
                         </div>
                     </div>
                 </div>

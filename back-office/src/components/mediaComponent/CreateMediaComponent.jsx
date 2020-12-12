@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import CategoryService from '../../services/CategoryService';
 import MediaService from '../../services/MediaService';
-import UserService from '../../services/UserService';
+
 
 class CreateMediaComponent extends Component {
     constructor(props) {
@@ -24,6 +23,7 @@ class CreateMediaComponent extends Component {
     getMedias() {
         MediaService.getMedias().then(res => {
             this.setState({ media: res.data });
+            console.log(res.data)
         })
     }
 

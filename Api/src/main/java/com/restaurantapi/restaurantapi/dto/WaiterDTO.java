@@ -6,7 +6,15 @@ public class WaiterDTO {
     private String email;
     private int age;
     private String phone;
+    private MediaDTO image;
 
+    public MediaDTO getImage() {
+        return image;
+    }
+
+    public void setImage(MediaDTO image) {
+        this.image = image;
+    }
 
     public String getEmail() {
         return email;
