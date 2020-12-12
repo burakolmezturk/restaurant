@@ -26,27 +26,20 @@ public class UserService {
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public UserDTO saveUser(UserDTO userDTO) {
+    public void saveUser(UserDTO userDTO) {
         List<Role> roleList = roleRepository.findAllById(userDTO.getRolesId());
 
         User user = UserDTOConverter.DTOToUsers(userDTO);
         user.setPassword(encoder.encode(userDTO.getPassword()));
         user.setRoleList(roleList);
         userRepository.save(user);
-        return userDTO;
+
     }
 
     public List<UserDTO> getListUsers() {
         List<UserDTO> userDTOList = new ArrayList<>();
         List<Integer> roleId = new ArrayList<>();
         userRepository.findAll().forEach(users -> userDTOList.add(UserDTOConverter.UserToDTO(users)));
-//        for (UsersDTO usersDTO: usersDTOList) {
-//            roleId=new ArrayList<>();
-//            for (Role role:usersDTO.getRolesList()) {
-//                roleId.add(role.getId());
-//            }
-//            usersDTO.setRolesId(roleId);
-//        }
 
         return userDTOList;
     }
@@ -69,23 +62,18 @@ public class UserService {
 
     }
 
-    public UserDTO updateUser(UserDTO userDTO) {
+    public void updateUser(UserDTO userDTO) {
         List<Role> roleList = roleRepository.findAllById(userDTO.getRolesId());
         User user = UserDTOConverter.DTOToUsers(userDTO);
         user.setPassword(encoder.encode(userDTO.getPassword()));
         user.setRoleList(roleList);
         userRepository.saveAndFlush(user);
-        return userDTO;
+
     }
 
     public void deleteUser(int userId) {
         userRepository.deleteById(userId);
     }
 
-    public List<RoleDTO> getRoles() {
-        List<RoleDTO> roleDTOList = new ArrayList<>();
 
-        roleRepository.findAll().forEach(role -> roleDTOList.add(RoleDTOConvertor.roleToDTO(role)));
-        return roleDTOList;
-    }
 }

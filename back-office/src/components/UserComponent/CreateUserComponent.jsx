@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import UserService from '../../services/UserService';
-
+import RoleService from '../../services/RoleService';
 class CreateUserComponent extends Component {
     constructor(props){
         super(props)
@@ -18,7 +18,7 @@ class CreateUserComponent extends Component {
             if(localStorage.getItem("username")==null && localStorage.getItem("password")==null){
                 this.props.history.push('')
             }
-            UserService.getRoles().then((res)=>{
+            RoleService.getRoles().then((res)=>{
             this.setState({roles:res.data})
             console.log(res.data);
             }

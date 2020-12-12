@@ -30,13 +30,13 @@ public class UserController {
     }
 
     @PostMapping("/function/add")
-    public UserDTO addUser(@RequestBody UserDTO users) {
-        return userService.saveUser(users);
+    public void addUser(@RequestBody UserDTO users) {
+         userService.saveUser(users);
     }
 
     @PutMapping("/function/update")
-    public UserDTO updateUser(@RequestBody UserDTO users) {
-        return userService.updateUser(users);
+    public void updateUser(@RequestBody UserDTO users) {
+         userService.updateUser(users);
     }
     @DeleteMapping("/function/delete/{id}")
     public void deleteUser(@PathVariable int id) {
@@ -46,10 +46,7 @@ public class UserController {
     @GetMapping("/login")
     public void login() {
     }
-    @GetMapping("/roles")
-    public List<RoleDTO> getRoles() {
-        return userService.getRoles();
-    }
+
 }
 
 
