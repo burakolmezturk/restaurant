@@ -14,6 +14,11 @@ public class Waiter {
     private int age;
     private String phone;
 
+
+    @JsonIgnore
+    @OneToOne
+    private Media image;
+
     public Media getImage() {
         return image;
     }
@@ -21,12 +26,6 @@ public class Waiter {
     public void setImage(Media image) {
         this.image = image;
     }
-
-    @JsonIgnore
-    @OneToOne
-    private Media image;
-
-
 
 
     public String getEmail() {

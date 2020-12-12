@@ -72,7 +72,12 @@ public class UserService {
     }
 
     public void deleteUser(int userId) {
-        userRepository.deleteById(userId);
+        Optional<User> userOptional = userRepository.findById(userId);
+        if(userOptional.isPresent()){
+            userOptional.get().setRoleList(null);
+            userRepository.deleteById(userId);
+        }
+
     }
 
 

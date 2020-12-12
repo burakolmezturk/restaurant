@@ -16,10 +16,10 @@ class LoginComponent extends Component {
     loginUser= (e) => {
         e.preventDefault();
         console.log(this.state.username + this.state.password);
-        LoginService.getLogin(this.state.username,'{noop}'+this.state.password).then((res)=>
+        LoginService.getLogin(this.state.username,this.state.password).then((res)=>
         {
             
-            if(res.data!=''){
+            if(res.status!='401'){
                 localStorage.setItem("username",this.state.username);
                 localStorage.setItem("password",this.state.password);
                 if (this.state.checked === true) {

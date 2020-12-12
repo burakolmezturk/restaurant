@@ -1,6 +1,7 @@
 package com.restaurantapi.restaurantapi.builder;
 
 
+import com.restaurantapi.restaurantapi.dto.MediaDTO;
 import com.restaurantapi.restaurantapi.dto.ProductDTO;
 import com.restaurantapi.restaurantapi.entity.Category;
 
@@ -15,6 +16,7 @@ public class ProductDTOBuilder extends Builder {
     private double purchasePrice;
     private Set<Category> categories = new HashSet<>();
     private int[] category;
+    private MediaDTO image;
 
 
     @Override
@@ -26,6 +28,7 @@ public class ProductDTOBuilder extends Builder {
         productDTO.setName(this.name);
         productDTO.setDescription(this.description);
         productDTO.setCategory(this.category);
+        productDTO.setImage(this.image);
        // productDTO.setCategories(this.categories);
         return productDTO;
     }
@@ -60,6 +63,10 @@ public class ProductDTOBuilder extends Builder {
     }
     public ProductDTOBuilder categoryId(int[] category) {
         this.category = category;
+        return this;
+    }
+    public ProductDTOBuilder image(MediaDTO image){
+        this.image=image;
         return this;
     }
 

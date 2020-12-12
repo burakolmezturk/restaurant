@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CategoryService from '../../services/CategoryService';
 import  {AppContext} from '../../ContextApi';
 import ProductService from '../../services/ProductService';
-
+import Loader from "react-loader-spinner";
 
 
 class ListProductComponent extends Component {
@@ -23,8 +23,9 @@ class ListProductComponent extends Component {
     
     componentDidMount() {
         
-        let value = this.context;
-        console.log(value);
+        
+       
+        
         if (localStorage.getItem("username") == null && localStorage.getItem("password") == null) {
             this.props.history.push('')
         }
@@ -38,18 +39,21 @@ class ListProductComponent extends Component {
         CategoryService.getCategory().then((res) => {
  
             this.setState({ categories: res.data })
-
+            this.context=true
+            console.log(this.context)
         });
+        
     }
     getProducts(id) {
         this.setState({ products: this.state.products.filter(product => product.categoryId == id) });
     }
-    editProduct(id, catId) {
+    editProduct(id, catId,imageId) {
         this.props.history.push({
             pathname: '/update-product',
             state: {
                 id: id,
-                catId: catId
+                catId: catId,
+                imageId:imageId
 
             },
         });
@@ -69,11 +73,17 @@ class ListProductComponent extends Component {
         });
     }
     render() {
-        const user = this.context;
+        const loading = this.context;
+        console.log(this.context);
         return (
   
                 <div>
+                    {!loading ? <div style={{width:'100%',height:'100',display:"flex",justifyContent:"center",alignItems:"center",marginTop:"15%"}}> 
+                                  
+                                  <Loader type="TailSpin" color="#000" height="50" width="100"/>                                       
+                         </div> :
                     <div clasname="container">
+                   
                         <h2 className="text-center">Product List</h2>
                         <div className="row">
                             <button className="btn btn-primary" onClick={this.addProduct}>Add Product</button>
@@ -86,6 +96,7 @@ class ListProductComponent extends Component {
                                         <th>Name</th>
                                         <th>Description</th>
                                         <th>Price</th>
+                                        <th>Image</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -101,8 +112,9 @@ class ListProductComponent extends Component {
                                                         <td>{products.name}</td>
                                                         <td>{products.description}</td>
                                                         <td>{products.salesPrice}</td>
+                                                        <td style={{textAlign:"center"}} ><img src={'data:image/png;base64,' + products.image.fileContent} style={{borderRadius:"10px"}} width="50" /></td>
                                                         <td>
-                                                            <button onClick={() => this.editProduct(products.id, products.categoryId)}
+                                                            <button  onClick={() => this.editProduct(products.id, products.categoryId,products.image.id)}
                                                                 className="btn btn-info"> Update
                                                                 </button>
                                                             <button style={{ marginLeft: "6px" }} onClick={() => this.deleteProduct(products.id)}
@@ -120,6 +132,7 @@ class ListProductComponent extends Component {
 
                         </div>
                     </div>
+    }
                 </div>
       
         );

@@ -179,8 +179,9 @@ class CartPageComponent extends Component {
                                         {
                                             this.state.categories.map(categories =>
                                                  
-                                                <a href="#" style={{ backgroundColor: "#f8f9fa" }} className="list-group-item list-group-item-action list-group-item-dark"
-                                                    onClick={() => this.getProducts(categories.id)} > <img src={'data:image/png;base64,' + categories.image.fileContent} style={{width:"2rem",height:"2rem",borderRadius:"10px"}}></img> {categories.name} </a>
+                                                <a href="#" style={{ backgroundColor: "#f8f9fa",textAlign:"left" }} className="list-group-item list-group-item-action list-group-item-dark"
+                                                    onClick={() => this.getProducts(categories.id)} > <img src={'data:image/png;base64,' + categories.image.fileContent} style={{width:"2rem",height:"2rem",borderRadius:"10px"}}></img> {categories.name} </a> 
+                                                    
 
                                             )}
                                     </div>
@@ -199,7 +200,9 @@ class CartPageComponent extends Component {
                                                     <div className="col-sm-6">
                                                         <div className="shadow-lg p-0 mb-2 bg-white rounded">
                                                             <div key={products.id} className="card">
+                                                            <a style={{textAlign:"center"}}> <img  style={{borderRadius:"3px"}}  src={'data:image/png;base64,' + products.image.fileContent} width="190" height="200" /></a>
                                                                 <div className="card-body">
+                                                                   
                                                                     <h5 className="card-title" style={{
                                                                         textAlign: "center",
                                                                         fontWeight: 'bold',

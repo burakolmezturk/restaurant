@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import MediaService from '../../services/MediaService';
 import WaiterService from '../../services/WaiterService';
 
@@ -118,7 +117,7 @@ class UpdateWaiterComponent extends Component {
                                     value={this.state.phone} onChange={this.changePhoneHandler} type="number"/>
                                 </div>
                                 <div className="form-group">
-                                        <label>Category Image :</label>
+                                        <label>Waiter Image :</label>
                                         <select
                                             className="form-control" id="option" onChange={this.changeImageSelect} > 
                                             {

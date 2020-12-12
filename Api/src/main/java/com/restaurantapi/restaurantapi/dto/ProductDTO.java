@@ -20,6 +20,15 @@ public class ProductDTO {
     private String description;
     private double salesPrice;
     private double purchasePrice;
+    private MediaDTO image;
+
+    public MediaDTO getImage() {
+        return image;
+    }
+
+    public void setImage(MediaDTO image) {
+        this.image = image;
+    }
 
     public List<Integer> getCategoryIdList() {
         return categoryIdList;

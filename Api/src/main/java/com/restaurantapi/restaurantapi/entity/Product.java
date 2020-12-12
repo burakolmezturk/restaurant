@@ -2,6 +2,7 @@ package com.restaurantapi.restaurantapi.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -20,6 +21,21 @@ public class Product {
     private double salesPrice;
     private double purchasePrice;
 
+    @JsonIgnore
+    @ManyToOne
+    private Media image;
+
+    @JsonManagedReference
+    @ManyToMany(mappedBy = "products", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Category> categories=new HashSet<>();
+
+    public Media getImage() {
+        return image;
+    }
+
+    public void setImage(Media image) {
+        this.image = image;
+    }
 
     public Set<Category> getCategories() {
         return categories;
@@ -28,10 +44,6 @@ public class Product {
     public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
-
-    @JsonManagedReference
-    @ManyToMany(mappedBy = "products", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<Category> categories=new HashSet<>();
 
     public String getDescription() {
         return description;

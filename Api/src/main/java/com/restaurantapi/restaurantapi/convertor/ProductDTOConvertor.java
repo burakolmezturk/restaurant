@@ -1,7 +1,9 @@
 package com.restaurantapi.restaurantapi.convertor;
 
 
+import com.restaurantapi.restaurantapi.dto.MediaDTO;
 import com.restaurantapi.restaurantapi.dto.ProductDTO;
+import com.restaurantapi.restaurantapi.entity.Media;
 import com.restaurantapi.restaurantapi.entity.Product;
 
 import java.util.ArrayList;
@@ -21,11 +23,9 @@ public class ProductDTOConvertor {
         product.setDescription(productDTO.getDescription());
         product.setPurchasePrice(productDTO.getPurchasePrice());
         product.setSalesPrice(productDTO.getSalesPrice());
-//        product.setCategory(new Category());
-//        product.getCategory().setId(productDTO.getCategoryId());
-//        product.getCategory().setDescription(productDTO.getCategoryDescription());
-//        product.getCategory().setImage(productDTO.getCategoryImage());
-//        product.getCategory().setName(productDTO.getCategoryName());
+        if (productDTO.getName() != null)
+            product.setImage(MediaDTOConvertor.dtoToMedia(productDTO.getImage()));
+        else product.setImage(new Media());
         return product;
     }
 
@@ -36,11 +36,9 @@ public class ProductDTOConvertor {
         productDTO.setDescription(product.getDescription());
         productDTO.setPurchasePrice(product.getPurchasePrice());
         productDTO.setSalesPrice(product.getSalesPrice());
-
-//        productDTO.setCategoryName(product.getCategory().getName());
-//        productDTO.setCategoryId(product.getCategory().getId());
-//        productDTO.setCategoryDescription(product.getCategory().getDescription());
-//        productDTO.setCategoryImage(product.getCategory().getImage());
+        if (product.getName() != null)
+            productDTO.setImage(MediaDTOConvertor.mediaToDTO(product.getImage()));
+        else productDTO.setImage(new MediaDTO());
         return productDTO;
     }
 
@@ -55,6 +53,9 @@ public class ProductDTOConvertor {
             productDTO.setDescription(product.getDescription());
             productDTO.setPurchasePrice(product.getPurchasePrice());
             productDTO.setSalesPrice(product.getSalesPrice());
+            if (product.getName() != null)
+                productDTO.setImage(MediaDTOConvertor.mediaToDTO(product.getImage()));
+            else productDTO.setImage(new MediaDTO());
             productDTOSet.add(productDTO);
         }
         return productDTOSet;
@@ -72,8 +73,10 @@ public class ProductDTOConvertor {
             productDTO.setDescription(product.getDescription());
             productDTO.setPurchasePrice(product.getPurchasePrice());
             productDTO.setSalesPrice(product.getSalesPrice());
-//            productDTO.setCategoryName(product.getCategory().getName());
-//            productDTO.setCategoryId(product.getCategory().getId());
+            if (product.getImage() != null)
+                productDTO.setImage(MediaDTOConvertor.mediaToDTO(product.getImage()));
+            else productDTO.setImage(new MediaDTO());
+
             productDTOList.add(productDTO);
         }
         return productDTOList;
@@ -91,11 +94,9 @@ public class ProductDTOConvertor {
             product.setDescription(productDTO.getDescription());
             product.setPurchasePrice(productDTO.getPurchasePrice());
             product.setSalesPrice(productDTO.getSalesPrice());
-//            product.setCategory(new Category());
-//            product.getCategory().setName(productDTO.getCategoryName());
-//            product.getCategory().setImage(productDTO.getCategoryImage());
-//            product.getCategory().setId(productDTO.getCategoryId());
-//            product.getCategory().setDescription(productDTO.getCategoryDescription());
+            if (productDTO.getName() != null)
+                product.setImage(MediaDTOConvertor.dtoToMedia(productDTO.getImage()));
+            else product.setImage(new Media());
             productList.add(product);
         }
         return productList;

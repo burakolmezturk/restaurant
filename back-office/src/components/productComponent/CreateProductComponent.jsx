@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ThemeProvider } from 'react-bootstrap';
 import CategoryService from '../../services/CategoryService';
 import ProductService from '../../services/ProductService';
-
+import MediaService from '../../services/MediaService';
 class CreateProductComponent extends Component {
     constructor(props) {
         super(props)
@@ -13,7 +13,9 @@ class CreateProductComponent extends Component {
             salesPrice: 0,
             purchasePrice: 0,
             categories: [],
-            multiCategories: []
+            multiCategories: [],
+            medias: [],
+            image:[]
         }
 
         this.changeNameHandler = this.changeNameHandler.bind(this);
@@ -21,7 +23,7 @@ class CreateProductComponent extends Component {
         this.changeCategoryHandler = this.changeCategoryHandler.bind(this);
         this.changeSalesHandler = this.changeSalesHandler.bind(this);
         this.changePurchaseHandler = this.changePurchaseHandler.bind(this);
-
+        this.changeImageSelect=this.changeImageSelect.bind(this);
         this.saveProduct = this.saveProduct.bind(this);
     }
 
@@ -31,9 +33,8 @@ class CreateProductComponent extends Component {
         }
         CategoryService.getCategory().then((res) => {
             this.setState({ categories: res.data })
-
-        }
-        )
+        })
+        this.getMedias();
 
     }
     changeMultiCate(id) {
@@ -56,7 +57,7 @@ class CreateProductComponent extends Component {
 
         let product = {
             name: this.state.name, description: this.state.description, category: this.state.multiCategories,
-            salesPrice: this.state.salesPrice, purchasePrice: this.state.purchasePrice,
+            salesPrice: this.state.salesPrice, purchasePrice: this.state.purchasePrice,image:this.state.image
         };
 
 
@@ -79,6 +80,23 @@ class CreateProductComponent extends Component {
     }
     changePurchaseHandler = (event) => {
         this.setState({ purchasePrice: event.target.value });
+    }
+    changeImageSelect=(event) =>{
+        this.setState({image:this.state.medias[event.target.value]});
+    }
+    showImage() {
+        const html = [];
+        const images = this.state.image
+        
+        html.push(<img src={'data:image/png;base64,' + images.fileContent} width="50" />)
+        return html;
+    }
+    getMedias() {
+        MediaService.getMedias().then(res => {
+            this.setState({ medias: res.data });
+            this.setState({image:this.state.medias[0]})
+
+        })
     }
 
 
@@ -106,9 +124,6 @@ class CreateProductComponent extends Component {
                                             value={this.state.description} onChange={this.changeDescriptionHandler} />
                                     </div>
 
-
-
-
                                     <div className="form-group">
                                         <div className="row col-md-12">
                                             <div className="checkbox" style={{ height: "10rem", width: "80rem", overflow: "auto" }}>
@@ -124,10 +139,6 @@ class CreateProductComponent extends Component {
 
                                         </div>
                                     </div>
-
-
-
-
                                     <div className="form-group">
                                         <label>Sales Price :</label>
                                         <input placeholder="Sales Price" name="salesprice" className="form-control"
@@ -137,6 +148,21 @@ class CreateProductComponent extends Component {
                                         <label>Purchase Price :</label>
                                         <input placeholder="Purchase Price" name="purchaseprice" className="form-control"
                                             value={this.state.purchasePrice} onChange={this.changePurchaseHandler} />
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Product Image :</label>
+                                        <select
+                                            className="form-control" id="option" onChange={this.changeImageSelect} > 
+                                            {
+                                                this.state.medias.map(
+                                                    (media,index) =>
+
+                                                        <option key={media.id} value={index}>{media.fileName}</option>
+                                                )
+                                            }
+                                        </select>
+                                        {this.showImage()}
+
                                     </div>
 
                                     <button className="btn btn-success" onClick={this.saveProduct}>Save</button>
