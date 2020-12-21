@@ -4,6 +4,7 @@ import ProductService from '../services/ProductService';
 import nextId from "react-id-generator";
 import CategoryService from '../services/CategoryService';
 import { get } from 'js-cookie';
+import Loading from './Loading';
 
 class CartPageComponent extends Component {
 
@@ -28,7 +29,8 @@ class CartPageComponent extends Component {
                 totalPrice: 0,
 
             },
-            totalCarts: 0
+            totalCarts: 0,
+            loading:true
 
         }
 
@@ -39,6 +41,7 @@ class CartPageComponent extends Component {
         const data = await ProductService.getProductsByCategory(this.state.categories[0].id);
         await this.setState({ products: data.data });
         await this.getCartFromStorage();
+        this.setState({loading:false})
 
     }
 
@@ -144,8 +147,11 @@ class CartPageComponent extends Component {
     }
 
     render() {
+        const loading = this.state.loading;
         return (
             <html>
+                 {loading == true ? <Loading/> :
+                <div>
                 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
@@ -286,6 +292,8 @@ class CartPageComponent extends Component {
                         </div>
                     </div>
                 </div>
+                </div>
+                 }
             </html>
         );
     }

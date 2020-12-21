@@ -116,7 +116,7 @@ class ListTableComponent extends Component {
                                                     <tr key={waiter.id}>
                                                         <td><img src={'data:image/png;base64,' + waiter.image.fileContent} style={{borderRadius:"30px"}} width="50" /></td>
                                                         <td>{waiter.name}</td>
-                                                        <button onClick={() => this.order(this.state.tableIndex, waiter.id)} className="btn btn-info" data-dismiss="modal">Select</button>
+                                                        <td><button onClick={() => this.order(this.state.tableIndex, waiter.id)} className="btn btn-info" data-dismiss="modal">Select</button></td>
                                                     </tr>
                                             )
                                         }

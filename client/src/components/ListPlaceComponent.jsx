@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import PlacesService from '../services/PlacesService';
+import Loading from './Loading';
 
 
 
@@ -8,7 +9,8 @@ class ListPlaceComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            places: []
+            places: [],
+            loading:true
           
         }
     }
@@ -17,7 +19,9 @@ class ListPlaceComponent extends Component {
             this.props.history.push('')
         }
         PlacesService.getPlaces().then((res) =>
-            this.setState({ places: res.data }))
+            this.setState({ places: res.data,loading:false }
+
+                ))
     }
 
 
@@ -37,8 +41,12 @@ class ListPlaceComponent extends Component {
     }
 
     render() {
+        const loading = this.state.loading;
         return (
+            
             <div>
+                 {loading == true ? <Loading/> :
+                <div>
                 <nav className="navbar navbar-expand-lg  navbar-dark bg-dark">
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
@@ -84,13 +92,11 @@ class ListPlaceComponent extends Component {
                                     </div>
                             )
                         }
-
-
-
-
                     </div>
                 </div>
                 </div>
+                </div>
+                 }
             </div>
 
         );

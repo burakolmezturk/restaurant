@@ -13,6 +13,7 @@ class LoginComponent extends Component {
         this.changepasswordHandler = this.changepasswordHandler.bind(this);
         this.changeCheckedHandler=this.changeCheckedHandler.bind(this);
     }
+    
     loginUser= (e) => {
         e.preventDefault();
         console.log(this.state.username + this.state.password);
