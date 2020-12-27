@@ -1,29 +1,22 @@
 package com.restaurantapi.restaurantapi.entity;
 
+import lombok.Data;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 
+@Data
 @Entity
+@SQLDelete(sql =
+        "UPDATE roles " +
+                "SET deleted = true " +
+                "WHERE id = ?")
+@Where(clause = "deleted = false")
 @Table(name="ROLES")
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Role extends BaseEntity{
+
     private String name;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String username) {
-        this.name = username;
-    }
 
 }

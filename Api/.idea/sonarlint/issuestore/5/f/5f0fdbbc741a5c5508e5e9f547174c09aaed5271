@@ -1,7 +1,7 @@
 
 c
-java:S11268"AReplace this if-then-else statement by a single return statement.(Ä·âÕşÿÿÿÿ8õÔåâ.
+java:S1126;"AReplace this if-then-else statement by a single return statement.(Ä·âÕşÿÿÿÿ8°û‡Öè.
 L
-java:S54110"*Use the primitive boolean expression here.(ˆı¡‡ùÿÿÿÿ8ÒÅåäâ.
+java:S54113"*Use the primitive boolean expression here.(ˆı¡‡ùÿÿÿÿ8°û‡Öè.
 c
-java:S11260"AReplace this if-then-else statement by a single return statement.(ˆı¡‡ùÿÿÿÿ8ÒÅåäâ.
+java:S11263"AReplace this if-then-else statement by a single return statement.(ˆı¡‡ùÿÿÿÿ8°û‡Öè.

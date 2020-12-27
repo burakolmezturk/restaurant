@@ -50,6 +50,8 @@ const ListCategory = () => {
                 <h2 className="text-center">Category List</h2>
                 <div className="row">
                     <button className="btn btn-primary" onClick={() => history.push(`add-category`)}>Add Category</button>
+                    </div>
+                    <div className="row"  style={{ overflow: "auto", height: "35rem" }}>
                     <table className="table table-striped table bordered">
                         <thead>
                             <tr>

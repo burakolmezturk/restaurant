@@ -1,35 +1,17 @@
 package com.restaurantapi.restaurantapi.dto;
 
+import com.restaurantapi.restaurantapi.entity.BaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class PlaceDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class PlaceDTO extends BaseEntity {
 
-    private int id;
     private String name;
-
-    public int getTableCount() {
-        return tableCount;
-    }
-
-    public void setTableCount(int tableCount) {
-        this.tableCount = tableCount;
-    }
-
     private int tableCount;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    private MediaDTO image;
 
 }

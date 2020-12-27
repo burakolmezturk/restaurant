@@ -3,8 +3,8 @@ import '../../src/App.css';
 import ProductService from '../services/ProductService';
 import nextId from "react-id-generator";
 import CategoryService from '../services/CategoryService';
-import { get } from 'js-cookie';
 import Loading from './Loading';
+import InfiniteScroll from 'react-infinite-scroller';
 
 class CartPageComponent extends Component {
 
@@ -17,6 +17,7 @@ class CartPageComponent extends Component {
             placeId: this.props.history.location.state?.placeId,
             tableId: this.props.history.location.state?.tableId,
             waiterId: this.props.history.location.state?.waiterId,
+            customerId:this.props.history.location.state?.customerId,
             products: [],
             categories: [],
             carts: [],
@@ -30,23 +31,28 @@ class CartPageComponent extends Component {
 
             },
             totalCarts: 0,
-            loading:true
-
+            loading: true,
+            loadData: true,
+            deneme: 1,
+            categoryId: 0
         }
 
     }
     async loadPage() {
         const res = await CategoryService.getCategory();
         await this.setState({ categories: res.data });
-        const data = await ProductService.getProductsByCategory(this.state.categories[0].id);
-        await this.setState({ products: data.data });
+        const data = await ProductService.getProductSlice(this.state.categories[0].id, 0);
+        await this.setState({ products: data.data.content,categoryId:this.state.categories[0].id });
+        if (data.data.numberOfElements !== data.data.size) {
+            this.setState({ loadData: false })
+        }
         await this.getCartFromStorage();
-        this.setState({loading:false})
+        this.setState({ loading: false })
 
     }
 
     componentDidMount() {
-
+        console.log(this.state.customerId);
         if (localStorage.getItem("username") == null && localStorage.getItem("password") == null) {
             this.props.history.push('')
         }
@@ -132,168 +138,215 @@ class CartPageComponent extends Component {
                     totalPrice: product.salesPrice,
                     placeId: this.state.placeId,
                     tableId: this.state.tableId,
-                    waiterId: this.state.waiterId
+                    waiterId: this.state.waiterId,
+                    customerId:this.state.customerId
                 }
             }, () => this.setState({ carts: [...this.state.carts, this.state.cart] }));
+            console.log(this.state.carts);
         }
     }
 
     getProducts(id) {
-
-        ProductService.getProductsByCategory(id).then((res) => {
-            this.setState({ products: res.data })
+        
+        ProductService.getProductSlice(id, 0).then((res) => {
+            //this.state.products.push(res.data.content)
+            console.log(id);
+            this.setState({deneme:0})
+            this.setState({categoryId:id});
+            const resdata = res.data.content
+            this.setState({ products: resdata })
+            if (res.data.numberOfElements != res.data.size) {
+                this.setState({deneme:0})
+                this.setState({ loadData: false })
+            }else{
+                this.setState({ loadData: true })
+                this.setState({deneme:this.state.deneme+1})
+            }
         });
+   
 
     }
+    getProductsCategory(id) {
+        console.log(this.state.deneme)
+        ProductService.getProductSlice(this.state.categoryId, this.state.deneme).then((res) => {
+            //this.state.products.push(res.data.content)
+            
+            const resdata = res.data.content
+            this.setState({ products: [...this.state.products, ...resdata] })
+            if (res.data.numberOfElements != res.data.size) {
+                
+                this.setState({ loadData: false })
+            }else{
+                this.setState({ loadData: true })
+                this.setState({deneme:this.state.deneme+1})
+            }
+        });
+       
+
+    }
+
 
     render() {
         const loading = this.state.loading;
         return (
             <html>
-                 {loading == true ? <Loading/> :
-                <div>
-                <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-                    <button className="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-                        <a className="navbar-brand" href="#">Restaurant Automation</a>
-                        <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-                            <li className="nav-item">
-                                <a className="nav-link" href="/place">Tables</a>
-                            </li>
-                        </ul>
+                {loading == true ? <Loading /> :
+                    <div>
+                        <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+                            <button className="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                                <span className="navbar-toggler-icon"></span>
+                            </button>
+                            <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
+                                <a className="navbar-brand" href="#">Restaurant Automation</a>
+                                <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/place">Tables</a>
+                                    </li>
+                                </ul>
 
-                        <form className="form-inline my-2 my-lg-0">
-                            <a href="/place" onClick={() => this.addCartToStorage(this.state.tableId, this.state.placeId, this.state.waiterId)} className="navbar-toggler-icon"></a>
+                                <form className="form-inline my-2 my-lg-0">
+                                    <a href="/place" onClick={() => this.addCartToStorage(this.state.tableId, this.state.placeId, this.state.waiterId)} className="navbar-toggler-icon"></a>
 
-                        </form>
-                    </div>
-                </nav>
-                <div className="container">
+                                </form>
+                            </div>
+                        </nav>
+                        <div className="container">
 
-                    <div className="row">
-                        <div className="col-md-2">
-                            <div className="card card-body-2">
+                            <div className="row">
+                                <div className="col-md-2">
+                                    <div className="card card-body-2">
 
-                                <div className="sidebar">
+                                        <div className="sidebar">
 
-                                    <div className="list-group">
-                                        <a className="list-group-item list-group-item-action " style={{ fontWeight: "bold", backgroundColor: "#868e96", color: "white" }}>Product Categories</a>
-                                        {
-                                            this.state.categories.map(categories =>
-                                                 
-                                                <a href="#" style={{ backgroundColor: "#f8f9fa",textAlign:"left" }} className="list-group-item list-group-item-action list-group-item-dark"
-                                                    onClick={() => this.getProducts(categories.id)} > <img src={'data:image/png;base64,' + categories.image.fileContent} style={{width:"2rem",height:"2rem",borderRadius:"10px"}}></img> {categories.name} </a> 
-                                                    
+                                            <div className="list-group">
+                                                <a className="list-group-item list-group-item-action " style={{ fontWeight: "bold", backgroundColor: "#868e96", color: "white" }}>Product Categories</a>
+                                                <div style={{ overflow: "auto", height: "33.5rem" }}>
+                                                    {
+                                                        this.state.categories.map(categories =>
 
-                                            )}
+                                                            <a href="#" style={{ backgroundColor: "#f8f9fa", textAlign: "left" }} className="list-group-item list-group-item-action list-group-item-dark"
+                                                                onClick={() => this.getProducts(categories.id)} > <img src={'data:image/png;base64,' + categories.image.fileContent} style={{ width: "2rem", height: "2rem", borderRadius: "10px" }}></img> {categories.name} </a>
+
+
+                                                        )}
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
+                                <div className="col-md-5">
+                                    <div className="card card-body-1">
 
-                            </div>
-                        </div>
-                        <div className="col-md-5">
-                            <div className="card card-body-1">
-                                <div className="scroll-1">
-                                    <div className="row">
+                                        <div className="scroll-1">
+                                            <InfiniteScroll
+                                                pageStart={this.state.deneme}
+                                                loadMore={this.getProductsCategory.bind(this)}
+                                                hasMore={this.state.loadData}
+                                                useWindow={false}
+                                            >
 
-                                        {
-                                            this.state.products.map(
-                                                products =>
-                                                    <div className="col-sm-6">
-                                                        <div className="shadow-lg p-0 mb-2 bg-white rounded">
-                                                            <div key={products.id} className="card">
-                                                            <a style={{textAlign:"center"}}> <img  style={{borderRadius:"3px"}}  src={'data:image/png;base64,' + products.image.fileContent} width="190" height="200" /></a>
-                                                                <div className="card-body">
-                                                                   
-                                                                    <h5 className="card-title" style={{
-                                                                        textAlign: "center",
-                                                                        fontWeight: 'bold',
-                                                                        fontSize: "25px"
-                                                                    }}>{products.name}</h5>
-                                                                    <p className="card-text"
-                                                                        style={{ textAlign: "center" }}>{products.description}</p>
-                                                                    <p className="card-text"
-                                                                        style={{ textAlign: "center" }}>{products.salesPrice} ₺</p>
+                                                <div className="row">
 
-                                                                </div>
-                                                                <button className="btn btn-secondary"
-                                                                    onClick={() => this.addCarts(products)}>Add To Carts
+                                                    {
+                                                        this.state.products.map(
+                                                            products =>
+                                                                <div className="col-sm-6">
+                                                                    <div className="shadow-lg p-0 mb-2 bg-white rounded">
+                                                                        <div key={products.id} className="card">
+                                                                            <a style={{ textAlign: "center" }}> <img style={{ borderRadius: "3px" }} src={'data:image/png;base64,' + products.image.fileContent} width="100" height="100" /></a>
+                                                                            <div className="card-body">
+
+                                                                                <h5 className="card-title" style={{
+                                                                                    textAlign: "center",
+                                                                                    fontWeight: 'bold',
+                                                                                    fontSize: "18px"
+                                                                                }}>{products.name}</h5>
+                                                                                <p className="card-text"
+                                                                                    style={{ fontSize: '13px', textAlign: "center" }}>{products.description}</p>
+                                                                                <p className="card-text"
+                                                                                    style={{ textAlign: "center" }}>{products.salesPrice} ₺</p>
+
+                                                                            </div>
+                                                                            <button className="btn btn-secondary"
+                                                                                onClick={() => this.addCarts(products)}>Add To Carts
                                                     </button>
 
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                            )
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="card card-body-3">
-                                <div className="col-md-5">
-                                    <div className="scroll">
-                                        <table className="table table-striped borderless">
-                                            <thead>
-                                                <tr>
-                                                    <th>Increase</th>
-                                                    <th>Name</th>
-                                                    <th>Piece</th>
-                                                    <th>Total</th>
-                                                    <th>Decrease</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {
-                                                    this.state.carts.map(
-                                                        cart =>
-                                                            <tr key={cart.cartid}>
-                                                                <td style={{ textAlign: "center" }}>
-                                                                    <button className="btn btn-success"
-                                                                        onClick={() => this.increasePrice(cart)}>+
-                                                </button>
-                                                                </td>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        )
+                                                    }
 
-                                                                <td style={{ textAlign:"left" }}>{cart.productName}</td>
-                                                                <td style={{ textAlign: "left" }}>{cart.piece}</td>
-
-                                                                <td style={{ textAlign: "left" }}>{cart.totalPrice} ₺</td>
-
-                                                                <td style={{ textAlign: "center" }}>
-                                                                    <button className="btn btn-danger"
-                                                                        onClick={() => this.decreasePrice(cart)}>-
-                                                </button>
-                                                                </td>
-                                                            </tr>
-                                                    )
-                                                }
-                                            </tbody>
-
-                                        </table>
+                                                </div>
+                                            </InfiniteScroll>
+                                        </div>
 
                                     </div>
                                 </div>
+                                <div className="row">
+                                    <div className="card card-body-3">
+                                        <div className="col-md-5">
+                                            <div className="scroll">
+                                                <table className="table table-striped borderless">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Increase</th>
+                                                            <th>Name</th>
+                                                            <th>Piece</th>
+                                                            <th>Total</th>
+                                                            <th>Decrease</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {
+                                                            this.state.carts.map(
+                                                                cart =>
+                                                                    <tr key={cart.cartid}>
+                                                                        <td style={{ textAlign: "center" }}>
+                                                                            <button className="btn btn-success"
+                                                                                onClick={() => this.increasePrice(cart)}>+
+                                                </button>
+                                                                        </td>
+
+                                                                        <td style={{ textAlign: "left" }}>{cart.productName}</td>
+                                                                        <td style={{ textAlign: "left" }}>{cart.piece}</td>
+
+                                                                        <td style={{ textAlign: "left" }}>{cart.totalPrice} ₺</td>
+
+                                                                        <td style={{ textAlign: "center" }}>
+                                                                            <button className="btn btn-danger"
+                                                                                onClick={() => this.decreasePrice(cart)}>-
+                                                </button>
+                                                                        </td>
+                                                                    </tr>
+                                                            )
+                                                        }
+                                                    </tbody>
+
+                                                </table>
+
+                                            </div>
+                                        </div>
 
 
-                                <div className="card" style={{ backgroundColor: "#f9f9f9" }}>
-                                    <a style={{ fontSize: "15px", fontWeight: "bold", marginLeft: "10px", color: "#dc3545" }}>Total Price :<a>{this.state.totalCarts} ₺</a></a>
-                                </div>
+                                        <div className="card" style={{ backgroundColor: "#f9f9f9" }}>
+                                            <a style={{ fontSize: "15px", fontWeight: "bold", marginLeft: "10px", color: "#dc3545" }}>Total Price :<a>{this.state.totalCarts} ₺</a></a>
+                                        </div>
 
-                                <button className="btn" style={{ backgroundColor: "#868e96", color: "white" }}
-                                    onClick={() => this.saleButton(this.state.carts)}>Payment
+                                        <button className="btn" style={{ backgroundColor: "#868e96", color: "white" }}
+                                            onClick={() => this.saleButton(this.state.carts)}>Payment
                                     </button>
 
 
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                </div>
-                 }
+                }
             </html>
         );
     }

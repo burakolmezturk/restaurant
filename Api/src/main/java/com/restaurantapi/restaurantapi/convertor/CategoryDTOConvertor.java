@@ -23,7 +23,7 @@ public class CategoryDTOConvertor {
         else category.setImage(null);
         category.setDescription(categoryDTO.getDescription());
         category.setName(categoryDTO.getName());
-        category.setProducts(new HashSet<>());
+        category.setProducts(new ArrayList<>());
         return category;
     }
 
@@ -35,7 +35,7 @@ public class CategoryDTOConvertor {
         else categoryDTO.setImage(null);
         categoryDTO.setDescription(category.getDescription());
         categoryDTO.setName(category.getName());
-        categoryDTO.setProducts(new HashSet<>());
+       // categoryDTO.setProducts(new HashSet<>());
         return categoryDTO;
     }
 

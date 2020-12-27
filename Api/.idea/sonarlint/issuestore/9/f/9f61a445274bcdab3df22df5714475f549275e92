@@ -1,16 +1,15 @@
 
-[
-java:S36559">Call "optionalProduct.isPresent()" before accessing the value.(Á¯¬»8¸öÆä.
-]	java:S125,"<This block of commented-out lines of code should be removed.(Ç…ÏÉÿÿÿÿÿ8ÂÍˆ¹ä.
+R
+java:S3740¤"/Provide the parametrized type for this generic.(£±×Îûÿÿÿÿ8º“‚æè.
+R
+java:S3740š"/Provide the parametrized type for this generic.(±ÿˆÊüÿÿÿÿ8¿ÿ´ãè.
+‰
+java:S1488š"fImmediately return this expression instead of assigning it to the temporary variable "productDTOPage".(±ÿˆÊüÿÿÿÿ8¿ÿ´ãè.
+d
+java:S1126€"AReplace this if-then-else statement by a single return statement.(óı¤Çÿÿÿÿÿ8¿ÿ´ãè.
 S
-java:S11726"1Remove this unused method parameter "categoryId".(‚§ÿıÿÿÿÿ8™Ğš¿ä.
-ˆ
-java:S1488"fImmediately return this expression instead of assigning it to the temporary variable "productDTOList".(³ƒ¥ ıÿÿÿÿ8 Ù¯Ğâ.
-c
-java:S1126f"AReplace this if-then-else statement by a single return statement.(óı¤Çÿÿÿÿÿ8‹‚Ö¿ä.
-S
-java:S3655="7Call "Optional#isPresent()" before accessing the value.(Û±Ë	8«ñ…Çä.
-`
-java:S3655K">Call "productOptional.isPresent()" before accessing the value.(ò·ı øÿÿÿÿ8‹‚Ö¿ä.
-T
-java:S3655C"7Call "category.isPresent()" before accessing the value.(âœ ‡8¸öÆä.
+java:S1172H"1Remove this unused method parameter "categoryId".(‚§ÿıÿÿÿÿ8¿ÿ´ãè.
+ƒ
+java:S1488¤"`Immediately return this expression instead of assigning it to the temporary variable "dtoSlice".(£±×Îûÿÿÿÿ8‡Ååè.
+]	java:S125u"<This block of commented-out lines of code should be removed.(•©àüÿÿÿÿ8¿ÿ´ãè.
+^	java:S125"<This block of commented-out lines of code should be removed.(Ìê¶æúÿÿÿÿ8¿ÿ´ãè.

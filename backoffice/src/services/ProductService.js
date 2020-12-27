@@ -11,6 +11,18 @@ class ProductService{
             }
         });
     }
+    getProductPage(pageNumber){
+        return axios.get(PRODUCT_API_BASE_URL+"getPage",{
+            auth:{
+                username:localStorage.getItem("username"),
+                password:localStorage.getItem("password")
+            },params:{
+                page:pageNumber,
+                size:10
+            }
+
+        });
+    }
     createProduct(product,categoryId){
         return axios.post(PRODUCT_API_BASE_URL+"add",product,{
             auth:{

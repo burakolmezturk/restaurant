@@ -1,5 +1,11 @@
 
 c
-java:S1126#"AReplace this if-then-else statement by a single return statement.(Öıï‹ùÿÿÿÿ8÷Ÿ¯Ôâ.
-Y
-java:S3655"7Call "Optional#isPresent()" before accessing the value.(»†Ğğøÿÿÿÿ8†Œã…å.
+java:S1126B"AReplace this if-then-else statement by a single return statement.(Öıï‹ùÿÿÿÿ8¬ÙœÒé.
+l
+java:S1128"JRemove this unused import 'org.springframework.cache.annotation.CachePut'.(ıâ‰ şÿÿÿÿ8°ŒñÅé.
+„
+java:S1488,"gImmediately return this expression instead of assigning it to the temporary variable "categoryDTOList".(¦ÚË8¤ÙÒé.
+M
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8ß¦Òé.
+x
+java:S1128"[Remove this unused import 'com.restaurantapi.restaurantapi.convertor.CategoryDTOConvertor'.(‚°­Ş8ˆõÓé.

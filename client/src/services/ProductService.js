@@ -70,6 +70,18 @@ class ProductService{
             }
         })
     }
+    getProductSlice(id,page){
+        return axios.get(PRODUCT_API_BASE_URL+"/getSlice",{
+            auth:{
+                username:localStorage.getItem("username"),
+                password:localStorage.getItem("password")
+            },params:{
+                size:4,
+                page:page,
+                id:id
+            }
+        });
+    }
 
 }
 export default new ProductService()

@@ -25,16 +25,16 @@ const EditCategory = () => {
     useEffect(() => {
         if (localStorage.getItem("username") == null && localStorage.getItem("password") == null) {
             history.push('')
-        }   
+        }
         getData();
 
     }, []);
 
-    async function getData(){
+    async function getData() {
 
         const res = await CategoryService.getCategoryById(id);
         const resMedias = await MediaService.getMedias();
-       
+
         await setMedias(resMedias.data);
         await setCategory({
             ...category,
@@ -45,9 +45,9 @@ const EditCategory = () => {
         });
         setLoading(false);
 
-              
+
     }
- 
+
     const showImage = () => {
 
         const html = [];
@@ -71,56 +71,62 @@ const EditCategory = () => {
         await CategoryService.updateCategory(category);
         history.push(`/category`);
     }
+    const getMedias = () => {
+        return (
+            <div className="form-group">
+                <label>Category Image :</label>
+                <select
+                    className="form-control" id="option" onChange={onChangeImage} >
+                    {
+                        medias.map(
+                            (media, index) =>
 
+                                <option key={media.id} selected={imageId == media.id} value={index}>{media.fileName}</option>
+                        )
+                    }
+                </select>
+                {showImage()}
+            </div>
+        )
+    }
+    const getForm = () => {
+        return (
+            <form>
+                <div className="form-group">
+                    <label>Name :</label>
+                    <input placeholder="Name" name="name" className="form-control"
+                        value={name} onChange={onChangeHandler} />
+                </div>
+                <div className="form-group">
+                    <label>Description :</label>
+                    <input placeholder="Category" name="description" className="form-control"
+                        value={description} onChange={onChangeHandler} />
+                </div>
+                {getMedias()}
+                <button className="btn btn-success" onClick={(e) => updateCategory(e)}>Save</button>
+                <button style={{ marginLeft: "10px" }} className="btn btn-danger" onClick={() => history.push(`/category`)} >Cancel</button>
+            </form>
+        )
+    }
+    if (loading == true) {
+        return (
+            <Loading />
+        )
+    }
     return (
         <div>
-            {loading==true? <Loading/> :
-           <div>
-            <Header/>
+            <Header />
             <div className="container">
                 <div className="row">
                     <div className="card col-md-6 offset-md-3 offset-md-3">
                         <h3 className="text-canter">Edit Category</h3>
                         <div className="card-body">
-                            <form>
-                                <div className="form-group">
-                                    <label>Name :</label>
-                                    <input placeholder="Name" name="name" className="form-control"
-                                        value={name} onChange={onChangeHandler} />
-                                </div>
-                                <div className="form-group">
-                                    <label>Description :</label>
-                                    <input placeholder="Category" name="description" className="form-control"
-                                        value={description} onChange={onChangeHandler} />
-                                </div>
-                                <div className="form-group">
-                                    <label>Category Image :</label>
-                                    <select
-                                        className="form-control" id="option" onChange={onChangeImage} >
-                                        {
-                                            medias.map(
-                                                (media, index) =>
-
-                                                    <option key={media.id} selected={imageId == media.id} value={index}>{media.fileName}</option>
-                                            )
-                                        }
-                                    </select>
-                                    {showImage()}
-
-                                </div>
-
-                                <button className="btn btn-success" onClick={(e) => updateCategory(e)}>Save</button>
-                                <button style={{ marginLeft: "10px" }} className="btn btn-danger" onClick={() => history.push(`/category`)} >Cancel</button>
-                            </form>
+                            {getForm()}
                         </div>
-
                     </div>
-
-                </div>
-
                 </div>
             </div>
-            }
-        </div>)
+        </div>
+    )
 }
 export default EditCategory;

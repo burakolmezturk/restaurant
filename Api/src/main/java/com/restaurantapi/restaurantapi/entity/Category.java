@@ -3,68 +3,43 @@ package com.restaurantapi.restaurantapi.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
+@Data
 @Entity
-public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+@SQLDelete(sql =
+        "UPDATE category " +
+                "SET deleted = true " +
+                "WHERE id = ?")
+@Where(clause = "deleted = false")
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Category extends  BaseEntity{
+
     private String name;
-
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
-    }
-
-    @JsonBackReference
-    @ManyToMany
-    @JoinTable(name = "category_product", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Product> products = new HashSet<>();
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     private String description;
 
-    public Media getImage() {
-        return image;
-    }
-
-    public void setImage(Media image) {
-        this.image = image;
-    }
-
     @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "category_product", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> products = new ArrayList<>();
+
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "media_id")
     private Media image;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                ", name='" + name + '\'' +
+                ", image=" + image +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

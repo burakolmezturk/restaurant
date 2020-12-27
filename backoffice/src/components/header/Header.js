@@ -38,7 +38,9 @@ const Header = () => {
                     <li className="nav-item">
                         <a className="nav-link" href="#" onClick={()=>goPage("/waiter")} >Waiter</a>
                     </li>
-
+                    <li className="nav-item">
+                        <a className="nav-link" href="#"  onClick={()=>goPage("/customers")} >Customer</a>
+                    </li>
                     <li className="nav-item">
                         <a className="nav-link" href="#"  onClick={()=>goPage("/user")} >Reports</a>
                     </li>

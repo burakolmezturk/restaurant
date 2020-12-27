@@ -23,11 +23,12 @@ const ListPlace = () => {
         setLoading(false);
     }
    
-    const editPlace = (id) => {
+    const editPlace = (id,imageId) => {
         history.push({
             pathname: '/update-place',
             state: {
-                id: id
+                id: id,
+                imageId:imageId
             }
         });
     }
@@ -38,48 +39,54 @@ const ListPlace = () => {
      }
     }
 
+    const getTable = () =>{
+        return(
+        <table className="table table-striped table bordered">
+        <thead>
+            <tr>
+                <th>Place Name</th>
+                <th>Table Count</th>
+                <th>Actions</th>
+                <th>Image</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            {
+                places.map(
+                    place =>
+                        <tr key={place.id} >
+                            <td >{place.name}</td>
+                            <td >{place.tableCount}</td>
+                            <td><img src={'data:image/png;base64,' + place.image.fileContent} style={{ borderRadius: "10px" }} width="50" /></td>
+                            <td >
+                                <button onClick={() => editPlace(place.id,place.image.id)} className="btn btn-info">Edit</button>
+                                <button style={{ marginLeft: "10px" }} onClick={() => deletePlace(place.id)} className="btn btn-danger" >Delete</button>
+                            </td>
+                        </tr>
+                )
+            }
+
+        </tbody>
+    </table>)
+    }
+    
+    if(loading==true){
+        return (<Loading/>);
+    }
+
     return (
-        <>
-        {loading==true? <Loading/> :
            <div>
             <Header />
             <div className="container">
                 <h2 className="text-center">Place List</h2>
                 <div className="row">
                     <button className="btn btn-primary" onClick={()=>history.push(`add-place`)}>Add Place</button>
-                    <table className="table table-striped table bordered">
-                        <thead>
-                            <tr>
-                                <th>Place Name</th>
-                                <th>Table Count</th>
-                                <th>Actions</th>
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-                            {
-                                places.map(
-                                    place =>
-                                        <tr key={place.id} >
-                                            <td >{place.name}</td>
-                                            <td >{place.tableCount}</td>
-                                            <td >
-                                                <button onClick={() => editPlace(place.id)} className="btn btn-info">Edit</button>
-                                                <button style={{ marginLeft: "10px" }} onClick={() => deletePlace(place.id)} className="btn btn-danger" >Delete</button>
-                                            </td>
-                                        </tr>
-                                )
-                            }
-
-                        </tbody>
-                    </table>
-
+                     {getTable()}
                 </div>
             </div>
             </div>
-}
-        </>
     )
 }
 export default ListPlace;

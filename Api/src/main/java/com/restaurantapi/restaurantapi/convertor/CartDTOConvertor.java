@@ -17,6 +17,7 @@ public class CartDTOConvertor {
         cart.setTableId(cartDTO.getTableId());
         cart.setTotalPrice(cartDTO.getTotalPrice());
         cart.setWaiterId(cartDTO.getWaiterId());
+        cart.setCustomerId(cartDTO.getCustomerId());
         return cart;
     }
 

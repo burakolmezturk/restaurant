@@ -27,7 +27,15 @@
 .App-link {
   color: #61dafb;
 }
+#react-paginate ul {
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 15px;
+}
 
+#react-paginate li {
+  display: inline-block;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +43,5 @@
   to {
     transform: rotate(360deg);
   }
+  
 }

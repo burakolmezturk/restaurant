@@ -1,11 +1,16 @@
 package com.restaurantapi.restaurantapi.services;
 
 import com.restaurantapi.restaurantapi.convertor.WaiterDTOConvertor;
+import com.restaurantapi.restaurantapi.dto.ErrorMessage;
 import com.restaurantapi.restaurantapi.dto.WaiterDTO;
 import com.restaurantapi.restaurantapi.entity.Media;
 import com.restaurantapi.restaurantapi.entity.Waiter;
+import com.restaurantapi.restaurantapi.exception.BusinessRuleException;
+import com.restaurantapi.restaurantapi.exception.RecordNotFoundException;
+import com.restaurantapi.restaurantapi.mapper.WaiterMapper;
 import com.restaurantapi.restaurantapi.repository.MediaRepository;
 import com.restaurantapi.restaurantapi.repository.WaiterRepository;
+import liquibase.pro.packaged.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,39 +23,52 @@ public class WaiterService {
 
     @Autowired
     private WaiterRepository waiterRepository;
+
     @Autowired
     private MediaRepository mediaRepository;
 
+    @Autowired
+    private WaiterMapper waiterMapper;
+
     public WaiterDTO addWaiter(WaiterDTO waiterDTO) {
-        Media media = mediaRepository.findById(waiterDTO.getImage().getId()).get();
-        Waiter waiter = WaiterDTOConvertor.dtoToWaiter(waiterDTO);
-        waiter.setImage(media);
-        return WaiterDTOConvertor.waiterToDTO(waiterRepository.save(waiter));
+        if (waiterDTO == null) throw new BusinessRuleException(ErrorMessage.WAITER_NOT_FOUND);
+
+        Optional<Media> optionalMedia = mediaRepository.findById(waiterDTO.getImage().getId());
+        if (!optionalMedia.isPresent()) throw new RecordNotFoundException(ErrorMessage.MEDIA_NOT_FOUND);
+
+        Waiter waiter = waiterMapper.toEntity(waiterDTO);
+
+        waiter.setImage(optionalMedia.get());
+        return waiterMapper.toDTO(waiterRepository.save(waiter));
+
     }
 
     public WaiterDTO editWaiter(WaiterDTO waiterDTO) {
-        return WaiterDTOConvertor.waiterToDTO(waiterRepository.saveAndFlush(WaiterDTOConvertor.dtoToWaiter(waiterDTO)));
+
+        return waiterMapper.toDTO(waiterRepository.saveAndFlush(waiterMapper.toEntity(waiterDTO)));
+
     }
 
     public List<WaiterDTO> getAllWaiters() {
         List<Waiter> waiters = waiterRepository.findAll();
-        List<WaiterDTO> waiterDTOList = new ArrayList<>();
-        waiters.stream().forEach(waiter -> waiterDTOList.add(WaiterDTOConvertor.waiterToDTO(waiter)));
+        if (waiters == null) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
+
+        List<WaiterDTO> waiterDTOList = waiterMapper.toEntityList(waiters);
         return waiterDTOList;
     }
 
     public boolean deleteWaiterById(int id) {
-        if (waiterRepository.existsById(id)) {
-            waiterRepository.deleteById(id);
-            return true;
-        } else return false;
+        if (waiterRepository.existsById(id)) throw new RecordNotFoundException(ErrorMessage.ID_IS_NULL);
+
+        waiterRepository.deleteById(id);
+        return true;
     }
 
     public WaiterDTO getWaiterById(int id) {
         Optional<Waiter> waiterOptional = waiterRepository.findById(id);
-        if (!waiterOptional.isPresent()) {
-            return null;
-        }
-        return WaiterDTOConvertor.waiterToDTO(waiterOptional.get());
+        if (!waiterOptional.isPresent()) throw new RecordNotFoundException(ErrorMessage.WAITER_NOT_FOUND);
+
+        return waiterMapper.toDTO(waiterOptional.get());
+
     }
 }

@@ -23,7 +23,7 @@ public class ProductDTOConvertor {
         product.setDescription(productDTO.getDescription());
         product.setPurchasePrice(productDTO.getPurchasePrice());
         product.setSalesPrice(productDTO.getSalesPrice());
-        if (productDTO.getName() != null)
+        if (productDTO.getImage() != null)
             product.setImage(MediaDTOConvertor.dtoToMedia(productDTO.getImage()));
         else product.setImage(new Media());
         return product;
@@ -36,7 +36,7 @@ public class ProductDTOConvertor {
         productDTO.setDescription(product.getDescription());
         productDTO.setPurchasePrice(product.getPurchasePrice());
         productDTO.setSalesPrice(product.getSalesPrice());
-        if (product.getName() != null)
+        if (product.getImage() != null)
             productDTO.setImage(MediaDTOConvertor.mediaToDTO(product.getImage()));
         else productDTO.setImage(new MediaDTO());
         return productDTO;
@@ -53,7 +53,8 @@ public class ProductDTOConvertor {
             productDTO.setDescription(product.getDescription());
             productDTO.setPurchasePrice(product.getPurchasePrice());
             productDTO.setSalesPrice(product.getSalesPrice());
-            if (product.getName() != null)
+            productDTO.setCategories(CategoryDTOConvertor.categoryListToDTOList(product.getCategories()));
+            if (product.getImage() != null)
                 productDTO.setImage(MediaDTOConvertor.mediaToDTO(product.getImage()));
             else productDTO.setImage(new MediaDTO());
             productDTOSet.add(productDTO);
@@ -73,6 +74,7 @@ public class ProductDTOConvertor {
             productDTO.setDescription(product.getDescription());
             productDTO.setPurchasePrice(product.getPurchasePrice());
             productDTO.setSalesPrice(product.getSalesPrice());
+            productDTO.setCategories(CategoryDTOConvertor.categoryListToDTOList(product.getCategories()));
             if (product.getImage() != null)
                 productDTO.setImage(MediaDTOConvertor.mediaToDTO(product.getImage()));
             else productDTO.setImage(new MediaDTO());
@@ -94,7 +96,8 @@ public class ProductDTOConvertor {
             product.setDescription(productDTO.getDescription());
             product.setPurchasePrice(productDTO.getPurchasePrice());
             product.setSalesPrice(productDTO.getSalesPrice());
-            if (productDTO.getName() != null)
+
+            if (productDTO.getImage()!= null)
                 product.setImage(MediaDTOConvertor.dtoToMedia(productDTO.getImage()));
             else product.setImage(new Media());
             productList.add(product);

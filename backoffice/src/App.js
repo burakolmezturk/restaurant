@@ -23,11 +23,19 @@ import EditRole from "./components/role/EditRole";
 import CreateUser from "./components/user/CreateUser";
 import ListUser from "./components/user/ListUser";
 import EditUser from "./components/user/EditUser";
+import CreateCustomer from "./components/customer/CreateCustomer";
+import ListCustomer from "./components/customer/ListCustomer";
+import EditCustomer from "./components/customer/EditCustomer";
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
 function App() {
   return (
     <ContextProvider>
       <Router>
         <Switch>
+        <Route path="/update-customer" component={EditCustomer}></Route>
+          <Route path="/customers" component={ListCustomer}></Route>
+          <Route path="/add-customer" component={CreateCustomer}></Route>
           <Route path="/update-user" component={EditUser}></Route>
           <Route path="/user" component={ListUser}></Route>
           <Route path="/add-user" component={CreateUser}></Route>
@@ -50,10 +58,10 @@ function App() {
           <Route path="/update-waiter" component={EditWaiterComponent}></Route>
           <Route path="/" component={LoginComponent}></Route>
           <Route path="/login" component={LoginComponent}></Route>
-
+          
         </Switch>
 
-
+        <NotificationContainer />
       </Router>
 
     </ContextProvider>

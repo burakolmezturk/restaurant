@@ -23,7 +23,7 @@ class HomePageComponent extends Component {
 					<div  className="box"style={{backgroundColor:"#5ac18e"}}  >
                         
                         <div className="box-btn">
-						    <a href="/cart"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
+						    <a href="/action-customer"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
 						<div className="box-title">
 							<h3 className="box-text1">Cart </h3>
 						</div>
@@ -93,9 +93,9 @@ class HomePageComponent extends Component {
 					<div  className="box"style={{backgroundColor:"#5ac18e"}}>
                         
                         <div className="box-btn">
-						    <a href="#"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
+						    <a href="/customers"><i className="fa fa-behance fa-3x" aria-hidden="true"></i>
 						<div className="box-title">
-							<h3 className="box-text1">Empty </h3>
+							<h3 className="box-text1">Customer </h3>
 						</div>
 						<div className="box-text">
 							<span></span>

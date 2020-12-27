@@ -6,6 +6,10 @@ import HomePageComponent from './components/HomePageComponent';
 import ListPlaceComponent from './components/ListPlaceComponent';
 import ListTableComponent from './components/ListTableComponent';
 import LoginComponent from './components/LoginComponent';
+import ListCustomer from './components/customer/ListCustomer';
+import CreateCustomer from './components/customer/CreateCustomer';
+import EditCustomer from './components/customer/EditCustomer';
+import ActionCustomer from './components/customer/ActionCustomer';
 
 
 function App() {
@@ -21,6 +25,11 @@ function App() {
                   <Route path ="/cart" exact component ={CartPageComponent}></Route>
                   <Route path ="/table" exact component ={ListTableComponent}></Route>
                   <Route path ="/place" exact component ={ListPlaceComponent}></Route>
+                  <Route path ="/customers" exact component ={ListCustomer}></Route>
+                  <Route path ="/add-customer" exact component ={CreateCustomer}></Route>
+                  <Route path ="/update-customer" exact component ={EditCustomer}></Route>
+                  <Route path ="/action-customer" exact component ={ActionCustomer}></Route>
+
                   
             </Switch>
           

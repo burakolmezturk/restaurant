@@ -1,9 +1,8 @@
 
-P
-java:S1068".Remove this unused "categories" private field.(”ÉÜ»ÿÿÿÿÿ8Ï§ÁÇä.
-{
-java:S1450"YRemove the "categories" field and declare it as a local variable in the relevant methods.(”ÉÜ»ÿÿÿÿÿ8üŽÂÇä.
-]	java:S125"<This block of commented-out lines of code should be removed.(ìÀÆ§ýÿÿÿÿ8Œ‚í¶ä.
 L
-java:S3740
-"/Provide the parametrized type for this generic.(ÌÎéÛ8äÉÑ›ä.
+java:S3740"/Provide the parametrized type for this generic.(ÌÎéÛ8äÉÑ›ä.
+{
+java:S1450"YRemove the "categories" field and declare it as a local variable in the relevant methods.(”ÉÜ»ÿÿÿÿÿ8üŽÂÇä.
+]	java:S125 "<This block of commented-out lines of code should be removed.(ìÀÆ§ýÿÿÿÿ8Œ‚í¶ä.
+P
+java:S1068".Remove this unused "categories" private field.(”ÉÜ»ÿÿÿÿÿ8Ï§ÁÇä.

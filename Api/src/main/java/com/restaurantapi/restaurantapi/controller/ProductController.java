@@ -5,6 +5,9 @@ import com.restaurantapi.restaurantapi.dto.ProductDTO;
 import com.restaurantapi.restaurantapi.services.CategoryService;
 import com.restaurantapi.restaurantapi.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,5 +67,14 @@ public class ProductController {
         return productService.getProductsByCategoryId(categoryId);
     }
 
+    @GetMapping("/getPage")
+    public Page<ProductDTO> getFindPage(Pageable pageable){
+        return productService.getFindPage(pageable);
+    }
+
+    @GetMapping("/getSlice")
+    public Slice<ProductDTO> getFindSlice(Pageable pageable,int id){
+        return productService.getProductWithSlice(pageable,id);
+    }
 
 }

@@ -1,31 +1,33 @@
-import { useEffect, useState,useContext } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import ProductService from '../../services/ProductService';
 import Header from '../header/Header';
 import Loading from '../loading/Loading';
 import { Context } from '../../contextApi/ContextApi';
-
+import Pagination from "react-js-pagination";
 const ListProduct = () => {
     const { user } = useContext(Context);
     const history = useHistory();
     const [loading, setLoading] = useState(true);
     const [products, setProducts] = useState([]);
-
+    const [activePage, setActivePage] = useState(0);
+    const [totalElemnts, setTotalElemnts] = useState();
 
     useEffect(() => {
-        
+
         if (user.username == '' && user.password == '') {
             history.push('');
         }
 
         getProducts();
-    },[]);
+    }, []);
     async function getProducts() {
-        
-        const res = await ProductService.getProduct();
-        await setProducts(res.data);
+        console.log(activePage);
+        const res = await ProductService.getProductPage(activePage);
+        await setTotalElemnts(res.data.totalElements);
+        await setProducts(res.data.content);
         setLoading(false);
-        
+
     }
 
     const editProduct = (id, catId, imageId) => {
@@ -43,6 +45,15 @@ const ListProduct = () => {
         await ProductService.deleteProduct(id);
         setProducts(products.filter(products => products.id !== id));
     }
+    const onChangePage = async (e) => {
+
+        await setActivePage(e - 1);
+        await setLoading(true);
+        const res = await ProductService.getProductPage(e - 1);
+        await setProducts(res.data.content);
+        setLoading(false);
+
+    }
 
     return (
         <div>
@@ -54,7 +65,9 @@ const ListProduct = () => {
                         <div className="row">
                             <button className="btn btn-primary" onClick={() => history.push(`add-product`)}>Add Product</button>
                             <button style={{ marginLeft: "6px" }} className="btn btn-primary" >All Products</button>
-                            <table className="table table-striped table-bordered">
+                        </div>
+                        <div className="row">
+                            <table className="table table-striped table-bordered" >
                                 <thead>
                                     <tr>
                                         <th>Category</th>
@@ -73,8 +86,8 @@ const ListProduct = () => {
                                                     <tr key={product.id}>
                                                         <td >
                                                             {
-                                                            product.categories.map( category=>
-                                                                <a  href="#">{category.name} </a>
+                                                                product.categories.map(category =>
+                                                                    <a href="#">{category.name} </a>
                                                                 )
                                                             }
                                                         </td>
@@ -96,10 +109,23 @@ const ListProduct = () => {
                                     )
                                 }
                             </table>
+
                         </div>
+                        <div className="row" style={{marginLeft:"20rem"}}>
+                        <Pagination 
+                            itemClass="page-item"
+                            linkClass="page-link"
+                            activePage={activePage + 1}
+                            itemsCountPerPage={10}
+                            totalItemsCount={totalElemnts}
+                            pageRangeDisplayed={10}
+                            onChange={onChangePage} />
+                            </div>
                     </div>
+
                 </div>
             }
+
         </div>);
 }
 export default ListProduct;
