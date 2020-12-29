@@ -16,7 +16,9 @@ public class PlaceController {
     private PlaceService placeService;
 
     @GetMapping("/list")
-    public List<PlaceDTO> getPlaces(){ return placeService.getPlaces(); }
+    public List<PlaceDTO> getPlaces()
+    {
+        return placeService.getPlaces(); }
     @PostMapping("/add")
     public boolean addPlace(@RequestBody PlaceDTO placeDTO){
         if (placeService.addPlace(placeDTO)) return true;

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
+import java.util.Locale;
 
 @CrossOrigin(origins = "*")
 @RequestMapping("/customer")
@@ -45,7 +46,7 @@ public class CustomerController {
     }
 
     @GetMapping("/search")
-    public Page<CustomerDTO> getCustomerById(@RequestParam String customerName,Pageable pageable){
+    public Page<CustomerDTO> getCustomerByName(@RequestParam String customerName,Pageable pageable){
         return customerService.getCustomersPageByName(customerName,pageable);
     }
 }

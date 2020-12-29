@@ -6,15 +6,16 @@
         <sqlFile path="/db-changelog/changes/create.sql"
                  stripComments="true"/>
     </changeSet>
+    <changeSet author="burak.olmezturk" id="07-10-2020_18:40" runOnChange="true">
+        <sqlFile path="/db-changelog/changes/alter.sql"
+                 stripComments="true"/>
+    </changeSet>
    <include file="/changes/insert-media.xml" relativeToChangelogFile="true"/>
     <changeSet author="burak.olmezturk" id="07-10-2020_18:39" runOnChange="true">
         <sqlFile path="/db-changelog/changes/data.sql"
                  stripComments="true"/>
     </changeSet>
-    <changeSet author="burak.olmezturk" id="07-10-2020_18:40" runOnChange="true">
-        <sqlFile path="/db-changelog/changes/alter.sql"
-                 stripComments="true"/>
-    </changeSet>
+
 <!--    <include file="/changes/create-insert-roles.xml" relativeToChangelogFile="true"/>-->
 <!--    <include file="/changes/create-insert-users.xml" relativeToChangelogFile="true"/>-->
 <!--    <include file="/changes/create-insert-place.xml" relativeToChangelogFile="true"/>-->

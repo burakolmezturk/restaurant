@@ -16,6 +16,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +48,9 @@ public class CategoryService {
 
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @CacheEvict(value = "CategoryCache", allEntries = true)
-    public boolean addCategory(CategoryDTO categoryDTO) {
+    public void addCategory(CategoryDTO categoryDTO) {
         if (categoryDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
 
         Optional<Media> media = mediaRepository.findById(categoryDTO.getImage().getId());
@@ -58,31 +61,30 @@ public class CategoryService {
 
         categoryRepository.save(category);
 
-        if (category.getId() != 0) return true;
-        else return false;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @CacheEvict(value = "CategoryCache", allEntries = true)
     public CategoryDTO editCategory(CategoryDTO categoryDTO) {
-        if (categoryDTO == null) {
-            throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
-        }
+        if (categoryDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
+
 
         categoryRepository.saveAndFlush(categoryMapper.toEntity(categoryDTO));
         return categoryDTO;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @CacheEvict(value = "CategoryCache", allEntries = true)
     public boolean deleteCategory(int id) {
         if (id <= 0) throw new BusinessRuleException(ErrorMessage.ID_IS_NULL);
-        if (categoryRepository.existsById(id)) throw new RecordNotFoundException(ErrorMessage.CATEGORY_NOT_FOUND);
+        if (!categoryRepository.existsById(id)) throw new RecordNotFoundException(ErrorMessage.CATEGORY_NOT_FOUND);
 
         categoryRepository.deleteById(id);
         return true;
 
     }
 
-    @CacheEvict(value = "CategoryCache", allEntries = true)
+    @Cacheable(value = "Category", key = "#categoryId")
     public CategoryDTO getCategoryById(int categoryId) {
 
         Optional<Category> category = categoryRepository.findById(categoryId);

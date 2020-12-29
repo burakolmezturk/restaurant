@@ -5,6 +5,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 @Data
@@ -15,7 +16,7 @@ import java.util.List;
                 "WHERE id = ?")
 @Where(clause = "deleted = false")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Media extends BaseEntity {
+public class Media extends BaseEntity implements Serializable {
 
     @Column(length = 100000)
     private byte[] fileContent;

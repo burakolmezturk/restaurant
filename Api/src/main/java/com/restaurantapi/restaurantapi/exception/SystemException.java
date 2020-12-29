@@ -2,6 +2,8 @@ package com.restaurantapi.restaurantapi.exception;
 
 import com.restaurantapi.restaurantapi.dto.ErrorMessage;
 
+import java.util.Locale;
+
 public class SystemException extends RuntimeException{
     private int errorCode;
     public SystemException(ErrorMessage e){

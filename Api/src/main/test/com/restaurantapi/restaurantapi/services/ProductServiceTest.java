@@ -4,14 +4,17 @@ import com.restaurantapi.restaurantapi.builder.CartDTOBuilder;
 import com.restaurantapi.restaurantapi.builder.CategoryDTOBuilder;
 import com.restaurantapi.restaurantapi.builder.MediaDTOBuilder;
 import com.restaurantapi.restaurantapi.builder.ProductDTOBuilder;
-import com.restaurantapi.restaurantapi.dto.CartDTO;
-import com.restaurantapi.restaurantapi.dto.CategoryDTO;
-import com.restaurantapi.restaurantapi.dto.MediaDTO;
-import com.restaurantapi.restaurantapi.dto.ProductDTO;
+import com.restaurantapi.restaurantapi.dto.*;
 import com.restaurantapi.restaurantapi.convertor.CartDTOConvertor;
 import com.restaurantapi.restaurantapi.convertor.CategoryDTOConvertor;
 import com.restaurantapi.restaurantapi.convertor.ProductDTOConvertor;
 import com.restaurantapi.restaurantapi.entity.Cart;
+import com.restaurantapi.restaurantapi.entity.Category;
+import com.restaurantapi.restaurantapi.entity.Customer;
+import com.restaurantapi.restaurantapi.entity.Product;
+import com.restaurantapi.restaurantapi.mapper.CategoryMapper;
+import com.restaurantapi.restaurantapi.mapper.MediaMapper;
+import com.restaurantapi.restaurantapi.mapper.ProductMapper;
 import com.restaurantapi.restaurantapi.repository.CartRepository;
 import com.restaurantapi.restaurantapi.repository.CategoryRepository;
 import com.restaurantapi.restaurantapi.repository.ProductRepository;
@@ -19,10 +22,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.data.domain.*;
 
 import java.util.*;
 
@@ -37,6 +43,15 @@ public class ProductServiceTest {
 
     @Mock
     private CategoryRepository categoryRepository;
+
+    @Spy
+    private ProductMapper productMapper = Mappers.getMapper(ProductMapper.class);
+
+    @Spy
+    private MediaMapper mediaMapper = Mappers.getMapper(MediaMapper.class);
+
+    @Spy
+    private CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
 
     @Mock
     private CartRepository cartRepository;
@@ -70,25 +85,32 @@ public class ProductServiceTest {
             .image(mediaDTO)
             .build();
     private List<ProductDTO> productDTOList = new ArrayList<>();
-    private Set<ProductDTO> productDTOSet = new HashSet<>();
 
+    private List<Product> productList = new ArrayList<>();
+
+    private Category category = categoryMapper.toEntity(categoryDTO);
+
+    private Product product = productMapper.toEntity(productDTO);
+
+    private Pageable pageable = PageRequest.of(0, 10);
     @Before
     public void setUp() throws Exception {
 
         cartDTOList.add(cartDTO);
-        productDTOSet.add(productDTO);
         productDTOList.add(productDTO);
+
+        productList = productMapper.toEntityList(productDTOList);
+
     }
 
     @Test
     public void shouldAddProduct() {
-        int categoryId = 1;
 
-        Mockito.when(categoryRepository.findById(Mockito.any())).thenReturn(Optional.of(CategoryDTOConvertor.dtoToCategory(categoryDTO)));
-        Mockito.when(productRepository.save(Mockito.any())).thenReturn(ProductDTOConvertor.dtoToProduct(productDTO));
+        Mockito.when(categoryRepository.findById(Mockito.any())).thenReturn(Optional.of(category));
+        Mockito.when(productRepository.save(Mockito.any())).thenReturn(product);
         ProductDTO res = productService.addProduct(productDTO);
         Assert.assertNotNull(res);
-        Assert.assertEquals(res, productDTO);
+        Assert.assertEquals(res.getId(), productDTO.getId());
 
     }
 
@@ -114,31 +136,31 @@ public class ProductServiceTest {
 
     @Test
     public void shouldGetAllProducts() {
-        Mockito.when(productRepository.findAll()).thenReturn(ProductDTOConvertor.dtoListToProductList(productDTOList));
 
+        Mockito.when(productRepository.findAll()).thenReturn(productList);
         List<ProductDTO> res = productService.getAllProducts();
         Assert.assertNotNull(res);
-        //Assert.assertEquals(res, productDTOList);
+        Assert.assertEquals(res.get(0).getId(), productDTOList.get(0).getId());
     }
 
     @Test
     public void shouldEditProduct() {
         int categoryId = 1;
-        Mockito.when(productRepository.findById(Mockito.any())).thenReturn(Optional.of(ProductDTOConvertor.dtoToProduct(productDTO)));
-        Mockito.when(categoryRepository.findById(Mockito.any())).thenReturn(Optional.of(CategoryDTOConvertor.dtoToCategory(categoryDTO)));
-        Mockito.when(productRepository.saveAndFlush(Mockito.any())).thenReturn(ProductDTOConvertor.dtoToProduct(productDTO));
+        Mockito.when(productRepository.findById(Mockito.any())).thenReturn(Optional.of(product));
+        Mockito.when(categoryRepository.findById(Mockito.any())).thenReturn(Optional.of(category));
+        Mockito.when(productRepository.saveAndFlush(Mockito.any())).thenReturn(product);
         ProductDTO res = productService.editProduct(productDTO, categoryId);
         Assert.assertNotNull(res);
-        Assert.assertEquals(res, productDTO);
+        Assert.assertEquals(res.getId(), productDTO.getId());
 
     }
 
     @Test
     public void ShouldGetProductById() {
-        Mockito.when(productRepository.findById(Mockito.any())).thenReturn(Optional.of(ProductDTOConvertor.dtoToProduct(productDTO)));
+        Mockito.when(productRepository.findById(Mockito.any())).thenReturn(Optional.of(product));
         ProductDTO res = productService.getProductById(1);
         Assert.assertNotNull(res);
-        //Assert.assertEquals(res, productDTO);
+        Assert.assertEquals(res.getId(), productDTO.getId());
     }
 
     @Test
@@ -170,5 +192,20 @@ public class ProductServiceTest {
 
         Assert.assertNotNull(res);
 
+    }
+    @Test
+    public void shouldFindByPage(){
+        Mockito.when(productRepository.findAll(pageable)).thenReturn(new PageImpl<Product>(productList, pageable, 1));
+        Page<ProductDTO> productDTOPage = productService.getFindPage(pageable);
+
+        Assert.assertEquals(productDTOPage.getContent().get(0).getId(),productDTO.getId());
+    }
+    @Test
+    public void shouldFindBySlice(){
+        Mockito.when(categoryRepository.findById(1)).thenReturn(Optional.of(category));
+        Mockito.when(productRepository.findProductByCategories(category,pageable)).thenReturn(new PageImpl<Product>(productList, pageable, 1));
+        Slice<ProductDTO> productDTOSlice = productService.getProductWithSlice(pageable,1);
+
+        Assert.assertEquals(productDTOSlice.getContent().get(0).getId(),productDTO.getId());
     }
 }

@@ -3,6 +3,7 @@ CREATE TABLE media (
   id int(11) NOT NULL AUTO_INCREMENT,
   file_name varchar(250) ,
   file_content mediumblob ,
+  deleted bool default false,
   PRIMARY KEY (id)
 );
 CREATE TABLE category (
@@ -10,6 +11,7 @@ CREATE TABLE category (
   name varchar(50) ,
   description varchar(50) ,
   media_id int(11) ,
+  deleted bool default false,
   PRIMARY KEY (id),
   CONSTRAINT fk_media_id FOREIGN KEY (media_id) REFERENCES media (id)
 );
@@ -21,6 +23,7 @@ CREATE TABLE product (
   sales_price float ,
   purchase_price float ,
   media_id int(11),
+  deleted bool default false,
   PRIMARY KEY (id),
   CONSTRAINT fk_media_product FOREIGN KEY (media_id) REFERENCES media (id)
 );
@@ -36,11 +39,13 @@ CREATE TABLE place (
   name varchar(250) ,
   table_count int ,
   media_id int,
+  deleted bool default false,
   PRIMARY KEY (id)
 );
 CREATE TABLE roles (
   id int(11) NOT NULL AUTO_INCREMENT,
   name varchar(250) ,
+  deleted bool,
   PRIMARY KEY (id)
 );
 CREATE TABLE user (
@@ -49,6 +54,7 @@ CREATE TABLE user (
   password varchar(250) ,
   email varchar(250) ,
   enabled bool,
+  deleted bool default false,
   PRIMARY KEY (id)
 );
 CREATE TABLE waiter (
@@ -58,6 +64,7 @@ CREATE TABLE waiter (
   email varchar(250) ,
   age int,
   media_id int ,
+  deleted bool default false,
   PRIMARY KEY (id),
   CONSTRAINT fk_media_waiter FOREIGN KEY (media_id) REFERENCES media (id)
 );

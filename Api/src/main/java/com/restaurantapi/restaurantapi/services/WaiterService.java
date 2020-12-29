@@ -13,6 +13,8 @@ import com.restaurantapi.restaurantapi.repository.WaiterRepository;
 import liquibase.pro.packaged.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ public class WaiterService {
     @Autowired
     private WaiterMapper waiterMapper;
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public WaiterDTO addWaiter(WaiterDTO waiterDTO) {
         if (waiterDTO == null) throw new BusinessRuleException(ErrorMessage.WAITER_NOT_FOUND);
 
@@ -43,22 +46,25 @@ public class WaiterService {
 
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public WaiterDTO editWaiter(WaiterDTO waiterDTO) {
 
+        if (waiterDTO == null) throw new BusinessRuleException(ErrorMessage.WAITER_NOT_FOUND);
         return waiterMapper.toDTO(waiterRepository.saveAndFlush(waiterMapper.toEntity(waiterDTO)));
 
     }
 
     public List<WaiterDTO> getAllWaiters() {
         List<Waiter> waiters = waiterRepository.findAll();
-        if (waiters == null) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
+        if (waiters.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
 
         List<WaiterDTO> waiterDTOList = waiterMapper.toEntityList(waiters);
         return waiterDTOList;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public boolean deleteWaiterById(int id) {
-        if (waiterRepository.existsById(id)) throw new RecordNotFoundException(ErrorMessage.ID_IS_NULL);
+        if (!waiterRepository.existsById(id)) throw new RecordNotFoundException(ErrorMessage.ID_IS_NULL);
 
         waiterRepository.deleteById(id);
         return true;

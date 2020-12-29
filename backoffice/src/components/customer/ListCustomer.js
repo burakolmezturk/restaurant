@@ -4,11 +4,23 @@ import CustomerService from '../../services/CustomerService';
 import Header from '../header/Header';
 import Loading from '../loading/Loading';
 import Pagination from "react-js-pagination";
-import ReactPaginate from 'react-paginate';
-import {createSuccessNotification, createErrorNotification,createWarningNotification,createInfoNotification} from "../Natifications";
+import { Context } from '../../contextApi/ContextApi';
+import { createSuccessNotification, createErrorNotification, createWarningNotification, createInfoNotification } from "../Natifications";
 import 'react-notifications/lib/notifications.css';
+import { CSVLink } from "react-csv";
+
+
 const ListCustomer = () => {
 
+    const headers = [
+        { label: "Name", key: "name" },
+        { label: "Surname", key: "surname" },
+        { label: "Address", key: "address" },
+        { label: "Phone", key: "phone" }
+    ];
+
+
+    const { user, language } = useContext(Context);
     const history = useHistory();
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -23,35 +35,26 @@ const ListCustomer = () => {
 
     const getCustomersByPage = async (activePage) => {
         let res;
-        await CustomerService.getCustomersByPage(activePage)
+        console.log(language);
+        await CustomerService.getCustomersByPage(activePage, language)
             .then(response => {
-                res = response;
+                setCustomers(response.data.content);
+                setTotalElements(response.data.totalElements);
+                setLoading(false);
             }).catch(({ response }) => {
-
-                res = response;
+                setLoading(false);
+                createInfoNotification(response.data.message);
             });
 
-  
-
-        if (res.status !== 200) {
-
-            setLoading(false);
-            createInfoNotification('0 Record Found');
-
-        }
-
-        setCustomers(res.data.content);
-        setTotalElements(res.data.totalElements);
-        setLoading(false);
-
     }
-   
 
-    const editCustomer = (customerId) => {
+
+    const editCustomer = (customerId, imageId) => {
         history.push({
             pathname: '/update-customer',
             state: {
-                id: customerId
+                id: customerId,
+                imageId: imageId
             }
         });
 
@@ -62,12 +65,12 @@ const ListCustomer = () => {
         setLoading(true);
         let res;
         await CustomerService.deleteCustomer(customerId)
-        .then(response => {
-            res = response;
-        }).catch(({ response }) => {
+            .then(response => {
+                res = response;
+            }).catch(({ response }) => {
 
-            res = response;
-        });
+                res = response;
+            });
 
 
         if (res.status === 200) {
@@ -98,6 +101,7 @@ const ListCustomer = () => {
                                 <th>Surname</th>
                                 <th>Address</th>
                                 <th>Phone</th>
+                                <th>Image</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -111,8 +115,9 @@ const ListCustomer = () => {
                                                 <td>{customer.surname}</td>
                                                 <td>{customer.address}</td>
                                                 <td>{customer.phone}</td>
+                                                <td><img src={'data:image/png;base64,' + customer.image.fileContent} style={{ borderRadius: "10px" }} width="50" /></td>
                                                 <td>
-                                                    <button onClick={() => editCustomer(customer.id)}
+                                                    <button onClick={() => editCustomer(customer.id, customer.image.id)}
                                                         className="btn btn-info"> Update
                                                         </button>
                                                     <button style={{ marginLeft: "6px" }} onClick={() => deleteCustomer(customer.id)}
@@ -157,7 +162,7 @@ const ListCustomer = () => {
         }
 
     }
-   
+
     if (loading == true) {
         return (
             <Loading />
@@ -170,6 +175,9 @@ const ListCustomer = () => {
                 <h2 className="text-center">Customer List</h2>
                 <div className="row">
                     <button className="btn btn-primary" onClick={() => history.push(`add-customer`)}>Add Customer</button>
+                    <CSVLink className="btn btn-primary" style={{marginLeft:"10px"}} data={customers} headers={headers}>
+                        Download Excel
+                      </CSVLink>
                 </div>
                 {getCustomersTable()}
                 {getPagenition()}

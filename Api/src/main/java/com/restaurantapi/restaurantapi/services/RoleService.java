@@ -8,8 +8,11 @@ import com.restaurantapi.restaurantapi.exception.BusinessRuleException;
 import com.restaurantapi.restaurantapi.exception.RecordNotFoundException;
 import com.restaurantapi.restaurantapi.mapper.RoleMapper;
 import com.restaurantapi.restaurantapi.repository.RoleRepository;
+import liquibase.pro.packaged.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,39 +25,42 @@ public class RoleService {
     private RoleRepository roleRepository;
 
     @Autowired
-    private  RoleMapper roleMapper;
+    private RoleMapper roleMapper;
 
-    public List<RoleDTO> getAllRoles(){
+    public List<RoleDTO> getAllRoles() {
 
-        List<Role>roleList =roleRepository.findAll();
-        if(roleList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
+        List<Role> roleList = roleRepository.findAll();
+        if (roleList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
 
-        return   roleMapper.toDTOList(roleList);
+        return roleMapper.toDTOList(roleList);
     }
 
-    public void addRole(RoleDTO roleDTO){
-        if(roleDTO==null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addRole(RoleDTO roleDTO) {
+        if (roleDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
 
         roleRepository.save(roleMapper.toEntity(roleDTO));
     }
 
-    public void editRole(RoleDTO roleDTO){
-        if(roleDTO==null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void editRole(RoleDTO roleDTO) {
+        if (roleDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
 
         roleRepository.saveAndFlush(roleMapper.toEntity(roleDTO));
     }
 
-    public void deleteRole(RoleDTO roleDTO){
-        if(roleDTO==null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void deleteRole(RoleDTO roleDTO) {
+        if (roleDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
 
         roleRepository.deleteById(roleMapper.toEntity(roleDTO).getId());
     }
 
-    public RoleDTO getRoleById(int roleId){
+    public RoleDTO getRoleById(int roleId) {
 
-       Optional<Role> role = roleRepository.findById(roleId);
-       if(!role.isPresent()) throw new BusinessRuleException(ErrorMessage.ROLE_NOT_FOUND);
+        Optional<Role> role = roleRepository.findById(roleId);
+        if (!role.isPresent()) throw new BusinessRuleException(ErrorMessage.ROLE_NOT_FOUND);
 
-       return  roleMapper.toDTO(role.get());
+        return roleMapper.toDTO(role.get());
     }
 }

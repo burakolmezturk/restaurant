@@ -20,6 +20,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -40,17 +42,15 @@ public class ProductService {
     public List<ProductDTO> getAllProducts() {
         List<Product> productList = productRepository.findAll();
 
-        if (productList.isEmpty()) {
-            throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
-        }
+        if (productList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
+
 
         return productMapper.toDTOList(productList);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public ProductDTO addProduct(ProductDTO productDTO) {
-        if (productDTO == null) {
-            throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
-        }
+        if (productDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
 
         Product product = productMapper.toEntity(productDTO);
 
@@ -59,9 +59,8 @@ public class ProductService {
 
             Optional<Category> category = categoryRepository.findById(categoryIds[i]);
 
-            if (!category.isPresent()) {
-               throw new RecordNotFoundException(ErrorMessage.CATEGORY_NOT_FOUND);
-            }
+            if (!category.isPresent()) throw new RecordNotFoundException(ErrorMessage.CATEGORY_NOT_FOUND);
+
             category.get().getProducts().add(product);
         }
         productRepository.save(product);
@@ -69,12 +68,12 @@ public class ProductService {
 
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public ProductDTO editProduct(ProductDTO productDTO, int categoryId) {
 
         Optional<Product> optionalProduct = productRepository.findById(productDTO.getId());
-        if(!optionalProduct.isPresent()){
-            throw new RecordNotFoundException(ErrorMessage.PRODUCT_NOT_FOUND);
-        }
+        if (!optionalProduct.isPresent()) throw new RecordNotFoundException(ErrorMessage.PRODUCT_NOT_FOUND);
+
 
         optionalProduct.get().getCategories().forEach(category -> category.getProducts().remove(optionalProduct.get()));
 
@@ -86,6 +85,7 @@ public class ProductService {
         }
 
         product.setCategories(categoryList);
+
         categoryList.forEach(category -> categoryRepository.saveAndFlush(category));
         for (int i = 0; i < productDTO.getCategoryIdList().size(); i++) {
             Optional<Category> category = categoryRepository.findById(productDTO.getCategoryIdList().get(i));
@@ -95,6 +95,7 @@ public class ProductService {
         return productDTO;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public Boolean deleteProduct(int id) {
         Optional<Product> productOptional = productRepository.findById(id);
         productOptional.get().getCategories().stream().forEach(category -> category.getProducts().remove(productOptional.get()));
@@ -110,17 +111,16 @@ public class ProductService {
     public ProductDTO getProductById(int id) {
         List<Integer> categories = new ArrayList<>();
         Optional<Product> productOptional = productRepository.findById(id);
-        if (!productOptional.isPresent()) {
-            return null;
-        }
+        if (!productOptional.isPresent()) throw new RecordNotFoundException(ErrorMessage.PRODUCT_NOT_FOUND);
+
         ProductDTO productDTO = productMapper.toDTO(productOptional.get());
-        //ProductDTOConvertor.productToDto(productOptional.get());
         productOptional.get().getCategories().stream().forEach(category -> categories.add(category.getId()));
         productDTO.setCategoryIdList(categories);
 
         return productDTO;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public boolean sellProduct(List<CartDTO> cartDTOList) {
         List<Cart> cartList = new ArrayList<>();
         cartDTOList.stream().forEach(cartDTO -> cartList.add(CartDTOConvertor.dtoToCart(cartDTO)));
@@ -131,18 +131,16 @@ public class ProductService {
     }
 
     public Set<ProductDTO> getProductsByCategoryId(int categoryId) {
+        if (categoryId <= 0) throw new RecordNotFoundException(ErrorMessage.ID_IS_NULL);
         Optional<Category> category = categoryRepository.findById(categoryId);
         Set<ProductDTO> productDTOSet = new HashSet<>();
-        if (category.isPresent()) {
 
-            List<Product> productSet = category.get().getProducts();
-            productSet.forEach(product -> productDTOSet.add(productMapper.toDTO(product)));
+        if (!category.isPresent()) throw new RecordNotFoundException(ErrorMessage.PRODUCT_NOT_FOUND);
 
-            return productDTOSet;
-            // ProductDTOConvertor.setProductToSetDTO(category.get().getProducts());
-        } else {
-            return Collections.emptySet();
-        }
+        List<Product> productSet = category.get().getProducts();
+        productSet.forEach(product -> productDTOSet.add(productMapper.toDTO(product)));
+
+        return productDTOSet;
 
     }
 
@@ -162,6 +160,7 @@ public class ProductService {
         List<ProductDTO> productDTOList = new ArrayList<>();
         productSlice.getContent().forEach(product -> productDTOList.add(productMapper.toDTO(product)));
         Slice<ProductDTO> dtoSlice = new PageImpl(productDTOList, pageable, productSlice.getSize());
+
         return dtoSlice;
     }
 }

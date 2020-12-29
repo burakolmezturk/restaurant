@@ -41,7 +41,7 @@ const EditPlace = () => {
     const getMedias = () => {
         return (
             <div className="form-group">
-                <label>Category Image :</label>
+                <label>Place Image :</label>
                 <select
                     className="form-control" id="option" onChange={onChangeImage} >
                     {

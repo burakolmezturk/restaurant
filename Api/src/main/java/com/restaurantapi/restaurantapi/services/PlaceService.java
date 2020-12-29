@@ -10,6 +10,8 @@ import com.restaurantapi.restaurantapi.mapper.PlaceMapper;
 import com.restaurantapi.restaurantapi.repository.PlaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +29,15 @@ public class PlaceService {
     public List<PlaceDTO> getPlaces() {
 
         List<Place> places = placeRepository.findAll();
-        if(places.isEmpty())throw new BusinessRuleException(ErrorMessage.RECORD_NOT_FOUND);
+        if (places.isEmpty()) throw new BusinessRuleException(ErrorMessage.RECORD_NOT_FOUND);
 
         return placeMapper.toDTOPlace(places);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public boolean addPlace(PlaceDTO placeDTO) {
 
-        if(placeDTO==null) throw new BusinessRuleException(ErrorMessage.PLACE_NOT_FOUND);
+        if (placeDTO == null) throw new BusinessRuleException(ErrorMessage.PLACE_NOT_FOUND);
 
         Place place = placeRepository.save(placeMapper.toEntity(placeDTO));
 
@@ -43,16 +46,18 @@ public class PlaceService {
 
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public PlaceDTO editPlace(PlaceDTO placeDTO) {
-        if(placeDTO==null)throw new BusinessRuleException(ErrorMessage.PLACE_NOT_FOUND);
+        if (placeDTO == null) throw new BusinessRuleException(ErrorMessage.PLACE_NOT_FOUND);
 
         placeRepository.saveAndFlush(placeMapper.toEntity(placeDTO));
         return placeDTO;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public boolean deletePlace(int id) {
 
-        if(id<=0)throw new BusinessRuleException(ErrorMessage.ID_IS_NULL);
+        if (id <= 0) throw new BusinessRuleException(ErrorMessage.ID_IS_NULL);
         if (!placeRepository.existsById(id)) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
 
         placeRepository.deleteById(id);

@@ -6,16 +6,23 @@ import com.restaurantapi.restaurantapi.convertor.MediaDTOConvertor;
 import com.restaurantapi.restaurantapi.convertor.WaiterDTOConvertor;
 import com.restaurantapi.restaurantapi.dto.MediaDTO;
 import com.restaurantapi.restaurantapi.dto.WaiterDTO;
+import com.restaurantapi.restaurantapi.entity.Media;
 import com.restaurantapi.restaurantapi.entity.Waiter;
+import com.restaurantapi.restaurantapi.exception.BusinessRuleException;
+import com.restaurantapi.restaurantapi.exception.RecordNotFoundException;
+import com.restaurantapi.restaurantapi.mapper.MediaMapper;
+import com.restaurantapi.restaurantapi.mapper.WaiterMapper;
 import com.restaurantapi.restaurantapi.repository.MediaRepository;
 import com.restaurantapi.restaurantapi.repository.WaiterRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
@@ -34,6 +41,12 @@ public class WaiterServiceTest {
     @Mock
     private MediaRepository mediaRepository;
 
+    @Spy
+    private WaiterMapper waiterMapper = Mappers.getMapper(WaiterMapper.class);
+
+    @Spy
+    private MediaMapper mediaMapper = Mappers.getMapper(MediaMapper.class);
+
     private MediaDTO mediaDTO = new MediaDTOBuilder()
             .fileContent(null)
             .fileName("deneme")
@@ -48,29 +61,30 @@ public class WaiterServiceTest {
             .build();
 
     private List<WaiterDTO> waiterDTOList = new ArrayList<>();
-    private Waiter waiter = WaiterDTOConvertor.dtoToWaiter(waiterDTO);
+    private Waiter waiter = waiterMapper.toEntity(waiterDTO);
     private List<Waiter> waiterList = new ArrayList<>();
+    private Media media = mediaMapper.toEntity(mediaDTO);
 
     @Before
     public void setUp() {
         waiterDTOList.add(waiterDTO);
-        waiterDTOList.stream().forEach(waiter -> waiterList.add(WaiterDTOConvertor.dtoToWaiter(waiter)));
+        waiterList = waiterMapper.toDTOList(waiterDTOList);
     }
 
     @Test
     public void shouldAddWaiter() {
-        Mockito.when(mediaRepository.findById(1)).thenReturn(Optional.of(MediaDTOConvertor.dtoToMedia(mediaDTO)));
+        Mockito.when(mediaRepository.findById(1)).thenReturn(Optional.of(media));
         Mockito.when(waiterRepository.save(Mockito.any())).thenReturn(waiter);
         WaiterDTO res = waiterService.addWaiter(waiterDTO);
         Assert.assertEquals(res.getId(), waiterDTO.getId());
     }
 
-    @Test
-    public void shouldNotAddWaiter() {
-        Mockito.when(mediaRepository.findById(1)).thenReturn(Optional.of(MediaDTOConvertor.dtoToMedia(mediaDTO)));
+    @Test(expected = BusinessRuleException.class)
+    public void shouldNotAddWaiterDTONull() {
+        Mockito.when(mediaRepository.findById(1)).thenReturn(Optional.of(media));
         Mockito.when(waiterRepository.save(Mockito.any())).thenReturn(new Waiter());
-        WaiterDTO res = waiterService.addWaiter(waiterDTO);
-        Assert.assertNotEquals(res.getId(), waiterDTO.getId());
+        WaiterDTO res = waiterService.addWaiter(null);
+
     }
 
     @Test
@@ -80,11 +94,11 @@ public class WaiterServiceTest {
         Assert.assertEquals(waiterDTO.getId(), res.getId());
     }
 
-    @Test
+    @Test(expected = BusinessRuleException.class)
     public void shouldNotEditWaiter() {
-        Mockito.when(waiterRepository.saveAndFlush(Mockito.any())).thenReturn(new Waiter());
-        WaiterDTO res = waiterService.editWaiter(waiterDTO);
-        Assert.assertNotEquals(waiterDTO.getId(), res.getId());
+        Mockito.when(waiterRepository.saveAndFlush(Mockito.any())).thenReturn(null);
+        waiterService.editWaiter(null);
+
     }
 
     @Test
@@ -101,7 +115,7 @@ public class WaiterServiceTest {
         Assert.assertEquals(true, res);
     }
 
-    @Test
+    @Test(expected = RecordNotFoundException.class)
     public void shouldNotDeleteWaiterById() {
         Mockito.when(waiterRepository.existsById(1)).thenReturn(false);
         Boolean res = waiterService.deleteWaiterById(1);

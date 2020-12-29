@@ -16,7 +16,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDTO extends BaseEntity {
+public class ProductDTO extends BaseDTO {
 
 
     private String name;

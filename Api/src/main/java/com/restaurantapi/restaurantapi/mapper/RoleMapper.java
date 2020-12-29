@@ -2,8 +2,10 @@ package com.restaurantapi.restaurantapi.mapper;
 
 import com.restaurantapi.restaurantapi.dto.RoleDTO;
 import com.restaurantapi.restaurantapi.entity.Role;
+import org.junit.runner.RunWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 

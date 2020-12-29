@@ -4,21 +4,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+
+import java.util.Locale;
+
 
 public enum ErrorMessage {
-    ID_IS_NULL("Id couldn't be null", 1),
-    ENTITY_IS_NULL("Entity couldn't be null", 2),
-    RECORD_NOT_FOUND("No Records Found", 3),
-    MEDIA_NOT_FOUND("No Media Found", 4),
-    CATEGORY_NOT_FOUND("No Category Found", 5),
-    PRODUCT_NOT_FOUND("No Category Found", 6),
-    ROLE_NOT_FOUND("No Role Found", 7),
-    PLACE_NOT_FOUND("No Place Found",8),
-    WAITER_NOT_FOUND("No Waiter Found",9),
-    USER_NOT_FOUND("No Waiter Found",10),
-    FILE_NOT_FOUND("No File Found", 11),
-    PATH_IS_NULL_OR_WRONG("Path Is Null Or Wrong", 12);
-
+    ID_IS_NULL("ID_IS_NULL", 1),
+    ENTITY_IS_NULL("ENTITY_IS_NULL", 2),
+    RECORD_NOT_FOUND("RECORD_NOT_FOUND", 3),
+    MEDIA_NOT_FOUND("MEDIA_NOT_FOUND", 4),
+    CATEGORY_NOT_FOUND("CATEGORY_NOT_FOUND", 5),
+    PRODUCT_NOT_FOUND("PRODUCT_NOT_FOUND", 6),
+    ROLE_NOT_FOUND("ROLE_NOT_FOUND", 7),
+    PLACE_NOT_FOUND("PLACE_NOT_FOUND",8),
+    WAITER_NOT_FOUND("WAITER_NOT_FOUND",9),
+    USER_NOT_FOUND("USER_NOT_FOUND",10),
+    FILE_NOT_FOUND("FILE_NOT_FOUND", 11),
+    PATH_IS_NULL_OR_WRONG("PATH_IS_NULL_OR_WRONG", 12);
 
     private String message;
     private int errorCode;
@@ -37,4 +41,5 @@ public enum ErrorMessage {
         return message;
 
     }
+
 }

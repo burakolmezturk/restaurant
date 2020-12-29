@@ -16,6 +16,8 @@ import com.restaurantapi.restaurantapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +37,12 @@ public class UserService {
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public void saveUser(UserDTO userDTO) {
-        if(userDTO==null) throw new BusinessRuleException(ErrorMessage.USER_NOT_FOUND);
+        if (userDTO == null) throw new BusinessRuleException(ErrorMessage.USER_NOT_FOUND);
 
         List<Role> roleList = roleRepository.findAllById(userDTO.getRolesId());
-        if(roleList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
+        if (roleList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
 
         User user = userMapper.toEntity(userDTO);
         user.setPassword(encoder.encode(userDTO.getPassword()));
@@ -51,7 +54,7 @@ public class UserService {
 
     public List<UserDTO> getListUsers() {
         List<User> users = userRepository.findAll();
-        if(users.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
+        if (users.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
 
         return userMapper.toDTOList(users);
     }
@@ -71,14 +74,15 @@ public class UserService {
 
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public void updateUser(UserDTO userDTO) {
-        if (userDTO==null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
+        if (userDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
         List<Integer> rolesIdsList = userDTO.getRolesId();
 
         if (rolesIdsList.isEmpty()) throw new BusinessRuleException(ErrorMessage.ROLE_NOT_FOUND);
 
         List<Role> roleList = roleRepository.findAllById(rolesIdsList);
-        if(roleList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
+        if (roleList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
 
         User user = userMapper.toEntity(userDTO);
         user.setPassword(encoder.encode(userDTO.getPassword()));
@@ -87,10 +91,11 @@ public class UserService {
 
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteUser(int userId) {
-        if(userId<=0) throw new BusinessRuleException(ErrorMessage.ID_IS_NULL);
+        if (userId <= 0) throw new BusinessRuleException(ErrorMessage.ID_IS_NULL);
         Optional<User> userOptional = userRepository.findById(userId);
-        if(!userOptional.isPresent())throw new BusinessRuleException(ErrorMessage.USER_NOT_FOUND);
+        if (!userOptional.isPresent()) throw new BusinessRuleException(ErrorMessage.USER_NOT_FOUND);
 
         userOptional.get().setRoleList(null);
         userRepository.deleteById(userId);

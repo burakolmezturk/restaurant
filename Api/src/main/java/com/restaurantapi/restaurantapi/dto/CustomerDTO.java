@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CustomerDTO extends BaseEntity {
+public class CustomerDTO extends BaseDTO {
 
     private String name;
     private String surname;

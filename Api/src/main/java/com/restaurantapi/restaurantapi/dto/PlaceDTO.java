@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PlaceDTO extends BaseEntity {
+public class PlaceDTO extends BaseDTO {
 
     private String name;
     private int tableCount;

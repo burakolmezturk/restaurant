@@ -1,16 +1,22 @@
 import { useHistory } from "react-router-dom";
+import { Context } from '../../contextApi/ContextApi';
+import { useContext } from 'react';
 
 const Header = () => {
     const history = useHistory();
-
+    const { language,setLanguage } = useContext(Context);
     function logout(e) {
         e.preventDefault();
         history.push("/")
 
 
     }
-    function goPage(url){
+    function goPage(url) {
         history.push(url);
+    }
+
+    const onChangeLanguage = (e) => {
+        setLanguage(e.target.value);
     }
 
     return (
@@ -24,35 +30,43 @@ const Header = () => {
                 <a className="navbar-brand" href="#">Admin Control</a>
                 <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li className="nav-item active">
-                        <a className="nav-link" onClick={()=>goPage("/product")} href="#" >Products<span className="sr-only">(current)</span></a>
+                        <a className="nav-link" onClick={() => goPage("/product")} href="#" >Products<span className="sr-only">(current)</span></a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#" onClick={()=>goPage("/user")}>Users</a>
+                        <a className="nav-link" href="#" onClick={() => goPage("/user")}>Users</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#" onClick={()=>goPage("/category")}>Categories</a>
+                        <a className="nav-link" href="#" onClick={() => goPage("/category")}>Categories</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#" onClick={()=>goPage("/place")} >Places</a>
+                        <a className="nav-link" href="#" onClick={() => goPage("/place")} >Places</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#" onClick={()=>goPage("/waiter")} >Waiter</a>
+                        <a className="nav-link" href="#" onClick={() => goPage("/waiter")} >Waiter</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#"  onClick={()=>goPage("/customers")} >Customer</a>
+                        <a className="nav-link" href="#" onClick={() => goPage("/customers")} >Customer</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#"  onClick={()=>goPage("/user")} >Reports</a>
+                        <a className="nav-link" href="#" onClick={() => goPage("/user")} >Reports</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#" onClick={()=>goPage("/role")} >Roles</a>
+                        <a className="nav-link" href="#" onClick={() => goPage("/role")} >Roles</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#" onClick={()=>goPage("/media")} >Media</a>
+                        <a className="nav-link" href="#" onClick={() => goPage("/media")} >Media</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="#" onClick={()=>goPage("/info")} >Info</a>
+                        <a className="nav-link" href="#" onClick={() => goPage("/info")} >Info</a>
                     </li>
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <select
+                        className="nav-item" id="option" onChange={onChangeLanguage} >
+                        <option key="1"  value="en" >English</option>
+                        <option key="1"  value="tr" >Turkish</option>
+                    </select>
                 </ul>
                 <form className="form-inline my-2 my-lg-0">
 

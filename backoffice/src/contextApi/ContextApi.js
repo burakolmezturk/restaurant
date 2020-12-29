@@ -2,6 +2,7 @@ import { createContext, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
+
 export const Context = createContext();
 
 const ContextProvider = (props) => {
@@ -10,8 +11,10 @@ const ContextProvider = (props) => {
 
     const [user, setUser] = useState({
         username: '', password: ''
-    })
+    });
+    const [language,setLanguage] = useState('en');
     const { username, password } = user;
+    
     const login = async (username, password) => {
         const res = await axios.get("http://localhost:8080/user/login", {
             auth: {
@@ -34,7 +37,7 @@ const ContextProvider = (props) => {
     }
     return (
 
-        <Context.Provider value={{ user, login }}>
+        <Context.Provider value={{ user,language,setLanguage, login }}>
             {props.children}
         </Context.Provider>
     )

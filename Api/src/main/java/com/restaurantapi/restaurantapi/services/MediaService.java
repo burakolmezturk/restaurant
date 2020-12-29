@@ -11,6 +11,8 @@ import com.restaurantapi.restaurantapi.repository.MediaRepository;
 import liquibase.pro.packaged.S;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.GeneratedValue;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class MediaService {
@@ -61,6 +64,7 @@ public class MediaService {
         return mediaDTOList;
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public MediaDTO addMedia(String fileName, MultipartFile multipartFile, String path) throws IOException {
         if (multipartFile == null) throw new RecordNotFoundException(ErrorMessage.FILE_NOT_FOUND);
 

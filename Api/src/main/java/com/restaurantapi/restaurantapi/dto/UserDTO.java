@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 @Data
-public class UserDTO extends BaseEntity {
+public class UserDTO extends BaseDTO {
 
 
     private String userName;

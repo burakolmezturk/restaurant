@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { useHistory } from "react-router-dom";
 import CustomerService from '../../services/CustomerService';
+import MediaService from '../../services/MediaService';
 import Header from '../header/Header';
 import Loading from '../loading/Loading';
 import { createSuccessNotification, createErrorNotification, createWarningNotification, createInfoNotification } from "../Natifications";
@@ -13,10 +14,12 @@ const EditCustomer = () => {
         name: '',
         surname: '',
         address: '',
-        phone: ''
+        phone: '',
+        imageId: history.location.state?.imageId,
+        image: []
     });
-    const { id, name, surname, address, phone } = customer;
-
+    const { id, name, surname, address, phone,imageId,image } = customer;
+    const [medias, setMedias] = useState([]);
 
 
     useEffect(() => {
@@ -29,14 +32,32 @@ const EditCustomer = () => {
 
         setCustomer({ ...customer, [e.target.name]: e.target.value });
     }
+    const onChangeImage = (e) => {
+        setCustomer({ ...customer, image: medias[e.target.value] });
+    }
 
     async function getCustomerInfo() {
-
+        await MediaService.getMedias()
+        .then(res=>
+            {
+                setMedias(res.data);
+            })
+        .catch(({response})=>
+        {
+            createErrorNotification('Medias not found.');
+            history.push("/media");
+        });
 
         await CustomerService.getCustomerById(id)
             .then(res => {
                 const customer = res.data;
-                setCustomer({ ...customer, name: customer.name, surname: customer.surname, address: customer.address, phone: customer.phone })
+                setCustomer({ ...customer, 
+                    name: customer.name, 
+                    surname: customer.surname, 
+                    address: customer.address, 
+                    phone: customer.phone,
+                    image:customer.image,
+                    imageId: history.location.state?.imageId })
                 setLoading(false);
             }).catch(({ response }) => {
 
@@ -74,7 +95,34 @@ const EditCustomer = () => {
             <Loading />
         )
     }
+    const showImage = () => {
 
+        const html = [];
+        const images = image;
+
+        html.push(<img src={'data:image/png;base64,' + images.fileContent} width="50" />)
+        return html;
+
+    }
+
+    const getMedias = () => {
+        return (
+            <div className="form-group">
+                <label>Customer Image :</label>
+                <select
+                    className="form-control" id="option" onChange={onChangeImage} >
+                    {
+                        medias.map(
+                            (media, index) =>
+
+                                <option key={media.id} selected={imageId == media.id} value={index}>{media.fileName}</option>
+                        )
+                    }
+                </select>
+                {showImage()}
+            </div>
+        )
+    }
     const getForm = () => {
         return (
             <form>
@@ -98,6 +146,7 @@ const EditCustomer = () => {
                     <input placeholder="Phone" name="phone" className="form-control"
                         value={phone} onChange={onChangeHandler} type="number" />
                 </div>
+                {getMedias()}
                 <button className="btn btn-success" onClick={(e) => updateCustomer(e)}>Save</button>
                 <button style={{ marginLeft: "10px" }} className="btn btn-danger" onClick={() => history.push('/customers')} >Cancel</button>
             </form>

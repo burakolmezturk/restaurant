@@ -4,7 +4,7 @@ import com.restaurantapi.restaurantapi.entity.BaseEntity;
 import lombok.Data;
 
 @Data
-public class CartDTO extends BaseEntity {
+public class CartDTO extends BaseDTO {
 
     private int productId;
     private double price;

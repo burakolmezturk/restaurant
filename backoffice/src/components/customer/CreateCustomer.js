@@ -3,9 +3,10 @@ import { useHistory } from "react-router-dom";
 import CustomerService from '../../services/CustomerService';
 import MediaService from '../../services/MediaService';
 import Header from '../header/Header';
+import { Context } from '../../contextApi/ContextApi';
 import {createSuccessNotification, createErrorNotification,createWarningNotification,createInfoNotification} from "../Natifications";
 const CreateCustomer = () => {
-
+    const {language,user} = useContext(Context);
     const history = useHistory();
 
     const [customer, setCustomer] = useState({
@@ -15,6 +16,7 @@ const CreateCustomer = () => {
     const { name, surname, address, phone, image } = customer;
 
     useEffect(() => {
+        
         getMedias();
     }, []);
 
@@ -52,7 +54,7 @@ const CreateCustomer = () => {
             return;
         }
         let res;
-         await CustomerService.createCustomer(customer).then(response => {
+         await CustomerService.createCustomer(customer,language).then(response => {
             res = response;
         }).catch(({ response }) => {
 

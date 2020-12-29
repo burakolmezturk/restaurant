@@ -53,16 +53,8 @@ public class CategoryControllerTest {
 
     @Test
     public void ShouldAddCategory() {
-        Mockito.when(categoryService.addCategory(categoryDTO)).thenReturn(true);
-        Boolean res = categoryController.addCategory(categoryDTO);
-        Assert.assertEquals(true, res);
-    }
-
-    @Test
-    public void ShouldNotAddCategory() {
-        Mockito.when(categoryService.addCategory(categoryDTO)).thenReturn(false);
-        Boolean res = categoryController.addCategory(categoryDTO);
-        Assert.assertEquals(false, res);
+        categoryService.addCategory(categoryDTO);
+        Mockito.verify(categoryService, Mockito.times(1)).addCategory(categoryDTO);
     }
 
     @Test
