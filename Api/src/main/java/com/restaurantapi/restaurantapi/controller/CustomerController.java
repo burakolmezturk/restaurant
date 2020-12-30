@@ -22,36 +22,40 @@ import java.util.Locale;
 @Validated
 public class CustomerController {
 
-    @Autowired
-    private CustomerService customerService;
+  @Autowired private CustomerService customerService;
 
-    @GetMapping()
-    public Page<CustomerDTO> getCustomersByPage(@Valid @NotNull Pageable pageable) {
-        return customerService.getCustomersByPage(pageable);
-    }
+  @GetMapping()
+  public Page<CustomerDTO> getCustomersByPage(@Valid @NotNull Pageable pageable) {
+    return customerService.getCustomersByPage(pageable);
+  }
 
-    @PostMapping()
-    public void addCustomer(@Valid @RequestBody @NotNull(message = "{CUSTOMER_NOT_FOUND}") CustomerDTO customerDTO) {
-        customerService.addCustomer(customerDTO);
-    }
+  @PostMapping()
+  public void addCustomer(
+      @Valid @RequestBody @NotNull(message = "{CUSTOMER_NOT_FOUND}") CustomerDTO customerDTO) {
+    customerService.addCustomer(customerDTO);
+  }
 
-    @PutMapping()
-    public void editCustomer(@Valid @RequestBody @NotNull(message = "{CUSTOMER_NOT_FOUND}") CustomerDTO customerDTO) {
-        customerService.editCustomer(customerDTO);
-    }
+  @PutMapping()
+  public void editCustomer(
+      @Valid @RequestBody @NotNull(message = "{CUSTOMER_NOT_FOUND}") CustomerDTO customerDTO) {
+    customerService.editCustomer(customerDTO);
+  }
 
-    @DeleteMapping("/{customerId}")
-    public void deleteCustomer(@PathVariable @Min(value = 1, message = "{ID_CONTROL}") int customerId) {
-        customerService.deleteCustomer(customerId);
-    }
+  @DeleteMapping("/{customerId}")
+  public void deleteCustomer(
+      @PathVariable @Min(value = 1, message = "{ID_CONTROL}") int customerId) {
+    customerService.deleteCustomer(customerId);
+  }
 
-    @GetMapping("/{customerId}")
-    public CustomerDTO getCustomerById(@PathVariable @Min(value = 1, message = "{ID_CONTROL}") int customerId) {
-        return customerService.getCustomerById(customerId);
-    }
+  @GetMapping("/{customerId}")
+  public CustomerDTO getCustomerById(
+      @PathVariable @Min(value = 1, message = "{ID_CONTROL}") int customerId) {
+    return customerService.getCustomerById(customerId);
+  }
 
-    @GetMapping("/search")
-    public Page<CustomerDTO> getCustomerByName(@RequestParam String customerName, @NotNull Pageable pageable) {
-        return customerService.getCustomersPageByName(customerName, pageable);
-    }
+  @GetMapping("/search")
+  public Page<CustomerDTO> getCustomerByName(
+      @RequestParam String customerName, @NotNull Pageable pageable) {
+    return customerService.getCustomersPageByName(customerName, pageable);
+  }
 }

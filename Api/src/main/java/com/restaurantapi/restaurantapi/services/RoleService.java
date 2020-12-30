@@ -21,43 +21,41 @@ import java.util.Optional;
 @Service
 public class RoleService {
 
-    @Autowired
-    private RoleRepository roleRepository;
+  @Autowired private RoleRepository roleRepository;
 
-    @Autowired
-    private RoleMapper roleMapper;
+  @Autowired private RoleMapper roleMapper;
 
-    public List<RoleDTO> getAllRoles() {
+  public List<RoleDTO> getAllRoles() {
 
-        List<Role> roleList = roleRepository.findAll();
-        if (roleList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
+    List<Role> roleList = roleRepository.findAll();
+    if (roleList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
 
-        return roleMapper.toDTOList(roleList);
-    }
+    return roleMapper.toDTOList(roleList);
+  }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void addRole(RoleDTO roleDTO) {
+  @Transactional(propagation = Propagation.REQUIRED)
+  public void addRole(RoleDTO roleDTO) {
 
-        roleRepository.save(roleMapper.toEntity(roleDTO));
-    }
+    roleRepository.save(roleMapper.toEntity(roleDTO));
+  }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void editRole(RoleDTO roleDTO) {
+  @Transactional(propagation = Propagation.REQUIRED)
+  public void editRole(RoleDTO roleDTO) {
 
-        roleRepository.saveAndFlush(roleMapper.toEntity(roleDTO));
-    }
+    roleRepository.saveAndFlush(roleMapper.toEntity(roleDTO));
+  }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteRole(RoleDTO roleDTO) {
+  @Transactional(propagation = Propagation.REQUIRED)
+  public void deleteRole(RoleDTO roleDTO) {
 
-        roleRepository.deleteById(roleMapper.toEntity(roleDTO).getId());
-    }
+    roleRepository.deleteById(roleMapper.toEntity(roleDTO).getId());
+  }
 
-    public RoleDTO getRoleById(int roleId) {
+  public RoleDTO getRoleById(int roleId) {
 
-        Optional<Role> role = roleRepository.findById(roleId);
-        if (!role.isPresent()) throw new BusinessRuleException(ErrorMessage.ROLE_NOT_FOUND);
+    Optional<Role> role = roleRepository.findById(roleId);
+    if (!role.isPresent()) throw new BusinessRuleException(ErrorMessage.ROLE_NOT_FOUND);
 
-        return roleMapper.toDTO(role.get());
-    }
+    return roleMapper.toDTO(role.get());
+  }
 }

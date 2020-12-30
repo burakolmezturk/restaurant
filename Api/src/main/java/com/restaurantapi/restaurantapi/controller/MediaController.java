@@ -21,17 +21,20 @@ import java.util.Locale;
 @Validated
 public class MediaController {
 
-    @Autowired
-    private MediaService mediaService;
+  @Autowired private MediaService mediaService;
 
-    @Value("${media.pathname}")
-    private String path;
-    @GetMapping
-    public List<MediaDTO> getAllMedia(){
-        return mediaService.getAllMedia();
-    }
-    @PostMapping
-    public MediaDTO addMedia(@RequestParam @NotNull String fileName, @RequestParam @NotNull MultipartFile file) throws IOException {
-        return mediaService.addMedia(fileName,file,path);
-    }
+  @Value("${media.pathname}")
+  private String path;
+
+  @GetMapping
+  public List<MediaDTO> getAllMedia() {
+    return mediaService.getAllMedia();
+  }
+
+  @PostMapping
+  public MediaDTO addMedia(
+      @RequestParam @NotNull String fileName, @RequestParam @NotNull MultipartFile file)
+      throws IOException {
+    return mediaService.addMedia(fileName, file, path);
+  }
 }

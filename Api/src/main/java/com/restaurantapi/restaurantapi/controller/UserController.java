@@ -18,38 +18,33 @@ import java.util.List;
 @Validated
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+  @Autowired private UserService userService;
 
-    @GetMapping("/function/list")
-    public List<UserDTO> getList() {
-        return userService.getListUsers();
-    }
+  @GetMapping("/function/list")
+  public List<UserDTO> getList() {
+    return userService.getListUsers();
+  }
 
-    @GetMapping("/function/list/{id}")
-    public UserDTO getUserById(@PathVariable @Min(value = 1, message = "{ID_CONTROL}") int id) {
-        return userService.getUserById(id);
-    }
+  @GetMapping("/function/list/{id}")
+  public UserDTO getUserById(@PathVariable @Min(value = 1, message = "{ID_CONTROL}") int id) {
+    return userService.getUserById(id);
+  }
 
-    @PostMapping("/function/add")
-    public void addUser(@Valid @RequestBody @NotNull(message = "{USER_NOT_FOUND}") UserDTO users) {
-        userService.saveUser(users);
-    }
+  @PostMapping("/function/add")
+  public void addUser(@Valid @RequestBody @NotNull(message = "{USER_NOT_FOUND}") UserDTO users) {
+    userService.saveUser(users);
+  }
 
-    @PutMapping("/function/update")
-    public void updateUser(@Valid @RequestBody @NotNull(message = "{USER_NOT_FOUND}") UserDTO users) {
-        userService.updateUser(users);
-    }
+  @PutMapping("/function/update")
+  public void updateUser(@Valid @RequestBody @NotNull(message = "{USER_NOT_FOUND}") UserDTO users) {
+    userService.updateUser(users);
+  }
 
-    @DeleteMapping("/function/delete/{id}")
-    public void deleteUser(@PathVariable @Min(value = 1, message = "{ID_CONTROL}") int id) {
-        userService.deleteUser(id);
-    }
+  @DeleteMapping("/function/delete/{id}")
+  public void deleteUser(@PathVariable @Min(value = 1, message = "{ID_CONTROL}") int id) {
+    userService.deleteUser(id);
+  }
 
-    @GetMapping("/login")
-    public void login() {
-    }
-
+  @GetMapping("/login")
+  public void login() {}
 }
-
-

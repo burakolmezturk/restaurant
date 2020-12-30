@@ -18,33 +18,33 @@ import java.util.List;
 @Validated
 public class WaiterController {
 
-    @Autowired
-    private WaiterService waiterService;
+  @Autowired private WaiterService waiterService;
 
-    @PostMapping("/add")
-    public WaiterDTO addWaiter(@Valid @RequestBody @NotNull(message = "{WAITER_NOT_FOUND}") WaiterDTO waiterDTO) {
-        return waiterService.addWaiter(waiterDTO);
-    }
+  @PostMapping("/add")
+  public WaiterDTO addWaiter(
+      @Valid @RequestBody @NotNull(message = "{WAITER_NOT_FOUND}") WaiterDTO waiterDTO) {
+    return waiterService.addWaiter(waiterDTO);
+  }
 
-    @PutMapping("/edit")
-    public WaiterDTO editWaiter(@Valid @RequestBody @NotNull(message = "{WAITER_NOT_FOUND}") WaiterDTO waiterDTO) {
-        return waiterService.editWaiter(waiterDTO);
-    }
+  @PutMapping("/edit")
+  public WaiterDTO editWaiter(
+      @Valid @RequestBody @NotNull(message = "{WAITER_NOT_FOUND}") WaiterDTO waiterDTO) {
+    return waiterService.editWaiter(waiterDTO);
+  }
 
-    @GetMapping("/list")
-    public List<WaiterDTO> getAllWaiter() {
-        return waiterService.getAllWaiters();
-    }
+  @GetMapping("/list")
+  public List<WaiterDTO> getAllWaiter() {
+    return waiterService.getAllWaiters();
+  }
 
-    @DeleteMapping("/delete/{id}")
-    public boolean deleteCategory(@PathVariable  @Min(value = 1, message = "{ID_CONTROL}") int id) {
-        if (waiterService.deleteWaiterById(id)) return true;
-        else return false;
-    }
+  @DeleteMapping("/delete/{id}")
+  public boolean deleteCategory(@PathVariable @Min(value = 1, message = "{ID_CONTROL}") int id) {
+    if (waiterService.deleteWaiterById(id)) return true;
+    else return false;
+  }
 
-    @GetMapping("/{id}")
-    public WaiterDTO getWaiterById(@PathVariable @Min(value = 1, message = "{ID_CONTROL}") int id) {
-        return waiterService.getWaiterById(id);
-    }
-
+  @GetMapping("/{id}")
+  public WaiterDTO getWaiterById(@PathVariable @Min(value = 1, message = "{ID_CONTROL}") int id) {
+    return waiterService.getWaiterById(id);
+  }
 }

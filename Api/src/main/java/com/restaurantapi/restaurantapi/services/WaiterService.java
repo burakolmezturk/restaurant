@@ -23,56 +23,52 @@ import java.util.Optional;
 @Service
 public class WaiterService {
 
-    @Autowired
-    private WaiterRepository waiterRepository;
+  @Autowired private WaiterRepository waiterRepository;
 
-    @Autowired
-    private MediaRepository mediaRepository;
+  @Autowired private MediaRepository mediaRepository;
 
-    @Autowired
-    private WaiterMapper waiterMapper;
+  @Autowired private WaiterMapper waiterMapper;
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public WaiterDTO addWaiter(WaiterDTO waiterDTO) {
+  @Transactional(propagation = Propagation.REQUIRED)
+  public WaiterDTO addWaiter(WaiterDTO waiterDTO) {
 
-        Optional<Media> optionalMedia = mediaRepository.findById(waiterDTO.getImage().getId());
-        if (!optionalMedia.isPresent()) throw new RecordNotFoundException(ErrorMessage.MEDIA_NOT_FOUND);
+    Optional<Media> optionalMedia = mediaRepository.findById(waiterDTO.getImage().getId());
+    if (!optionalMedia.isPresent()) throw new RecordNotFoundException(ErrorMessage.MEDIA_NOT_FOUND);
 
-        Waiter waiter = waiterMapper.toEntity(waiterDTO);
+    Waiter waiter = waiterMapper.toEntity(waiterDTO);
 
-        waiter.setImage(optionalMedia.get());
-        return waiterMapper.toDTO(waiterRepository.save(waiter));
+    waiter.setImage(optionalMedia.get());
+    return waiterMapper.toDTO(waiterRepository.save(waiter));
+  }
 
-    }
+  @Transactional(propagation = Propagation.REQUIRED)
+  public WaiterDTO editWaiter(WaiterDTO waiterDTO) {
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public WaiterDTO editWaiter(WaiterDTO waiterDTO) {
+    return waiterMapper.toDTO(waiterRepository.saveAndFlush(waiterMapper.toEntity(waiterDTO)));
+  }
 
-        return waiterMapper.toDTO(waiterRepository.saveAndFlush(waiterMapper.toEntity(waiterDTO)));
+  public List<WaiterDTO> getAllWaiters() {
+    List<Waiter> waiters = waiterRepository.findAll();
+    if (waiters.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
 
-    }
+    List<WaiterDTO> waiterDTOList = waiterMapper.toEntityList(waiters);
+    return waiterDTOList;
+  }
 
-    public List<WaiterDTO> getAllWaiters() {
-        List<Waiter> waiters = waiterRepository.findAll();
-        if (waiters.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
+  @Transactional(propagation = Propagation.REQUIRED)
+  public boolean deleteWaiterById(int id) {
+    if (!waiterRepository.existsById(id))
+      throw new RecordNotFoundException(ErrorMessage.ID_IS_NULL);
 
-        List<WaiterDTO> waiterDTOList = waiterMapper.toEntityList(waiters);
-        return waiterDTOList;
-    }
+    waiterRepository.deleteById(id);
+    return true;
+  }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public boolean deleteWaiterById(int id) {
-        if (!waiterRepository.existsById(id)) throw new RecordNotFoundException(ErrorMessage.ID_IS_NULL);
+  public WaiterDTO getWaiterById(int id) {
+    Optional<Waiter> waiterOptional = waiterRepository.findById(id);
+    if (!waiterOptional.isPresent())
+      throw new RecordNotFoundException(ErrorMessage.WAITER_NOT_FOUND);
 
-        waiterRepository.deleteById(id);
-        return true;
-    }
-
-    public WaiterDTO getWaiterById(int id) {
-        Optional<Waiter> waiterOptional = waiterRepository.findById(id);
-        if (!waiterOptional.isPresent()) throw new RecordNotFoundException(ErrorMessage.WAITER_NOT_FOUND);
-
-        return waiterMapper.toDTO(waiterOptional.get());
-
-    }
+    return waiterMapper.toDTO(waiterOptional.get());
+  }
 }

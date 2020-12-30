@@ -17,31 +17,31 @@ import java.util.List;
 @Validated
 public class RoleController {
 
-    @Autowired
-    private RoleService roleService;
+  @Autowired private RoleService roleService;
 
-    @GetMapping("/list")
-    public List<RoleDTO> getRoles() {
-        return roleService.getAllRoles();
-    }
+  @GetMapping("/list")
+  public List<RoleDTO> getRoles() {
+    return roleService.getAllRoles();
+  }
 
-    @PostMapping("/add")
-    public void addRole(@Valid @RequestBody @NotNull(message = "{ROLE_NOT_FOUND}") RoleDTO roleDTO) {
-        roleService.addRole(roleDTO);
-    }
+  @PostMapping("/add")
+  public void addRole(@Valid @RequestBody @NotNull(message = "{ROLE_NOT_FOUND}") RoleDTO roleDTO) {
+    roleService.addRole(roleDTO);
+  }
 
-    @PutMapping("/edit")
-    public void editRole(@Valid @RequestBody @NotNull(message = "{ROLE_NOT_FOUND}") RoleDTO roleDTO) {
-        roleService.editRole(roleDTO);
-    }
+  @PutMapping("/edit")
+  public void editRole(@Valid @RequestBody @NotNull(message = "{ROLE_NOT_FOUND}") RoleDTO roleDTO) {
+    roleService.editRole(roleDTO);
+  }
 
-    @DeleteMapping("/delete")
-    public void deleteRole(@Valid @RequestBody @NotNull(message = "{ROLE_NOT_FOUND}") RoleDTO roleDTO) {
-        roleService.deleteRole(roleDTO);
-    }
+  @DeleteMapping("/delete")
+  public void deleteRole(
+      @Valid @RequestBody @NotNull(message = "{ROLE_NOT_FOUND}") RoleDTO roleDTO) {
+    roleService.deleteRole(roleDTO);
+  }
 
-    @GetMapping("/{roleId}")
-    public RoleDTO getRoleById(@PathVariable @Min(value = 1, message = "{ID_CONTROL}") int roleId) {
-        return roleService.getRoleById(roleId);
-    }
+  @GetMapping("/{roleId}")
+  public RoleDTO getRoleById(@PathVariable @Min(value = 1, message = "{ID_CONTROL}") int roleId) {
+    return roleService.getRoleById(roleId);
+  }
 }

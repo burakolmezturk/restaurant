@@ -26,78 +26,70 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    @Autowired
-    private RoleRepository roleRepository;
+  @Autowired private RoleRepository roleRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired private UserRepository userRepository;
 
-    @Autowired
-    private UserMapper userMapper;
+  @Autowired private UserMapper userMapper;
 
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+  private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void saveUser(UserDTO userDTO) {
+  @Transactional(propagation = Propagation.REQUIRED)
+  public void saveUser(UserDTO userDTO) {
 
-        List<Role> roleList = roleRepository.findAllById(userDTO.getRolesId());
-        if (roleList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
+    List<Role> roleList = roleRepository.findAllById(userDTO.getRolesId());
+    if (roleList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
 
-        User user = userMapper.toEntity(userDTO);
-        user.setPassword(encoder.encode(userDTO.getPassword()));
-        user.setRoleList(roleList);
+    User user = userMapper.toEntity(userDTO);
+    user.setPassword(encoder.encode(userDTO.getPassword()));
+    user.setRoleList(roleList);
 
-        userRepository.save(user);
+    userRepository.save(user);
+  }
 
-    }
+  public List<UserDTO> getListUsers() {
+    List<User> users = userRepository.findAll();
+    if (users.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
 
-    public List<UserDTO> getListUsers() {
-        List<User> users = userRepository.findAll();
-        if (users.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
+    return userMapper.toDTOList(users);
+  }
 
-        return userMapper.toDTOList(users);
-    }
+  public UserDTO getUserById(int userId) {
+    List<Integer> roleId = new ArrayList<>();
+    Optional<User> optionalUser = userRepository.findById(userId);
 
-    public UserDTO getUserById(int userId) {
-        List<Integer> roleId = new ArrayList<>();
-        Optional<User> optionalUser = userRepository.findById(userId);
+    if (!optionalUser.isPresent()) throw new RecordNotFoundException(ErrorMessage.USER_NOT_FOUND);
+    User user = optionalUser.get();
 
-        if (!optionalUser.isPresent()) throw new RecordNotFoundException(ErrorMessage.USER_NOT_FOUND);
-        User user = optionalUser.get();
+    user.getRoleList().forEach(role -> roleId.add(role.getId()));
 
-        user.getRoleList().forEach(role -> roleId.add(role.getId()));
+    UserDTO userDTO = userMapper.toDTO(user);
+    userDTO.setRolesId(roleId);
+    return userDTO;
+  }
 
-        UserDTO userDTO = userMapper.toDTO(user);
-        userDTO.setRolesId(roleId);
-        return userDTO;
+  @Transactional(propagation = Propagation.REQUIRED)
+  public void updateUser(UserDTO userDTO) {
+    List<Integer> rolesIdsList = userDTO.getRolesId();
 
-    }
+    if (rolesIdsList.isEmpty()) throw new BusinessRuleException(ErrorMessage.ROLE_NOT_FOUND);
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void updateUser(UserDTO userDTO) {
-        List<Integer> rolesIdsList = userDTO.getRolesId();
+    List<Role> roleList = roleRepository.findAllById(rolesIdsList);
+    if (roleList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
 
-        if (rolesIdsList.isEmpty()) throw new BusinessRuleException(ErrorMessage.ROLE_NOT_FOUND);
+    User user = userMapper.toEntity(userDTO);
+    user.setPassword(encoder.encode(userDTO.getPassword()));
+    user.setRoleList(roleList);
+    userRepository.saveAndFlush(user);
+  }
 
-        List<Role> roleList = roleRepository.findAllById(rolesIdsList);
-        if (roleList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
+  @Transactional(propagation = Propagation.REQUIRED)
+  public void deleteUser(int userId) {
 
-        User user = userMapper.toEntity(userDTO);
-        user.setPassword(encoder.encode(userDTO.getPassword()));
-        user.setRoleList(roleList);
-        userRepository.saveAndFlush(user);
+    Optional<User> userOptional = userRepository.findById(userId);
+    if (!userOptional.isPresent()) throw new BusinessRuleException(ErrorMessage.USER_NOT_FOUND);
 
-    }
-
-    @Transactional(propagation = Propagation.REQUIRED)
-    public void deleteUser(int userId) {
-
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (!userOptional.isPresent()) throw new BusinessRuleException(ErrorMessage.USER_NOT_FOUND);
-
-        userOptional.get().setRoleList(null);
-        userRepository.deleteById(userId);
-    }
-
-
+    userOptional.get().setRoleList(null);
+    userRepository.deleteById(userId);
+  }
 }

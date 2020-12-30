@@ -2,7 +2,6 @@ package com.restaurantapi.restaurantapi.services;
 
 import com.restaurantapi.restaurantapi.dto.ErrorMessage;
 import com.restaurantapi.restaurantapi.dto.PlaceDTO;
-import com.restaurantapi.restaurantapi.convertor.PlaceDTOConvertor;
 import com.restaurantapi.restaurantapi.entity.Place;
 import com.restaurantapi.restaurantapi.exception.BusinessRuleException;
 import com.restaurantapi.restaurantapi.exception.RecordNotFoundException;
@@ -13,60 +12,55 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PlaceService {
 
-    @Autowired
-    private PlaceRepository placeRepository;
+  @Autowired private PlaceRepository placeRepository;
 
-    @Autowired
-    private PlaceMapper placeMapper;
+  @Autowired private PlaceMapper placeMapper;
 
-    public List<PlaceDTO> getPlaces() {
+  public List<PlaceDTO> getPlaces() {
 
-        List<Place> places = placeRepository.findAll();
-        if (places.isEmpty()) throw new BusinessRuleException(ErrorMessage.RECORD_NOT_FOUND);
+    List<Place> places = placeRepository.findAll();
+    if (places.isEmpty()) throw new BusinessRuleException(ErrorMessage.RECORD_NOT_FOUND);
 
-        return placeMapper.toDTOPlace(places);
-    }
+    return placeMapper.toDTOPlace(places);
+  }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public boolean addPlace(PlaceDTO placeDTO) {
+  @Transactional(propagation = Propagation.REQUIRED)
+  public boolean addPlace(PlaceDTO placeDTO) {
 
-        Place place = placeRepository.save(placeMapper.toEntity(placeDTO));
+    Place place = placeRepository.save(placeMapper.toEntity(placeDTO));
 
-        if (place.getId() != 0) return true;
-        else return false;
+    if (place.getId() != 0) return true;
+    else return false;
+  }
 
-    }
+  @Transactional(propagation = Propagation.REQUIRED)
+  public PlaceDTO editPlace(PlaceDTO placeDTO) {
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public PlaceDTO editPlace(PlaceDTO placeDTO) {
+    placeRepository.saveAndFlush(placeMapper.toEntity(placeDTO));
+    return placeDTO;
+  }
 
-        placeRepository.saveAndFlush(placeMapper.toEntity(placeDTO));
-        return placeDTO;
-    }
+  @Transactional(propagation = Propagation.REQUIRED)
+  public boolean deletePlace(int id) {
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public boolean deletePlace(int id) {
+    if (!placeRepository.existsById(id))
+      throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
 
-        if (!placeRepository.existsById(id)) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
+    placeRepository.deleteById(id);
+    return true;
+  }
 
-        placeRepository.deleteById(id);
-        return true;
+  public PlaceDTO getPlaceById(int placeId) {
 
-    }
+    Optional<Place> place = placeRepository.findById(placeId);
+    if (!place.isPresent()) throw new RecordNotFoundException(ErrorMessage.PLACE_NOT_FOUND);
 
-    public PlaceDTO getPlaceById(int placeId) {
-
-        Optional<Place> place = placeRepository.findById(placeId);
-        if (!place.isPresent()) throw new RecordNotFoundException(ErrorMessage.PLACE_NOT_FOUND);
-
-        return placeMapper.toDTO(place.get());
-
-    }
+    return placeMapper.toDTO(place.get());
+  }
 }

@@ -7,21 +7,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/info")
 public class InfoController {
 
-   @Autowired
-   private InfoService infoService;
+  @Autowired private InfoService infoService;
 
-    @GetMapping("/get")
-    public String getInfo() {
-        return infoService.getInfo();
-    }
-    @GetMapping("/getProfile")
-    public String getSpringProfile() {
-        return infoService.getSpringProfiles();
-    }
+  @GetMapping("/get")
+  public String getInfo() {
+    return infoService.getInfo();
+  }
 
+  @GetMapping("/getProfile")
+  public String getSpringProfile() {
+    return infoService.getSpringProfiles();
+  }
+
+  @GetMapping("/getBeanNames")
+  public List<String> getBeanNames(){return infoService.getBeanNames();}
 }
