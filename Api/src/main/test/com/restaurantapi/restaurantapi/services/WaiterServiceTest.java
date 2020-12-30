@@ -79,26 +79,11 @@ public class WaiterServiceTest {
         Assert.assertEquals(res.getId(), waiterDTO.getId());
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotAddWaiterDTONull() {
-        Mockito.when(mediaRepository.findById(1)).thenReturn(Optional.of(media));
-        Mockito.when(waiterRepository.save(Mockito.any())).thenReturn(new Waiter());
-        WaiterDTO res = waiterService.addWaiter(null);
-
-    }
-
     @Test
     public void shouldEditWaiter() {
         Mockito.when(waiterRepository.saveAndFlush(Mockito.any())).thenReturn(waiter);
         WaiterDTO res = waiterService.editWaiter(waiterDTO);
         Assert.assertEquals(waiterDTO.getId(), res.getId());
-    }
-
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotEditWaiter() {
-        Mockito.when(waiterRepository.saveAndFlush(Mockito.any())).thenReturn(null);
-        waiterService.editWaiter(null);
-
     }
 
     @Test

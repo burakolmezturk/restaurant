@@ -1,4 +1,7 @@
 
+z
+java:S1128"XRemove this unused import 'com.restaurantapi.restaurantapi.convertor.PlaceDTOConvertor'.(æÂÆãûÿÿÿÿ8Ğ€ê.
 ^
-java:S1126"AReplace this if-then-else statement by a single return statement.(æ¡±î8æå´Õâ.
-]	java:S125;"<This block of commented-out lines of code should be removed.(ÑŠ¾†üÿÿÿÿ8Ş•­è.
+java:S1126*"AReplace this if-then-else statement by a single return statement.(æ¡±î8Ò…õê.
+M
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8óˆíÿé.

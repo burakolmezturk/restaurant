@@ -30,7 +30,6 @@ public class CustomerService {
     private CustomerMapper customerMapper;
 
     public Page<CustomerDTO> getCustomersByPage(Pageable pageable) {
-        if (pageable == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
 
         Page<Customer> customerPage = customerRepository.findAll(pageable);
         List<Customer> pageContentList = customerPage.getContent();
@@ -46,7 +45,6 @@ public class CustomerService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addCustomer(CustomerDTO customerDTO) {
-        if (customerDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
 
         customerRepository.save(customerMapper.toEntity(customerDTO));
 
@@ -54,22 +52,17 @@ public class CustomerService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void editCustomer(CustomerDTO customerDTO) {
-        if (customerDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
-
-        if (customerDTO.getId() == 0) throw new BusinessRuleException(ErrorMessage.ID_IS_NULL);
 
         customerRepository.saveAndFlush(customerMapper.toEntity(customerDTO));
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteCustomer(int customerId) {
-        if (customerId <= 0) throw new BusinessRuleException(ErrorMessage.ID_IS_NULL);
 
         customerRepository.deleteById(customerId);
     }
 
     public CustomerDTO getCustomerById(int customerId) {
-        if (customerId <= 0) throw new BusinessRuleException(ErrorMessage.ID_IS_NULL);
 
         Optional<Customer> customerOptional = customerRepository.findById(customerId);
         if (!customerOptional.isPresent()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
@@ -78,7 +71,6 @@ public class CustomerService {
     }
 
     public Page<CustomerDTO> getCustomersPageByName(String customerName, Pageable pageable) {
-        if (pageable == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
 
         Page<Customer> customerPage = customerRepository.findCustomersByNameContains(customerName, pageable);
         List<Customer> pageContentList = customerPage.getContent();

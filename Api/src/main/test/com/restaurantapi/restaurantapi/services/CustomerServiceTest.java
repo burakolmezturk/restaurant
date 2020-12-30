@@ -79,13 +79,6 @@ public class CustomerServiceTest {
 
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotAddCustomer() {
-        customerService.addCustomer(null);
-        Mockito.verify(customerRepository, Mockito.times(1)).save(null);
-
-    }
-
     @Test
     public void shouldEditCustomer() {
         customerService.editCustomer(customerDTO);
@@ -93,30 +86,9 @@ public class CustomerServiceTest {
 
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotEditCustomerNullDTO() {
-        customerService.editCustomer(null);
-        Mockito.verify(customerRepository, Mockito.times(1)).saveAndFlush(null);
-
-    }
-
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotEditCustomer() {
-        customerDTO.setId(0);
-        customerService.editCustomer(customerDTO);
-        Mockito.verify(customerRepository, Mockito.times(1)).saveAndFlush(Mockito.any());
-    }
-
     @Test
     public void shouldDeleteCustomer() {
         int id = 1;
-        customerService.deleteCustomer(id);
-        Mockito.verify(customerRepository, Mockito.times(1)).deleteById(Mockito.any());
-    }
-
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotDeleteCustomer() {
-        int id = 0;
         customerService.deleteCustomer(id);
         Mockito.verify(customerRepository, Mockito.times(1)).deleteById(Mockito.any());
     }
@@ -129,18 +101,6 @@ public class CustomerServiceTest {
         Assert.assertEquals(res.getId(), customerDTO.getId());
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotGetCustomerById() {
-        int id = 0;
-        Mockito.when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
-        CustomerDTO res = customerService.getCustomerById(id);
-        Assert.assertEquals(res.getId(), customerDTO.getId());
-    }
-
-    @Test(expected = BusinessRuleException.class)
-    public void shouldNotGetCustomersPageByName() {
-        customerService.getCustomersPageByName("deneme", null);
-    }
 
     @Test
     public void shouldGetCustomersPageByName() {

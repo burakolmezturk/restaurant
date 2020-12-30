@@ -78,4 +78,6 @@ public class UserControllerTest {
         UserDTO res = userController.getUserById(userDTO.getId());
         Assert.assertEquals(userDTO.getId(), res.getId());
     }
+
+
 }

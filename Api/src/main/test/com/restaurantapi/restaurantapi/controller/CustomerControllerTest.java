@@ -4,6 +4,7 @@ import com.restaurantapi.restaurantapi.builder.CustomerDTOBuilder;
 import com.restaurantapi.restaurantapi.builder.MediaDTOBuilder;
 import com.restaurantapi.restaurantapi.dto.CustomerDTO;
 import com.restaurantapi.restaurantapi.dto.MediaDTO;
+import com.restaurantapi.restaurantapi.entity.Customer;
 import com.restaurantapi.restaurantapi.services.CustomerService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,6 +14,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerControllerTest {
@@ -37,6 +45,12 @@ public class CustomerControllerTest {
             .image(mediaDTO)
             .build();
 
+    private Pageable pageable = PageRequest.of(0, 10);
+    private List<CustomerDTO> customerDTOList = new ArrayList<>();
+    @Before
+    public void setUp(){
+         customerDTOList.add(customerDTO);
+    }
     @Test
     public void shouldAddCustomer() {
         customerController.addCustomer(customerDTO);
@@ -53,7 +67,7 @@ public class CustomerControllerTest {
     public void shouldDeleteCustomer() {
         int id = 1;
         customerController.deleteCustomer(id);
-        Mockito.verify(customerService, Mockito.times(1)).deleteCustomer(Mockito.any());
+        Mockito.verify(customerService, Mockito.times(1)).deleteCustomer(id);
     }
 
     @Test
@@ -63,6 +77,14 @@ public class CustomerControllerTest {
         Mockito.when(customerService.getCustomerById(id)).thenReturn(customerDTO);
         CustomerDTO res =customerController.getCustomerById(id);
         Assert.assertEquals(res.getId(), customerDTO.getId());
+    }
+    @Test
+    public void shouldGetCustomerByName(){
+
+        Mockito.when(customerService.getCustomersPageByName("deneme",pageable)).thenReturn(new PageImpl<CustomerDTO>(customerDTOList, pageable, 1));
+        Page<CustomerDTO> res = customerController.getCustomerByName("deneme",pageable);
+        Assert.assertEquals(res.getContent().get(0).getId(), customerDTOList.get(0).getId());
+
     }
 
 

@@ -32,7 +32,7 @@ public class RoleServiceTest {
     private RoleRepository roleRepository;
 
     @Spy
-    private RoleMapper roleMapper= Mappers.getMapper(RoleMapper.class);
+    private RoleMapper roleMapper = Mappers.getMapper(RoleMapper.class);
 
     RoleDTO roleDTO = new RoleDTOBuilder()
             .id(1)
@@ -46,7 +46,7 @@ public class RoleServiceTest {
     public void setUp() {
         roleDTOList.add(roleDTO);
         roleList = roleMapper.toEntityList(roleDTOList);
-        role=roleMapper.toEntity(roleDTO);
+        role = roleMapper.toEntity(roleDTO);
     }
 
     @Test

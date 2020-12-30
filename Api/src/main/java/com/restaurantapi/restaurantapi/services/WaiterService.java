@@ -34,7 +34,6 @@ public class WaiterService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public WaiterDTO addWaiter(WaiterDTO waiterDTO) {
-        if (waiterDTO == null) throw new BusinessRuleException(ErrorMessage.WAITER_NOT_FOUND);
 
         Optional<Media> optionalMedia = mediaRepository.findById(waiterDTO.getImage().getId());
         if (!optionalMedia.isPresent()) throw new RecordNotFoundException(ErrorMessage.MEDIA_NOT_FOUND);
@@ -49,7 +48,6 @@ public class WaiterService {
     @Transactional(propagation = Propagation.REQUIRED)
     public WaiterDTO editWaiter(WaiterDTO waiterDTO) {
 
-        if (waiterDTO == null) throw new BusinessRuleException(ErrorMessage.WAITER_NOT_FOUND);
         return waiterMapper.toDTO(waiterRepository.saveAndFlush(waiterMapper.toEntity(waiterDTO)));
 
     }

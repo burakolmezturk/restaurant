@@ -53,7 +53,7 @@ public class CategoryControllerTest {
 
     @Test
     public void ShouldAddCategory() {
-        categoryService.addCategory(categoryDTO);
+        categoryController.addCategory(categoryDTO);
         Mockito.verify(categoryService, Mockito.times(1)).addCategory(categoryDTO);
     }
 

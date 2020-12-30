@@ -49,14 +49,11 @@ public class PlaceServiceTest {
         placesDTO.add(placeDTO);
         places = placeMapper.toEntityPlace(placesDTO);
     }
-
     @Test
-    public void ShouldAddPlace() {
-        Mockito.when(placeRepository.save(Mockito.any())).thenReturn(place);
-        Boolean res = placeService.addPlace(placeDTO);
-        Assert.assertNotNull(res);
-        Assert.assertEquals(true, res);
-
+    public void shouldGetPlaces(){
+        Mockito.when(placeRepository.findAll()).thenReturn(places);
+        List<PlaceDTO> res = placeService.getPlaces();
+        Assert.assertEquals(res.get(0).getId(),places.get(0).getId());
     }
 
     @Test
@@ -68,13 +65,6 @@ public class PlaceServiceTest {
     }
 
     @Test
-    public void ShouldGetPlaces() {
-        Mockito.when(placeRepository.findAll()).thenReturn(places);
-        List<PlaceDTO> res = placeService.getPlaces();
-        Assert.assertNotNull(res);
-    }
-
-    @Test
     public void ShouldEditPlace() {
         Mockito.when(placeRepository.saveAndFlush(Mockito.any())).thenReturn(place);
         PlaceDTO res = placeService.editPlace(placeDTO);
@@ -82,26 +72,12 @@ public class PlaceServiceTest {
         Assert.assertEquals(res, placeDTO);
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void ShouldNotEditPlace() {
-        Mockito.when(placeRepository.saveAndFlush(null)).thenReturn(null);
-        placeService.editPlace(null);
-
-    }
-
     @Test
     public void ShouldDeletePlace() {
         int id = 1;
-        Mockito.when(placeRepository.existsById(Mockito.any())).thenReturn(true);
+        Mockito.when(placeRepository.existsById(id)).thenReturn(true);
         Boolean res = placeService.deletePlace(id);
         Assert.assertEquals(true, res);
-    }
-
-    @Test(expected = BusinessRuleException.class)
-    public void ShouldNotDeletePlace() {
-        int id = 1;
-        Mockito.when(placeRepository.existsById(Mockito.any())).thenReturn(false);
-        Boolean res = placeService.deletePlace(0);
     }
 
     @Test

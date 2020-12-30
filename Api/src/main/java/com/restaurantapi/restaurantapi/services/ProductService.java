@@ -41,16 +41,13 @@ public class ProductService {
 
     public List<ProductDTO> getAllProducts() {
         List<Product> productList = productRepository.findAll();
-
         if (productList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
-
 
         return productMapper.toDTOList(productList);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public ProductDTO addProduct(ProductDTO productDTO) {
-        if (productDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
 
         Product product = productMapper.toEntity(productDTO);
 
@@ -73,7 +70,6 @@ public class ProductService {
 
         Optional<Product> optionalProduct = productRepository.findById(productDTO.getId());
         if (!optionalProduct.isPresent()) throw new RecordNotFoundException(ErrorMessage.PRODUCT_NOT_FOUND);
-
 
         optionalProduct.get().getCategories().forEach(category -> category.getProducts().remove(optionalProduct.get()));
 
@@ -131,7 +127,7 @@ public class ProductService {
     }
 
     public Set<ProductDTO> getProductsByCategoryId(int categoryId) {
-        if (categoryId <= 0) throw new RecordNotFoundException(ErrorMessage.ID_IS_NULL);
+
         Optional<Category> category = categoryRepository.findById(categoryId);
         Set<ProductDTO> productDTOSet = new HashSet<>();
 

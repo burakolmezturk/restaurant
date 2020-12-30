@@ -51,7 +51,6 @@ public class CategoryService {
     @Transactional(propagation = Propagation.REQUIRED)
     @CacheEvict(value = "CategoryCache", allEntries = true)
     public void addCategory(CategoryDTO categoryDTO) {
-        if (categoryDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
 
         Optional<Media> media = mediaRepository.findById(categoryDTO.getImage().getId());
         if (!media.isPresent()) throw new RecordNotFoundException(ErrorMessage.MEDIA_NOT_FOUND);
@@ -66,8 +65,6 @@ public class CategoryService {
     @Transactional(propagation = Propagation.REQUIRED)
     @CacheEvict(value = "CategoryCache", allEntries = true)
     public CategoryDTO editCategory(CategoryDTO categoryDTO) {
-        if (categoryDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
-
 
         categoryRepository.saveAndFlush(categoryMapper.toEntity(categoryDTO));
         return categoryDTO;
@@ -76,7 +73,7 @@ public class CategoryService {
     @Transactional(propagation = Propagation.REQUIRED)
     @CacheEvict(value = "CategoryCache", allEntries = true)
     public boolean deleteCategory(int id) {
-        if (id <= 0) throw new BusinessRuleException(ErrorMessage.ID_IS_NULL);
+
         if (!categoryRepository.existsById(id)) throw new RecordNotFoundException(ErrorMessage.CATEGORY_NOT_FOUND);
 
         categoryRepository.deleteById(id);

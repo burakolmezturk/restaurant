@@ -37,8 +37,6 @@ public class PlaceService {
     @Transactional(propagation = Propagation.REQUIRED)
     public boolean addPlace(PlaceDTO placeDTO) {
 
-        if (placeDTO == null) throw new BusinessRuleException(ErrorMessage.PLACE_NOT_FOUND);
-
         Place place = placeRepository.save(placeMapper.toEntity(placeDTO));
 
         if (place.getId() != 0) return true;
@@ -48,7 +46,6 @@ public class PlaceService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public PlaceDTO editPlace(PlaceDTO placeDTO) {
-        if (placeDTO == null) throw new BusinessRuleException(ErrorMessage.PLACE_NOT_FOUND);
 
         placeRepository.saveAndFlush(placeMapper.toEntity(placeDTO));
         return placeDTO;
@@ -57,7 +54,6 @@ public class PlaceService {
     @Transactional(propagation = Propagation.REQUIRED)
     public boolean deletePlace(int id) {
 
-        if (id <= 0) throw new BusinessRuleException(ErrorMessage.ID_IS_NULL);
         if (!placeRepository.existsById(id)) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
 
         placeRepository.deleteById(id);

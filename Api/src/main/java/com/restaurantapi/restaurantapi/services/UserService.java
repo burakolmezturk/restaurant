@@ -39,7 +39,6 @@ public class UserService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void saveUser(UserDTO userDTO) {
-        if (userDTO == null) throw new BusinessRuleException(ErrorMessage.USER_NOT_FOUND);
 
         List<Role> roleList = roleRepository.findAllById(userDTO.getRolesId());
         if (roleList.isEmpty()) throw new RecordNotFoundException(ErrorMessage.RECORD_NOT_FOUND);
@@ -76,7 +75,6 @@ public class UserService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void updateUser(UserDTO userDTO) {
-        if (userDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
         List<Integer> rolesIdsList = userDTO.getRolesId();
 
         if (rolesIdsList.isEmpty()) throw new BusinessRuleException(ErrorMessage.ROLE_NOT_FOUND);
@@ -93,7 +91,7 @@ public class UserService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteUser(int userId) {
-        if (userId <= 0) throw new BusinessRuleException(ErrorMessage.ID_IS_NULL);
+
         Optional<User> userOptional = userRepository.findById(userId);
         if (!userOptional.isPresent()) throw new BusinessRuleException(ErrorMessage.USER_NOT_FOUND);
 

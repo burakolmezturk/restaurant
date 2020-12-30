@@ -217,3 +217,13 @@ Lsrc/main/java/com/restaurantapi/restaurantapi/exception/SystemException.java,8
 Rsrc/main/java/com/restaurantapi/restaurantapi/exception/BusinessRuleException.java,5\5\55330285ca7d3b2240629e9406b53eb65fd6b117
 u
 Esrc/main/java/com/restaurantapi/restaurantapi/mapper/MediaMapper.java,a\c\ac48310477e2b4d587afd02f3ce06c9cf213234f
+}
+Msrc/main/java/com/restaurantapi/restaurantapi/builder/CustomerDTOBuilder.java,1\2\123f51e30272c1b278d2b4ccee9b38d9502c26b0
+„
+Tsrc/main/test/com/restaurantapi/restaurantapi/controller/CustomerControllerTest.java,7\e\7e886d6a76cbdd1255e36787b84f9e6261971238
+z
+Jsrc/main/java/com/restaurantapi/restaurantapi/config/ValidationConfig.java,7\e\7ea7eaeb9243d34c94888d5a75cf35da835fe6e8
+n
+>src/main/java/com/restaurantapi/restaurantapi/dto/BaseDTO.java,a\4\a4a06dad588e502e35980076442b8e49796fdbce
+
+Osrc/main/test/com/restaurantapi/restaurantapi/services/CustomerServiceTest.java,2\d\2d0ed25ae1766c6caee4a5fc46d772a7995b17b5

@@ -2,8 +2,12 @@
 o
 java:S1128"RRemove this unused import 'com.fasterxml.jackson.annotation.JsonManagedReference'.(Æ˜µ8öØ×¨è.
 J
-java:S1128".Remove this unused import 'java.util.HashSet'.(Ê‚êX8°„ Óè.
+java:S1128".Remove this unused import 'java.util.HashSet'.(Ê‚êX8°„ Óè.
+L
+java:S1128"*Remove this unused import 'java.util.Set'.(ö²„¤şÿÿÿÿ8ÂÁŸÓè.
 q
 java:S1128"ORemove this unused import 'com.fasterxml.jackson.annotation.JsonBackReference'.(»Ôœ¿ıÿÿÿÿ8®¹±Ñè.
-L
-java:S1128"*Remove this unused import 'java.util.Set'.(ö²„¤şÿÿÿÿ8ÂÁŸÓè.
+G
+java:S1948 "*Make "products" transient or serializable.(íĞûä8ùëÛÍê.
+C
+java:S1948$"'Make "image" transient or serializable.(´ÖÉI8ùëÛÍê.

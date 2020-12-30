@@ -85,18 +85,17 @@ public class ProductServiceTest {
             .image(mediaDTO)
             .build();
     private List<ProductDTO> productDTOList = new ArrayList<>();
-
+    private List<Integer> categoryIdList = new ArrayList<>();
     private List<Product> productList = new ArrayList<>();
-
     private Category category = categoryMapper.toEntity(categoryDTO);
-
     private Product product = productMapper.toEntity(productDTO);
-
     private Pageable pageable = PageRequest.of(0, 10);
+
     @Before
     public void setUp() throws Exception {
-
+        categoryIdList.add(1);
         cartDTOList.add(cartDTO);
+        productDTO.setCategoryIdList(categoryIdList);
         productDTOList.add(productDTO);
 
         productList = productMapper.toEntityList(productDTOList);
@@ -193,19 +192,21 @@ public class ProductServiceTest {
         Assert.assertNotNull(res);
 
     }
+
     @Test
-    public void shouldFindByPage(){
+    public void shouldFindByPage() {
         Mockito.when(productRepository.findAll(pageable)).thenReturn(new PageImpl<Product>(productList, pageable, 1));
         Page<ProductDTO> productDTOPage = productService.getFindPage(pageable);
 
-        Assert.assertEquals(productDTOPage.getContent().get(0).getId(),productDTO.getId());
+        Assert.assertEquals(productDTOPage.getContent().get(0).getId(), productDTO.getId());
     }
-    @Test
-    public void shouldFindBySlice(){
-        Mockito.when(categoryRepository.findById(1)).thenReturn(Optional.of(category));
-        Mockito.when(productRepository.findProductByCategories(category,pageable)).thenReturn(new PageImpl<Product>(productList, pageable, 1));
-        Slice<ProductDTO> productDTOSlice = productService.getProductWithSlice(pageable,1);
 
-        Assert.assertEquals(productDTOSlice.getContent().get(0).getId(),productDTO.getId());
+    @Test
+    public void shouldFindBySlice() {
+        Mockito.when(categoryRepository.findById(1)).thenReturn(Optional.of(category));
+        Mockito.when(productRepository.findProductByCategories(category, pageable)).thenReturn(new PageImpl<Product>(productList, pageable, 1));
+        Slice<ProductDTO> productDTOSlice = productService.getProductWithSlice(pageable, 1);
+
+        Assert.assertEquals(productDTOSlice.getContent().get(0).getId(), productDTO.getId());
     }
 }

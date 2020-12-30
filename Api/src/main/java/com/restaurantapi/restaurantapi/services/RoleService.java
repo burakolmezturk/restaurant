@@ -37,21 +37,18 @@ public class RoleService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addRole(RoleDTO roleDTO) {
-        if (roleDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
 
         roleRepository.save(roleMapper.toEntity(roleDTO));
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void editRole(RoleDTO roleDTO) {
-        if (roleDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
 
         roleRepository.saveAndFlush(roleMapper.toEntity(roleDTO));
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void deleteRole(RoleDTO roleDTO) {
-        if (roleDTO == null) throw new BusinessRuleException(ErrorMessage.ENTITY_IS_NULL);
 
         roleRepository.deleteById(roleMapper.toEntity(roleDTO).getId());
     }

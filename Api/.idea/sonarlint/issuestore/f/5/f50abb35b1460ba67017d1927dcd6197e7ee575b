@@ -1,9 +1,9 @@
 
-]	java:S125""<This block of commented-out lines of code should be removed.(†µš©ùÿÿÿÿ8˜š«è.
 y
 java:S1128"WRemove this unused import 'com.restaurantapi.restaurantapi.convertor.RoleDTOConvertor'.(àÓ¶èûÿÿÿÿ8¹Èƒ«è.
-X	java:S1259"<This block of commented-out lines of code should be removed.(ñ’†8ÍşŸ«è.
-]	java:S125G"<This block of commented-out lines of code should be removed.(†µš©ùÿÿÿÿ8Ï¡«è.
 j
-java:S1128"HRemove this unused import 'com.restaurantapi.restaurantapi.dto.RoleDTO'.(µàóúşÿÿÿÿ8¹Èƒ«è.
-]	java:S125-"<This block of commented-out lines of code should be removed.(¯õ’ıÿÿÿÿ8ñÅ«è.
+java:S1128"HRemove this unused import 'com.restaurantapi.restaurantapi.dto.RoleDTO'.(µàóúşÿÿÿÿ8¹Èƒ«è.
+y
+java:S1128"WRemove this unused import 'com.restaurantapi.restaurantapi.convertor.UserDTOConverter'.(« À¾şÿÿÿÿ8ƒ”ç€ê.
+m
+java:S1128"PRemove this unused import 'com.restaurantapi.restaurantapi.mapper.WaiterMapper'.(ò½İ…8ÏØ€ê.

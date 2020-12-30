@@ -75,17 +75,10 @@ public class CategoryServiceTest {
         Mockito.when(mediaRepository.findById(1)).thenReturn(Optional.of(media));
         Mockito.when(categoryRepository.save(category)).thenReturn(category);
         categoryService.addCategory(categoryDTO);
-        Mockito.verify(categoryService, Mockito.times(1)).addCategory(categoryDTO);
+        Mockito.verify(categoryRepository, Mockito.times(1)).save(category);
     }
 
-    @Test(expected = BusinessRuleException.class)
-    public void NotShouldAddCategory() {
-        Mockito.when(mediaRepository.findById(1)).thenReturn(Optional.of(new Media()));
-        Mockito.when(categoryRepository.save(null)).thenReturn(new Category());
-        categoryService.addCategory(null);
-        Mockito.verify(categoryService, Mockito.times(1)).addCategory(Mockito.any());
 
-    }
 
     @Test
     public void ShouldGetCategories() {

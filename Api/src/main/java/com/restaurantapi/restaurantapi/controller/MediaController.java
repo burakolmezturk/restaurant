@@ -6,9 +6,11 @@ import com.restaurantapi.restaurantapi.services.MediaService;
 import liquibase.pro.packaged.S;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -16,6 +18,7 @@ import java.util.Locale;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/media")
+@Validated
 public class MediaController {
 
     @Autowired
@@ -28,7 +31,7 @@ public class MediaController {
         return mediaService.getAllMedia();
     }
     @PostMapping
-    public MediaDTO addMedia(@RequestParam String fileName, @RequestParam MultipartFile file) throws IOException {
+    public MediaDTO addMedia(@RequestParam @NotNull String fileName, @RequestParam @NotNull MultipartFile file) throws IOException {
         return mediaService.addMedia(fileName,file,path);
     }
 }

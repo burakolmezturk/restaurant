@@ -28,7 +28,9 @@ const ListCustomer = () => {
     const [totalElements, setTotalElements] = useState();
 
     useEffect(() => {
-
+        if (user.username == '' && user.password == '') {
+            history.push('');
+        }
         getCustomersByPage(0);
 
     }, []);
