@@ -19,6 +19,14 @@ class InfoService{
             }
         });
     }
+    getBeanNames(){
+        return axios.get(INFO_API_BASE_URL+"getBeanNames",{
+            auth:{
+                username:localStorage.getItem("username"),
+                password:localStorage.getItem("password")
+            }
+        });
+    }
    
 
 }
