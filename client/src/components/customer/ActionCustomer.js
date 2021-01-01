@@ -35,12 +35,12 @@ const ActionCustomer =() =>{
 
     }
 
-    const selectCustomer = (customerId) => {
-        console.log(customerId);
+    const selectCustomer = (customer) => {
+
         history.push({
             pathname: '/cart',
             state: {
-                customerId: customerId          
+                customer: customer          
             }
         });
     }
@@ -98,7 +98,7 @@ const ActionCustomer =() =>{
                                                 <td>{customer.address}</td>
                                                 <td>{customer.phone}</td>
                                                 <td>
-                                                    <button onClick={() => selectCustomer(customer.id)}
+                                                    <button onClick={() => selectCustomer(customer)}
                                                         className="btn btn-info"> Select
                                                         </button>
                                                 

@@ -33,14 +33,14 @@ class ListTableComponent extends Component {
         this.setState({ tableIndex: tableIndex });
 
     }
-    order(tableId, waiterId) {
+    order(tableId, waiter) {
 
         this.props.history.push({
             pathname: '/cart',
             state: {
                 tableId: tableId,
                 placeId: this.state.placeId,
-                waiterId: waiterId
+                waiter: waiter
             },
         });
 
@@ -116,7 +116,7 @@ class ListTableComponent extends Component {
                                                     <tr key={waiter.id}>
                                                         <td><img src={'data:image/png;base64,' + waiter.image.fileContent} style={{borderRadius:"30px"}} width="50" /></td>
                                                         <td>{waiter.name}</td>
-                                                        <td><button onClick={() => this.order(this.state.tableIndex, waiter.id)} className="btn btn-info" data-dismiss="modal">Select</button></td>
+                                                        <td><button onClick={() => this.order(this.state.tableIndex, waiter)} className="btn btn-info" data-dismiss="modal">Select</button></td>
                                                     </tr>
                                             )
                                         }

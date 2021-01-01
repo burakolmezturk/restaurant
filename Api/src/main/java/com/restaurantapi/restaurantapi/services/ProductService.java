@@ -1,17 +1,15 @@
 package com.restaurantapi.restaurantapi.services;
 
-import com.restaurantapi.restaurantapi.dto.CartDTO;
+import com.restaurantapi.restaurantapi.dto.OrderItemDTO;
 import com.restaurantapi.restaurantapi.dto.ErrorMessage;
 import com.restaurantapi.restaurantapi.dto.ProductDTO;
 import com.restaurantapi.restaurantapi.convertor.CartDTOConvertor;
-import com.restaurantapi.restaurantapi.convertor.ProductDTOConvertor;
-import com.restaurantapi.restaurantapi.entity.Cart;
+import com.restaurantapi.restaurantapi.entity.OrderItem;
 import com.restaurantapi.restaurantapi.entity.Category;
 import com.restaurantapi.restaurantapi.entity.Product;
-import com.restaurantapi.restaurantapi.exception.BusinessRuleException;
 import com.restaurantapi.restaurantapi.exception.RecordNotFoundException;
 import com.restaurantapi.restaurantapi.mapper.ProductMapper;
-import com.restaurantapi.restaurantapi.repository.CartRepository;
+import com.restaurantapi.restaurantapi.repository.OrderRepository;
 import com.restaurantapi.restaurantapi.repository.CategoryRepository;
 import com.restaurantapi.restaurantapi.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,7 @@ import java.util.*;
 public class ProductService {
   @Autowired private ProductRepository productRepository;
 
-  @Autowired private CartRepository cartRepository;
+  @Autowired private OrderRepository orderRepository;
 
   @Autowired private CategoryRepository categoryRepository;
 
@@ -116,15 +114,6 @@ public class ProductService {
     productDTO.setCategoryIdList(categories);
 
     return productDTO;
-  }
-
-  @Transactional(propagation = Propagation.REQUIRED)
-  public boolean sellProduct(List<CartDTO> cartDTOList) {
-    List<Cart> cartList = new ArrayList<>();
-    cartDTOList.stream().forEach(cartDTO -> cartList.add(CartDTOConvertor.dtoToCart(cartDTO)));
-    List<Cart> carts = cartRepository.saveAll(cartList);
-    if (carts.isEmpty()) return false;
-    else return true;
   }
 
   public Set<ProductDTO> getProductsByCategoryId(int categoryId) {

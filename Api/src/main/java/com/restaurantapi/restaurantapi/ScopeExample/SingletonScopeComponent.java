@@ -1,4 +1,4 @@
-package com.restaurantapi.restaurantapi.ScopeExample;
+package com.restaurantapi.restaurantapi.scopeExample;
 
 import org.springframework.stereotype.Component;
 

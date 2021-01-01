@@ -75,19 +75,6 @@ CREATE TABLE users_role (
   CONSTRAINT fk_user_role FOREIGN KEY (user_id) REFERENCES user (id),
   CONSTRAINT fk_role_user FOREIGN KEY (role_id) REFERENCES roles (id)
 );
-CREATE TABLE cart (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  product_id varchar(50) ,
-  total_price varchar(50) ,
-  piece varchar(250) ,
-  place_id int ,
-  price int ,
-  table_id int ,
-  waiter_id int ,
-  customer_id int,
-  create_date timestamp ,
-  PRIMARY KEY (id)
-);
 CREATE TABLE customer (
   id int(11) NOT NULL AUTO_INCREMENT,
   name varchar(50) ,
@@ -98,4 +85,31 @@ CREATE TABLE customer (
   deleted bool DEFAULT FALSE,
   PRIMARY KEY (id)
 );
+CREATE TABLE order_item (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  product_id int ,
+  order_id int ,
+  total_price int,
+  piece int ,
+  price float ,
+  create_date timestamp ,
+  deleted bool DEFAULT FALSE,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_orders_product FOREIGN KEY (product_id) REFERENCES product (id),
+  CONSTRAINT fk_orders_order FOREIGN KEY (order_id) REFERENCES product (id)
+);
+CREATE TABLE orders (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  waiter_id int ,
+  customer_id int ,
+  total_price float ,
+  total_count float ,
+  payment_type int,
+  create_date timestamp ,
+  deleted bool DEFAULT FALSE,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_orders_customer FOREIGN KEY (customer_id) REFERENCES customer (id),
+  CONSTRAINT fk_orders_waiter FOREIGN KEY (waiter_id) REFERENCES waiter (id)
+);
+
 

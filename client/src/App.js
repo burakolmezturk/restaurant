@@ -15,10 +15,7 @@ import ActionCustomer from './components/customer/ActionCustomer';
 function App() {
   return (
     <div>
-      <Router>    
-
-
-           
+      <Router>        
            <Switch> 
                   <Route path ="/home" exact component ={HomePageComponent}></Route>
                   <Route path ="/" exact component ={LoginComponent}></Route>
@@ -28,13 +25,8 @@ function App() {
                   <Route path ="/customers" exact component ={ListCustomer}></Route>
                   <Route path ="/add-customer" exact component ={CreateCustomer}></Route>
                   <Route path ="/update-customer" exact component ={EditCustomer}></Route>
-                  <Route path ="/action-customer" exact component ={ActionCustomer}></Route>
-
-                  
-            </Switch>
-          
-
-
+                  <Route path ="/action-customer" exact component ={ActionCustomer}></Route>                 
+            </Switch>      
       </Router>
   </div>
   );

@@ -22,7 +22,7 @@
 <!--    <include file="/changes/create-insert-waiter.xml" relativeToChangelogFile="true"/>-->
 <!--    <include file="/changes/create-insert-category.xml" relativeToChangelogFile="true"/>-->
 <!--    <include file="/changes/create-insert-product.xml" relativeToChangelogFile="true"/>-->
-<!--    <include file="/changes/create-insert-cart.xml" relativeToChangelogFile="true"/>-->
+<!--    <include file="/changes/create-insert-orderItem.xml" relativeToChangelogFile="true"/>-->
 <!--    <include file="/changes/create-insert-users-role.xml" relativeToChangelogFile="true"/>-->
 <!--    <include file="/changes/create-insert-product-category.xml" relativeToChangelogFile="true"/>-->
 </databaseChangeLog>

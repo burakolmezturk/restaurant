@@ -1,13 +1,3 @@
 
-x
-java:S1128"[Remove this unused import 'com.restaurantapi.restaurantapi.convertor.CategoryDTOConvertor'.(‚°­Ş8ˆõÓé.
-Y
-java:S3655Z"7Call "category.isPresent()" before accessing the value.(Éò´ÿÿÿÿÿ8Ùê€ê.
-W
-java:S3984X"5Throw this exception or remove this useless statement(ïã‘úşÿÿÿÿ8Øˆı€ê.
-l
-java:S1128"JRemove this unused import 'org.springframework.cache.annotation.CachePut'.(ıâ‰ şÿÿÿÿ8°ŒñÅé.
-M
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8ß¦Òé.
 „
-java:S1488-"gImmediately return this expression instead of assigning it to the temporary variable "categoryDTOList".(¦ÚË8¤ÙÒé.
+java:S1488'"gImmediately return this expression instead of assigning it to the temporary variable "categoryDTOList".(¦ÚË8¥ôí•ë.

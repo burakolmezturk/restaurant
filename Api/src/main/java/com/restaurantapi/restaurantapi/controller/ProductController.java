@@ -1,8 +1,7 @@
 package com.restaurantapi.restaurantapi.controller;
 
-import com.restaurantapi.restaurantapi.dto.CartDTO;
+import com.restaurantapi.restaurantapi.dto.OrderItemDTO;
 import com.restaurantapi.restaurantapi.dto.ProductDTO;
-import com.restaurantapi.restaurantapi.services.CategoryService;
 import com.restaurantapi.restaurantapi.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -48,12 +47,12 @@ public class ProductController {
     else return false;
   }
 
-  @PostMapping("/cart")
-  public boolean sellProduct(@RequestBody List<CartDTO> cartDTOList) {
-
-    if (productService.sellProduct(cartDTOList)) return true;
-    else return false;
-  }
+//  @PostMapping("/cart")
+//  public boolean sellProduct(@RequestBody List<OrderItemDTO> orderItemDTOList) {
+//
+//    if (productService.sellProduct(orderItemDTOList)) return true;
+//    else return false;
+//  }
 
   @GetMapping("/products")
   public Set<ProductDTO> getProductsByCategoryId(@RequestParam int categoryId) {

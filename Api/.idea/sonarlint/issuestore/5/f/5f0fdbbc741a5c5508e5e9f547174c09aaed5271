@@ -1,9 +1,6 @@
 
+X	java:S1253"<This block of commented-out lines of code should be removed.(–«¹Õ8’ø¼ªë.
 c
-java:S11260"AReplace this if-then-else statement by a single return statement.(ˆı¡‡ùÿÿÿÿ8°û‡Öè.
-r
-java:S1128"URemove this unused import 'com.restaurantapi.restaurantapi.services.CategoryService'.(Åê¡û8¦§ïØê.
-c
-java:S11268"AReplace this if-then-else statement by a single return statement.(Ä·âÕşÿÿÿÿ8°û‡Öè.
+java:S1126."AReplace this if-then-else statement by a single return statement.(¿ˆÌ”ÿÿÿÿÿ8¤ƒÉë.
 L
-java:S54110"*Use the primitive boolean expression here.(ˆı¡‡ùÿÿÿÿ8°û‡Öè.
+java:S5411."*Use the primitive boolean expression here.(¿ˆÌ”ÿÿÿÿÿ8–€¯«ë.

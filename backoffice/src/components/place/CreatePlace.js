@@ -3,9 +3,43 @@ import { useHistory } from "react-router-dom";
 import MediaService from '../../services/MediaService';
 import PlaceService from '../../services/PlaceService';
 import Header from '../header/Header';
+import { useFormik } from 'formik';
 
+const validate = values => {
+   
+    const errors = {};
+    if (!values.name) {
+        console.log('geldi');
+      errors.name = 'Required';
+    } else if (values.name.length > 15) {
+        console.log('geldi');
+      errors.name = 'Must be 15 characters or less';
+    }
+  
+    if (!values.tableCount) {
+        console.log('geldi');
+      errors.tableCount = 'Required';
+    } else if (values.tableCount<1) {
+        
+      errors.tableCount = 'Must be big than 0';
+      console.log(errors.tableCount);
+    }
+  
+    return errors;
+  };
 const CreatePlace = () => {
     const history = useHistory();
+    const formik = useFormik({
+        initialValues: {
+          name: '',
+          tableCount: '',
+          image: '',
+        },
+        validate,
+        onSubmit: values => {
+         savePlace(values);
+        },
+      });
     const [place, setPlace] = useState({
         name: '', tableCount: 0,image : ''
     });
@@ -17,17 +51,18 @@ const CreatePlace = () => {
         getMedias();
     },[]);
 
-    const onChangeHandler=(e)=> {
-        setPlace({ ...place, [e.target.name]: e.target.value });
-    }
+    // const onChangeHandler=(e)=> {
+    //     setPlace({ ...place, [e.target.name]: e.target.value });
+    // }
 
-    const savePlace=()=> {
+    const savePlace=(place)=> {
         PlaceService.createPlace(place);
         history.push(`/place`);
     }
     
     const onChangeImage = (e) => {
-        setPlace({ ...place, image: medias[e.target.value] });
+        formik.values.image= medias[e.target.value];
+        //setPlace({ ...place, image: medias[e.target.value] });
     }
 
     async function getMedias() {
@@ -35,8 +70,8 @@ const CreatePlace = () => {
         const res = await MediaService.getMedias();
 
         await setMedias(res.data);
-
-        setPlace({ ...place, image: res.data[0] });
+        formik.values.image= res.data[0];
+       // setPlace({ ...place, image: res.data[0] });
 
     }
 
@@ -71,19 +106,32 @@ const CreatePlace = () => {
 
     const getForm = () =>{
         return(
-        <form>
+        <form onSubmit={formik.handleSubmit}>
             <div className="form-group">
                 <label>Place Name :</label>
-                <input placeholder="Place Name" name="name" className="form-control"
-                    value={name} onChange={onChangeHandler} />
+                <input placeholder="Place Name" name="name" className="form-control" id="name"
+         type="text"
+         onChange={formik.handleChange}
+         value={formik.values.name}
+                    // value={name} onChange={onChangeHandler} 
+                    />
+                    {formik.touched.name && formik.errors.name ? ( <div>{formik.errors.name}</div>) : null}
             </div>
+            
             <div className="form-group">
                 <label>Table Count :</label>
                 <input placeholder="Table Count" name="tableCount" className="form-control"
-                    value={tableCount} onChange={onChangeHandler} />
+                    // value={tableCount} onChange={onChangeHandler}
+                    id="tableCount"
+         type="number"
+         onChange={formik.handleChange}
+         value={formik.values.lastName}
+
+                     />
             </div>
+            {formik.touched.tableCount && formik.errors.tableCount ? (<div>{formik.errors.tableCount}</div>) : null}
             {getListBox()}
-            <button className="btn btn-success" onClick={()=>savePlace()}>Save</button>
+            <button type="submit" className="btn btn-success" >Save</button>
             <button style={{ marginLeft: "10px" }} className="btn btn-danger" onClick={()=>history.push(`/place`)} >Cancel</button>
         </form>)
     }

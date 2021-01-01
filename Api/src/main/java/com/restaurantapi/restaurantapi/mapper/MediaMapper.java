@@ -1,8 +1,6 @@
 package com.restaurantapi.restaurantapi.mapper;
 
-import com.restaurantapi.restaurantapi.dto.CustomerDTO;
 import com.restaurantapi.restaurantapi.dto.MediaDTO;
-import com.restaurantapi.restaurantapi.entity.Customer;
 import com.restaurantapi.restaurantapi.entity.Media;
 import org.mapstruct.Mapper;
 

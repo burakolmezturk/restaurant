@@ -1,9 +1,9 @@
 
-y
-java:S1128"WRemove this unused import 'com.restaurantapi.restaurantapi.convertor.RoleDTOConvertor'.(àÓ¶èûÿÿÿÿ8¹Èƒ«è.
 j
 java:S1128"HRemove this unused import 'com.restaurantapi.restaurantapi.dto.RoleDTO'.(µàóúşÿÿÿÿ8¹Èƒ«è.
 y
-java:S1128"WRemove this unused import 'com.restaurantapi.restaurantapi.convertor.UserDTOConverter'.(« À¾şÿÿÿÿ8ƒ”ç€ê.
+java:S1128"WRemove this unused import 'com.restaurantapi.restaurantapi.convertor.RoleDTOConvertor'.(àÓ¶èûÿÿÿÿ8¹Èƒ«è.
 m
 java:S1128"PRemove this unused import 'com.restaurantapi.restaurantapi.mapper.WaiterMapper'.(ò½İ…8ÏØ€ê.
+y
+java:S1128"WRemove this unused import 'com.restaurantapi.restaurantapi.convertor.UserDTOConverter'.(« À¾şÿÿÿÿ8ƒ”ç€ê.

@@ -30,7 +30,7 @@ public class CategoryService {
 
   @Autowired private CategoryMapper categoryMapper;
 
-  @Cacheable(value = "CategoryCache")
+  //@Cacheable(value = "CategoryCache")
   public List<CategoryDTO> getCategories() {
 
     List<Category> categories = categoryRepository.findAll();
@@ -42,7 +42,7 @@ public class CategoryService {
   }
 
   @Transactional(propagation = Propagation.REQUIRED)
-  @CacheEvict(value = "CategoryCache", allEntries = true)
+  //@CacheEvict(value = "CategoryCache", allEntries = true)
   public void addCategory(CategoryDTO categoryDTO) {
 
     Optional<Media> media = mediaRepository.findById(categoryDTO.getImage().getId());
@@ -55,7 +55,7 @@ public class CategoryService {
   }
 
   @Transactional(propagation = Propagation.REQUIRED)
-  @CacheEvict(value = "CategoryCache", allEntries = true)
+  //@CacheEvict(value = "CategoryCache", allEntries = true)
   public CategoryDTO editCategory(CategoryDTO categoryDTO) {
 
     categoryRepository.saveAndFlush(categoryMapper.toEntity(categoryDTO));
@@ -63,7 +63,7 @@ public class CategoryService {
   }
 
   @Transactional(propagation = Propagation.REQUIRED)
-  @CacheEvict(value = "CategoryCache", allEntries = true)
+  //@CacheEvict(value = "CategoryCache", allEntries = true)
   public boolean deleteCategory(int id) {
 
     if (!categoryRepository.existsById(id))
@@ -73,7 +73,7 @@ public class CategoryService {
     return true;
   }
 
-  @Cacheable(value = "Category", key = "#categoryId")
+  //@Cacheable(value = "Category", key = "#categoryId")
   public CategoryDTO getCategoryById(int categoryId) {
 
     Optional<Category> category = categoryRepository.findById(categoryId);
