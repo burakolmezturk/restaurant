@@ -6,6 +6,7 @@ import com.restaurantapi.restaurantapi.dto.CustomerDTO;
 import com.restaurantapi.restaurantapi.dto.MediaDTO;
 import com.restaurantapi.restaurantapi.entity.Customer;
 import com.restaurantapi.restaurantapi.services.CustomerService;
+import org.apache.xmlbeans.impl.soap.SOAPException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,6 +20,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,19 +55,19 @@ public class CustomerControllerTest {
          customerDTOList.add(customerDTO);
     }
     @Test
-    public void shouldAddCustomer() {
+    public void shouldAddCustomer() throws IOException, JAXBException, SOAPException {
         customerController.addCustomer(customerDTO);
         Mockito.verify(customerService, Mockito.times(1)).addCustomer(Mockito.any());
     }
 
     @Test
-    public void shouldEditCustomer() {
+    public void shouldEditCustomer() throws JAXBException, IOException {
         customerController.editCustomer(customerDTO);
         Mockito.verify(customerService, Mockito.times(1)).editCustomer(Mockito.any());
     }
 
     @Test
-    public void shouldDeleteCustomer() {
+    public void shouldDeleteCustomer() throws JAXBException, IOException {
         int id = 1;
         customerController.deleteCustomer(id);
         Mockito.verify(customerService, Mockito.times(1)).deleteCustomer(id);

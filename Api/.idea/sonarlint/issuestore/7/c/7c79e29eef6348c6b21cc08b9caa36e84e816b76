@@ -1,0 +1,32 @@
+
+O
+java:S1481m"-Remove this unused "response" local variable.(°Áøœûÿÿÿÿ8¶î¡áì.
+’
+java:S1130$"uRemove the declaration of thrown exception 'javax.xml.bind.JAXBException', as it cannot be thrown from method's body.(Þä¶œ8“´¢“í.
+^
+java:S1854m"<Remove this useless assignment to local variable "response".(°Áøœûÿÿÿÿ8¶î¡áì.
+O
+java:S1481]"-Remove this unused "response" local variable.(°Áøœûÿÿÿÿ8¶î¡áì.
+©
+java:S2681:"†This line will not be executed conditionally; only the first line of this 3-line block will be. The rest will execute unconditionally.(Ì§¨øûÿÿÿÿ8¶î¡áì.
+m
+java:S1192B"KDefine a constant instead of duplicating this literal "text/plain" 6 times.(Ãÿ™ëùÿÿÿÿ8¶î¡áì.
+X	java:S125^"<This block of commented-out lines of code should be removed.(âû‚¬8¶î¡áì.
+‰
+java:S1130$"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(Þä¶œ8“´¢“í.
+o
+java:S1192H"MDefine a constant instead of duplicating this literal "Content-Type" 3 times.(ç¨—ïøÿÿÿÿ8¶î¡áì.
+]	java:S125n"<This block of commented-out lines of code should be removed.(Þ…§—úÿÿÿÿ8¶î¡áì.
+¨
+java:S1192F"…Define a constant instead of duplicating this literal "http://localhost:8080/SOAPCustomer/services/CustomerServiceImpl?wsdl" 3 times.(¥’·øÿÿÿÿ8¶î¡áì.
+X	java:S125&"<This block of commented-out lines of code should be removed.(Å˜Ð8“´¢“í.
+^
+java:S1854]"<Remove this useless assignment to local variable "response".(°Áøœûÿÿÿÿ8¶î¡áì.
+¢
+java:S1130$"„Remove the declaration of thrown exception 'org.apache.xmlbeans.impl.soap.SOAPException', as it cannot be thrown from method's body.(Þä¶œ8“´¢“í.
+^
+java:S1854K"<Remove this useless assignment to local variable "response".(°Áøœûÿÿÿÿ8û‡ƒ•í.
+¢
+java:S1130?"„Remove the declaration of thrown exception 'org.apache.xmlbeans.impl.soap.SOAPException', as it cannot be thrown from method's body.(ÌÂèÖ8û‡ƒ•í.
+O
+java:S1481K"-Remove this unused "response" local variable.(°Áøœûÿÿÿÿ8û‡ƒ•í.

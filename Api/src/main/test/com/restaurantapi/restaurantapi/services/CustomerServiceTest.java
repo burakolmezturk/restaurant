@@ -12,6 +12,7 @@ import com.restaurantapi.restaurantapi.mapper.CategoryMapper;
 import com.restaurantapi.restaurantapi.mapper.CustomerMapper;
 import com.restaurantapi.restaurantapi.mapper.MediaMapper;
 import com.restaurantapi.restaurantapi.repository.CustomerRepository;
+import org.apache.xmlbeans.impl.soap.SOAPException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +28,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -73,21 +76,21 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void shouldAddCustomer() {
+    public void shouldAddCustomer() throws IOException, JAXBException, SOAPException {
         customerService.addCustomer(customerDTO);
         Mockito.verify(customerRepository, Mockito.times(1)).save(Mockito.any());
 
     }
 
     @Test
-    public void shouldEditCustomer() {
+    public void shouldEditCustomer() throws JAXBException, IOException {
         customerService.editCustomer(customerDTO);
         Mockito.verify(customerRepository, Mockito.times(1)).saveAndFlush(Mockito.any());
 
     }
 
     @Test
-    public void shouldDeleteCustomer() {
+    public void shouldDeleteCustomer() throws JAXBException, IOException {
         int id = 1;
         customerService.deleteCustomer(id);
         Mockito.verify(customerRepository, Mockito.times(1)).deleteById(Mockito.any());
@@ -113,7 +116,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void shouldGetCustomersByPage(){
+    public void shouldGetCustomersByPage() throws JAXBException, IOException, SOAPException {
         Mockito.when(customerRepository.findAll(pageable)).thenReturn(new PageImpl<Customer>(customers, pageable, 1));
         Page<CustomerDTO> customerPage = customerService.getCustomersByPage(pageable);
 

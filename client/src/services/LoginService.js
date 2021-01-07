@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const LOGIN_API_BASE_URL = "http://localhost:8080/user/";
+const LOGIN_API_BASE_URL = "http://localhost:8082/user/";
 class LoginService{
 
     getLogin(username,password){

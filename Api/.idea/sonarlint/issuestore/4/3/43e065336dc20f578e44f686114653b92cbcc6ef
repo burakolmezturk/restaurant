@@ -1,0 +1,29 @@
+
+\
+java:S1118":Add a private constructor to hide the implicit public one.(ºÍÃ¯úÿÿÿÿ8«Ã‹¦ì.
+÷
+java:S11923"ÙDefine a constant instead of duplicating this literal "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ser=\"http://service.ba.com\" xmlns:xsd=\"http://dto.ba.com/xsd\">\n" 4 times.(½ú÷õ8±  “í.
+p
+java:S11925"TDefine a constant instead of duplicating this literal "   <soapenv:Body>\n" 4 times.(í®‘8±  “í.
+q
+java:S1192:"TDefine a constant instead of duplicating this literal "</soapenv:Envelope>" 4 times.(¦ŸÒ8±  “í.
+w
+java:S11929"UDefine a constant instead of duplicating this literal "   </soapenv:Body>\n" 4 times.(Ú¸”£şÿÿÿÿ8±  “í.
+y
+java:S11924"WDefine a constant instead of duplicating this literal "   <soapenv:Header/>\n" 4 times.(åÙÕşÿÿÿÿ8±  “í.
+
+java:S1488M"dImmediately return this expression instead of assigning it to the temporary variable "soapEnvelope".(½ú÷õ8±  “í.
+a
+java:S1854"?Remove this useless assignment to local variable "inputStream".(Ç¼–Éıÿÿÿÿ8±  “í.
+‰
+java:S1130"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(£ßô8±  “í.
+\
+java:S4719":Replace Charset.forName() call with StandardCharsets.UTF_8(äª†ñüÿÿÿÿ8±  “í.
+X	java:S125"<This block of commented-out lines of code should be removed.(¼¬À¤8±  “í.
+—
+java:S1130K"uRemove the declaration of thrown exception 'javax.xml.bind.JAXBException', as it cannot be thrown from method's body.(ÆìÂØÿÿÿÿÿ8±  “í.
+’
+java:S1130["uRemove the declaration of thrown exception 'javax.xml.bind.JAXBException', as it cannot be thrown from method's body.(½ÊÙ¯8±  “í.
+J	java:S108q")Either remove or fill this block of code.(¶¶Öƒıÿÿÿÿ8±  “í.
+R
+java:S1481"0Remove this unused "inputStream" local variable.(Ç¼–Éıÿÿÿÿ8±  “í.

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const WAITER_API_BASE_URL = "http://localhost:8080/waiter/";
+const WAITER_API_BASE_URL = "http://localhost:8082/waiter/";
 class WaiterService{
 
     getWaiters(){

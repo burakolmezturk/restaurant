@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const ROLE_API_BASE_URL = "http://localhost:8080/role/";
+const ROLE_API_BASE_URL = "http://localhost:8082/role/";
 class RoleService{
 
     getRoles(){

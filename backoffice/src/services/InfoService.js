@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const INFO_API_BASE_URL = "http://localhost:8080/info/";
+const INFO_API_BASE_URL = "http://localhost:8082/info/";
 class InfoService{
     
     getInfo(){

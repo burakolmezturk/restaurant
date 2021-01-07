@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const MEDIA_API_BASE_URL = "http://localhost:8080/media";
+const MEDIA_API_BASE_URL = "http://localhost:8082/media";
 class MediaService{
 
     getMedias(){

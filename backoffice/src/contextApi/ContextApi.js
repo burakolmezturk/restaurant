@@ -16,7 +16,7 @@ const ContextProvider = (props) => {
     const { username, password } = user;
     
     const login = async (username, password) => {
-        const res = await axios.get("http://localhost:8080/user/login", {
+        const res = await axios.get("http://localhost:8082/user/login", {
             auth: {
                 username: username,
                 password: password

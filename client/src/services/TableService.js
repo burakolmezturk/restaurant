@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const TABLE_API_BASE_URL = "http://localhost:8080/table/";
+const TABLE_API_BASE_URL = "http://localhost:8082/table/";
 class TableService{
 
     getTable(){

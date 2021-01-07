@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const PRODUCT_API_BASE_URL = "http://localhost:8080/user/function/";
-const ROLES_API_BASE_URL = "http://localhost:8080/user/roles";
+const PRODUCT_API_BASE_URL = "http://localhost:8082/user/function/";
+const ROLES_API_BASE_URL = "http://localhost:8082/user/roles";
 class UserService{
 
     getUsers(){

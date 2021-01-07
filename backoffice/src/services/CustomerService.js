@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const CUSTOMER_API_BASE_URL = "http://localhost:8080/customer/";
+const CUSTOMER_API_BASE_URL = "http://localhost:8082/customer/";
 class CustomerService{
 
     getCustomersByPage(pageNumber,language){

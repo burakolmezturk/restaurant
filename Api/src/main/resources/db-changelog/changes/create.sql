@@ -96,7 +96,7 @@ CREATE TABLE order_item (
   deleted bool DEFAULT FALSE,
   PRIMARY KEY (id),
   CONSTRAINT fk_orders_product FOREIGN KEY (product_id) REFERENCES product (id),
-  CONSTRAINT fk_orders_order FOREIGN KEY (order_id) REFERENCES product (id)
+  CONSTRAINT fk_orders_order FOREIGN KEY (order_id) REFERENCES orders (id)
 );
 CREATE TABLE orders (
   id int(11) NOT NULL AUTO_INCREMENT,

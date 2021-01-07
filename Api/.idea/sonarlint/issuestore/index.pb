@@ -263,3 +263,7 @@ a
 1bin/src/main/resources/application-dev.properties,b\a\baa92fcf4c4b006d33e68f10fbada18607e20e9f
 ]
 -bin/src/main/resources/application.properties,6\a\6a009ac4b484339a826bf725505dbfc09f25052f
+r
+Bsrc/main/java/com/restaurantapi/restaurantapi/dto/ResponseDTO.java,7\d\7d9b3c82a5bc9b959fe215372489464de3f35aaa
+y
+Isrc/main/java/com/restaurantapi/restaurantapi/convertor/XMLConverter.java,4\3\43e065336dc20f578e44f686114653b92cbcc6ef

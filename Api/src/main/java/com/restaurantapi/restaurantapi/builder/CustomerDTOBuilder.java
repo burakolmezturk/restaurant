@@ -23,7 +23,7 @@ public class CustomerDTOBuilder extends Builder{
     public CustomerDTO build() {
         CustomerDTO customerDTO=new CustomerDTO();
         customerDTO.setId(super.id);
-        customerDTO.setImage(this.image);
+       // customerDTO.setImage(this.image);
         customerDTO.setAddress(this.address);
         customerDTO.setName(this.name);
         customerDTO.setSurname(this.surname);

@@ -40,12 +40,10 @@ const ListCustomer = () => {
         console.log(language);
         await CustomerService.getCustomersByPage(activePage, language)
             .then(response => {
+                
                 setCustomers(response.data.content);
                 setTotalElements(response.data.totalElements);
                 setLoading(false);
-            }).catch(({ response }) => {
-                setLoading(false);
-                createInfoNotification(response.data.message);
             });
 
     }
@@ -103,7 +101,7 @@ const ListCustomer = () => {
                                 <th>Surname</th>
                                 <th>Address</th>
                                 <th>Phone</th>
-                                <th>Image</th>
+                                {/* <th>Image</th> */}
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -117,7 +115,7 @@ const ListCustomer = () => {
                                                 <td>{customer.surname}</td>
                                                 <td>{customer.address}</td>
                                                 <td>{customer.phone}</td>
-                                                <td><img src={'data:image/png;base64,' + customer.image.fileContent} style={{ borderRadius: "10px" }} width="50" /></td>
+                                                {/* <td><img src={'data:image/png;base64,' + customer.image.fileContent} style={{ borderRadius: "10px" }} width="50" /></td> */}
                                                 <td>
                                                     <button onClick={() => editCustomer(customer.id, customer.image.id)}
                                                         className="btn btn-info"> Update
